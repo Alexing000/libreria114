@@ -1,4 +1,5 @@
 package com.example.Progetto.models;
-public class Autore{
 
+public class Autore {
+    
 }
