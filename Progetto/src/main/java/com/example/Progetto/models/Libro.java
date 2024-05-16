@@ -1,9 +1,21 @@
 package com.example.Progetto.models;
 
+import java.sql.Date;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
+@Data
+public class Libro extends Entity{
 
-
-public class Libro {
+    private Long id;
+    private String titolo;
+    private String trama;
+    private String autore;
+    private int nPagine;
+    private String genere;
+    private Date dataPubblicazione;
+    private double rating;
     
 }
