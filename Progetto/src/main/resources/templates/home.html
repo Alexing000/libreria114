@@ -23,14 +23,30 @@
     <div id="libri-recenti">
         <h2>Le ultime Uscite!</h2>
         <div>
-            <p><button onclick="listaRecenti()">...</button></p>
-            <img src="src\main\resources\img\book.png" alt="Book">
-            <p>Titolo: </p>
-            <p>Autore: </p>
-            <p>Genere: </p>
-            <p>Anno: </p>
-            <td><input type="button" value="AGGIUNGI" onclick="add();refresh()"></td>
-            <td><input type="button" value="ELIMINA" onclick="remove();refresh()"></td> 
+                        <table>
+                <thead>
+                    <th>ID</th>
+                    <th>Titolo</th>
+                    <th>Autore</th>
+                    <th>Genere</th>
+                    <th>Release</th>
+                    <th>Ratings</th>
+                    <a href="/pagina-recenti">...</a>
+                </thead>
+                <tbody>
+                    <tr th:each="libro:${libri}">
+                        <td th:text="${libro.id}"></td>
+                        <td th:text="${libro.titolo}"></td>
+                        <td th:text="${libro.autore}"></td>
+                        <td th:text="${libro.genere}"></td>
+                        <td th:text="${libro.dataPubblicazione}"></td>
+                        <td th:text="${libro.rating}"></td>
+
+                        <td><a href="|/libro-byAnno?libroDataPubb=${libro.dataPubblicazione}|">...</a></td>
+                    </tr>
+                </tbody>
+
+            </table>
         </div>
         
 
@@ -39,7 +55,7 @@
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
         <div>
-            <p><button onclick="listaGenere()">...</button></p>
+            <a href="/pagina-genere">...</a>
             <img src="src\main\resources\img\book.png" alt="Book">
             <p>Titolo: </p>
             <p>Autore: </p>
