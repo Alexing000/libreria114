@@ -69,6 +69,29 @@ public class DaoAutore implements IDao<Long, Autore>{
         return a;
     }
 
+    //cercare un autore per nome 
+    public Autore readByNome(String nome) {
+        String query = "SELECT * FROM autore WHERE nome = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, nome);
+        Autore a = null;
+        for (Map<String, String> map : ris.values()) {
+            a = context.getBean(Autore.class, map);
+        }
+        return a;
+    }
+
+    //cercare un autore per nome o cognome
+    public Autore readByNomeCognome(String nome, String cognome) {
+        String query = "SELECT * FROM autore WHERE nome = ? AND cognome = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, nome, cognome);
+        Autore a = null;
+        for (Map<String, String> map : ris.values()) {
+            a = context.getBean(Autore.class, map);
+        }
+        return a;
+    }
+
+
     
 
 }
