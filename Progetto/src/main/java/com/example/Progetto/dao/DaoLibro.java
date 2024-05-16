@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import lombok.Data;
 
@@ -78,6 +79,17 @@ public class DaoLibro implements IDao<Long, Libro>{
         Map<Long, Map<String, String>> libri = database.executeDQL(query, String.valueOf(id));
         Libro l = null;
         for (Map<String, String> map : libri.values()) {
+            l = context.getBean(Libro.class, map);
+        }
+        return l;
+    }
+
+    //cercare un autore per nome 
+    public Libro readByTitolo(String titolo) {
+        String query = "SELECT * FROM libro WHERE titolo = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, titolo);
+        Libro l = null;
+        for (Map<String, String> map : ris.values()) {
             l = context.getBean(Libro.class, map);
         }
         return l;
