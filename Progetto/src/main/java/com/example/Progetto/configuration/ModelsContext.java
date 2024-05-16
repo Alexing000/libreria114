@@ -1,6 +1,8 @@
 package com.example.Progetto.configuration;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
@@ -27,9 +29,13 @@ public class ModelsContext {
         a.setNome(map.get("nome"));
         a.setCognome(map.get("cognome"));
         a.setRating(Double.parseDouble(map.get("rating")));
+        List<Libro> libri = new ArrayList<>();
+        a.setLibri(libri);
         return a;
 
-}
+    }
+
+
     @Bean
     @Scope("prototype")
     public Libro libro (Map<String, String> map) {
@@ -46,6 +52,7 @@ public class ModelsContext {
         l.setGenere(map.get("genere"));
         l.setDataPubblicazione(Date.valueOf((map.get("dataPubblicazione"))));
         l.setRating(Double.parseDouble(map.get("rating")));
+        
 
         return l;
     }

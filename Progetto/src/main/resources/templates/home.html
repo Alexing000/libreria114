@@ -9,6 +9,8 @@
 <body>
     <h1>114 Libri</h1>
     <p>Benvenuto su 114 Libri!</p>
+    <h4 th:text="${actualUser}"></h4>
+    <a href="/logout">Logout</a>
     <div class="search-container">
         <form action="/search" method="GET" id="search-form">
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
@@ -21,11 +23,14 @@
     <div id="libri-recenti">
         <h2>Le ultime Uscite!</h2>
         <div>
+            <p><button onclick="listaRecenti()">...</button></p>
             <img src="src\main\resources\img\book.png" alt="Book">
             <p>Titolo: </p>
             <p>Autore: </p>
             <p>Genere: </p>
             <p>Anno: </p>
+            <td><input type="button" value="AGGIUNGI" onclick="add();refresh()"></td>
+            <td><input type="button" value="ELIMINA" onclick="remove();refresh()"></td> 
         </div>
         
 
@@ -34,6 +39,7 @@
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
         <div>
+            <p><button onclick="listaGenere()">...</button></p>
             <img src="src\main\resources\img\book.png" alt="Book">
             <p>Titolo: </p>
             <p>Autore: </p>
