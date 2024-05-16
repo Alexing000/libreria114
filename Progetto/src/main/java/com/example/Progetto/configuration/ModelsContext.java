@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
+import com.example.Progetto.models.Utente;
 
 @Configuration
 public class ModelsContext {
@@ -56,4 +57,26 @@ public class ModelsContext {
 
         return l;
     }
+
+    //creare bean di tipo Utente
+    @Bean
+    @Scope("prototype")
+    public Utente utente(Map<String, String> map) {
+        Utente u = new Utente();
+        Long id = -1L;
+        if(map.containsKey("id")) {
+            id = Long.parseLong(map.get("id"));
+        }
+        u.setId(id);
+        u.setUsername(map.get("username"));
+        u.setPassword(map.get("password"));
+        u.setNome(map.get("nome"));
+        u.setCognome(map.get("cognome"));
+        u.setEmail(map.get("email"));
+        u.setRuolo(map.get("ruolo"));
+        return u;
+    }
+
+
+
 }
