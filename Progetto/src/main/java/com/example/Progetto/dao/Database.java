@@ -71,6 +71,7 @@ public class Database implements IDatabase{
             ps.setString(i+1, params[i].toString());
         }
         ps.executeUpdate();
+        rs = ps.getGeneratedKeys();
         if(rs.next()){
             id = rs.getLong(1);
         }
