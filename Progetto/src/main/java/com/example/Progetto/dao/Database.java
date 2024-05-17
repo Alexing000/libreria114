@@ -91,7 +91,7 @@ public class Database implements IDatabase{
     }
     @Override
     public Map<Long, Map<String, String>> executeDQL(String query, Object... params) {
-        // TODO Auto-generated method stub
+        
       Map<Long,Map<String,String>> result = new HashMap<>();
       PreparedStatement ps = null;
         ResultSet rs = null;
