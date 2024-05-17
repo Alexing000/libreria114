@@ -29,4 +29,10 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
             return (Libro) x;
         }).toList();
     }
+
+    public Libro findByTitolo(String titolo) {
+        return getDao().readByTitolo(titolo);
+    }
+
+    
 }
