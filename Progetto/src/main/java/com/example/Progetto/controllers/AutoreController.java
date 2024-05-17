@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Progetto.models.Autore;
-import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
-import com.example.Progetto.services.ServiceLibro;
 
 import lombok.Data;
 

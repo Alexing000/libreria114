@@ -45,7 +45,7 @@ public class LibroController {
 
 
     //http://localhost:8080/api/libro/byTitolo?titolo=titolo
-    /*@GetMapping("/byTitolo")
+    @GetMapping("/byTitolo")
     public Libro findByTitolo(@RequestParam(name="titolo", defaultValue = " ")String titolo,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("libro")&&
@@ -56,7 +56,7 @@ public class LibroController {
             
         }
     } 
-
+    /*
     @GetMapping("/byAutore")
     public List<Libro> findByAutore(@RequestParam(name="autore", defaultValue = " ")String autore,
     @RequestHeader("token")String token){
