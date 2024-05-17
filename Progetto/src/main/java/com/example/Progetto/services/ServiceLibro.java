@@ -9,7 +9,7 @@ import com.example.Progetto.dao.DaoLibro;
 import com.example.Progetto.models.Libro;
 
 @Service
-public class LibroService extends GenericService <Long, Libro, DaoLibro>{
+public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
 
     @Override
     public Libro createEntity(Map<String, String> map) {
