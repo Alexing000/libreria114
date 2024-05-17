@@ -1,12 +1,14 @@
 package com.example.Progetto.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Libro;
+
 import lombok.Data;
 
 @Service
@@ -94,4 +96,15 @@ public class DaoLibro implements IDao<Long, Libro>{
         return l;
     }
 
+    public List<Libro> orderByAnno(){
+        String query = "SELECT titolo,autore FROM libro ORDER BY dataPubblicazione desc limit 5";
+        Map<Long, Map<String, String>> libri = database.executeDQL(query);
+        Libro l = null;
+        List<Libro> libriList = null;
+        for (Map<String, String> map : libri.values()) {
+            l = context.getBean(Libro.class, map);
+            libriList.add(l);
+        }
+        return libriList;
+    } 
 }
