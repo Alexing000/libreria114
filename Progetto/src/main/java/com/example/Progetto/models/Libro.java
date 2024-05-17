@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Libro extends Entity{
 
-    private Long id;
     private String titolo;
     private String trama;
     private String autore;
