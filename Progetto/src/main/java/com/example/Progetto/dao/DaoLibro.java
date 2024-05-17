@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import lombok.Data;
 
