@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.services.ServiceAutore;
-
 import lombok.Data;
 
 @Controller
@@ -47,7 +45,7 @@ public class AutoreController {
 
     //http://localhost:8080/api/libro/byTitolo?titolo=titolo
     @GetMapping("/byNome")
-    public Autore findByNomeCognome(@RequestParam(name="nome", defaultValue = " ")String nome,
+    public Autore findByNome(@RequestParam(name="nome", defaultValue = " ")String nome,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("autore")&&
         token.split("-")[1].contains(nome)) {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model; 
 
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceLibro;
@@ -22,14 +23,15 @@ import lombok.Data;
 @Data
 @RequestMapping("/api/libro")
 public class LibroController {
-
     private final ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
-    public ResponseEntity<List<Libro>> all(){
+    public String all(Model model){
+        List<Libro> ris = serviceLibro.findAll();
+        model.addAttribute("libri", ris);
 
-        return ResponseEntity.status(HttpStatus.OK).body(serviceLibro.findAll());
+        return "libriOrderUscita.html";
     }
 
     @GetMapping("/byId")
