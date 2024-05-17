@@ -78,4 +78,16 @@ public class DaoUtente implements IDao<Long, Utente>{
         return u;
     }
 
+    // Metodo per la ricerca del ruolo di un utente tramite password e username
+    public String readByUsernameAndPassword(String username, String password){
+        String query = "SELECT ruolo FROM utente WHERE username = ? AND password = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, username, password);
+        String ruolo = null; // Initialize ruolo with a default value
+        for (Map<String, String> map : ris.values()) {
+            ruolo = map.get("ruolo");
+            return ruolo;
+        }
+        return ruolo;
+    }
+
 }
