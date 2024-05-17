@@ -36,4 +36,9 @@ public class ServiceAutore extends GenericService<Long, Autore, DaoAutore>{
                 .toList();
 
 }
+
+// cercare un autore per nome
+public Autore findByNome(String nome) {
+    return getDao().readByNome(nome);
+}
 }
