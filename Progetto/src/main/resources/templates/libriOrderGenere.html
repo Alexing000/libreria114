@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Progetto\src\main\resources\static\css\homeStyle.css" type="text/css">
-    <title>Nuove Uscite</title>
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <title>Pop-Genre</title>
 </head> 
 <body>
-    <h3>I tuoi Generi Preferiti!</h3>
+    <h3>Il Genere più popolare!</h3>
     
     <table>
         <thead>
@@ -17,19 +17,24 @@
             <th>GENERE</th>
             <TH>DATA PUBBLICAZIONE</TH>
             <TH>RATING</TH>
+            <th>See More</th>
             
         </thead>
         <tbody>
             <tr th:each="libro:${libri}">
-                <td th:src="${libro.url}"></td>
+                <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
                 <td th:text="${libro.titolo}"></td>
                 <td th:text="${libro.autore}"></td>
                 <td th:text="${libro.genere}"></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
+
+               
+
                 
 
-                <td><a href="|/libro-byAnno?libroDataPubb=${libro.dataPubblicazione}|">...</a></td>
+
+                <td><a href="|/libro-byAnno?libroGenere=${libro.genere}|">...</a></td>
             </tr>
         </tbody>
 
