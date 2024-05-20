@@ -28,19 +28,20 @@ public class LibroController {
     private  ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
-    @GetMapping("/all")
+    /*@GetMapping("/all")
     public String all(Model model){
         List<Libro> ris = serviceLibro.findAll();      
+    
+        return "libriOrderUscita.html";
+    }
+*/
     @GetMapping("/recenti")
     public String orderBy(Model model){
         List<Libro> ris = serviceLibro.byAnno();
         model.addAttribute("libri", ris);
-       
-
         return "libriOrderUscita.html";
+       
     }
-
-    
 
     @GetMapping("/byId")
     public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
