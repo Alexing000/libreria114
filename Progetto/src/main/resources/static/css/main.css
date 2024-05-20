@@ -22,6 +22,7 @@ body {
 h1 {
     color: #008080; /* Verde pastello */
     margin-top: 50px; /* Spazio sopra il titolo */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
 }
 
 /* Stile per il form di login */
