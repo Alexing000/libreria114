@@ -3,6 +3,7 @@ package com.example.Progetto.controllers;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,16 +21,19 @@ import com.example.Progetto.services.ServiceLibro;
 import lombok.Data;
 
 @Controller
-@Data
 @RequestMapping("/api/libro")
+@Data
 public class LibroController {
-    private final ServiceLibro serviceLibro;
+    @Autowired
+    private  ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
     public String all(Model model){
         List<Libro> ris = serviceLibro.findAll();
+       
         model.addAttribute("libri", ris);
+       
 
         return "libriOrderUscita.html";
     }
