@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Libro;
+
 import lombok.Data;
 
 @Service
@@ -97,17 +98,23 @@ public class DaoLibro implements IDao<Long, Libro>{
         return l;
     }
 
+
+
      public List<Libro> orderByAnno(){
         String query = "SELECT * FROM libro ORDER BY dataPubblicazione desc";
         Map<Long, Map<String, String>> libri = database.executeDQL(query);
         Libro l = new Libro();
         List<Libro> libriList = new ArrayList<Libro>();
+
         for (Map<String, String> map : libri.values()) {
             l = context.getBean(Libro.class, map);
             libriList.add(l);
         }
 
+
+
         libriList.sort(Comparator.comparing(Libro::getDataPubblicazione).reversed());
         return libriList;
     }
+
 }
