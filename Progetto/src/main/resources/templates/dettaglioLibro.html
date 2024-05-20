@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <title>DettaglioLibro</title>
+</head>
+<body>
+    <!--da aggiungere bottone per arrivare alla pagina-->
+    <table>
+        <thead>
+            <th>Titolo</th>
+            <th>Autore</th>
+            <th>Genere</th>
+            <th>Anno Pubblicazioone</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${libro.titolo}"></td>
+                <td th:text="${libro.autore}"></td>
+                <td th:text="${libro.genere}"></td>
+                <td th:text="${libro.annoPubblicazione}"></td>
+            </tr>
+        </tbody>
+    </table>
+   
+    <h3>Trama</h3>
+    <p th:text="${libro.trama}"></p>
+
+    <h3><a href="/pagina-libri">Torna alla lista</a></h3>
+</body>
+</html>
