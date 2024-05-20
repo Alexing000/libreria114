@@ -53,6 +53,7 @@ public class ModelsContext {
         l.setGenere(map.get("genere"));
         l.setDataPubblicazione(Date.valueOf((map.get("dataPubblicazione"))));
         l.setRating(Double.parseDouble(map.get("rating")));
+        l.setUrl(map.get("url"));
         
 
         return l;
