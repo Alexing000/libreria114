@@ -64,6 +64,35 @@ td img {
     margin: 0 auto; /* Centra l'immagine orizzontalmente */
     border-radius: 5px; /* Bordi leggermente arrotondati */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+
+}
+#Fiveimg  img{
+    width: 100px; /* Larghezza fissa */
+    height: 150px; /* Altezza fissa per mantenere le proporzioni */
+    object-fit: cover; /* Taglia l'immagine per riempire le dimensioni */
+    display: block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    border-radius: 5px; /* Bordi leggermente arrotondati */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+   
+}
+
+#Fiveimg {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 0px 0px;
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color:none; /* Bianco */
+    background-color:none
+ 
+}
+li{
+    list-style-type:  none;
+    display: inline;
+    margin: 0 10px;
+    
 }
 
 /* Stile per il link "Torna alla Home" */
@@ -78,6 +107,7 @@ a {
     font-weight: bold;
     transition: background-color 0.3s ease;
 }
+
 
 /* Stile per il link "Torna alla Home" al passaggio del mouse */
 a:hover {

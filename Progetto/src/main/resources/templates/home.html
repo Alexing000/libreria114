@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
     <title>114 Libri</title>
 </head>
 <body>
@@ -38,24 +38,17 @@
         <div>
             <table>
 
-                <thead>
-                    <th>ULTIME USCITE</th>
-                    
-                    <a href="/api/libro/recenti">...</a>
-                </thead>
+                
                 <tbody>
-                        <tr th:each="libro:${libri}">
-                            <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
-                        <td th:text="${libro.id}"></td>
-                        <td th:text="${libro.titolo}"></td>
-                        <td th:text="${libro.autore}"></td>
-                        <td th:text="${libro.genere}"></td>
-                        <td th:text="${libro.dataPubblicazione}"></td>
-                        <td th:text="${libro.rating}"></td>
-
-                        <td><a href="|/libro-byAnno?libroDataPubb=${libro.dataPubblicazione}|">...</a></td>
-                    </tr>
+                       
+                    <li th:each="libro:${libr}">      
+                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                    </li>
                 </tbody>
+                <div>
+                    <a href="/api/libro/recenti">...</a>
+                </div>
+                
 
             </table>
         </div>
