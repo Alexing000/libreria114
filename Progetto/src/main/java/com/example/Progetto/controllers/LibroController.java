@@ -29,13 +29,13 @@ public class LibroController {
     private  ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
-    /*@GetMapping("/all")
+    @GetMapping("/all")
     public String all(Model model){
         List<Libro> ris = serviceLibro.findAll();      
-    
-        return "libriOrderUscita.html";
+        model.addAttribute("libri", ris);
+        return "archivioCompleto.html";
     }
-*/
+
     @GetMapping("/recenti")
     public String orderBy(Model model){
         List<Libro> ris = serviceLibro.byAnno();

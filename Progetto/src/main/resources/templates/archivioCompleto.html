@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <title>Archivio Completo</title>
+</head> 
+<body>
+    <h3>Archivio Completo</h3>
+    
+    <table>
+        <thead>
+            <TH>COVER</TH>
+            <th>TITOLO</th>
+            <TH>AUTORE</TH>
+            <th>GENERE</th>
+            <TH>DATA PUBBLICAZIONE</TH>
+            <TH>RATING</TH>
+            <th>See More</th>
+            
+        </thead>
+        <tbody>
+            <tr th:each="libro:${libri}">
+                <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
+                <td th:text="${libro.titolo}"></td>
+                <td th:text="${libro.autore}"></td>
+                <td th:text="${libro.genere}"></td>
+                <td th:text="${libro.dataPubblicazione}"></td>
+                <td th:text="${libro.rating}"></td>
+
+               
+
+                
+
+                <td><a href="|/libro-byAnno?idLibro=${libro.id}|">...</a></td>
+            
+            </tr>
+        </tbody>
+
+
+
+
+
+ <!--tabella di visualizzazione lista/modifica libro e cancellazione-->
+
+</table>
+
+<div class="contenuto" id="inserisci">
+    <h4>Aggiungi</h4>
+    <!--Uso la form per permettere l'inserimento di dati da parte dell'utente
+    Se faccio una richiesta inserimento dati
+    e uso il body allora probabilmente sfrutterò il verbo POST
+    questi dati potranno così essere recuperati dal backend e li passiamo al server-->
+    <button id="crea" th:if="${isAdmin}">Aggiungi</button>
+    <form action="/api/libro/add" method="post">
+       
+        <label for="titolo"> Titolo</label>
+        <input type="text" id="titolo" name="titolo" >
+        <br>
+        <label for="autore">Autore</label>
+        <input type="text" id="autore" name="autore">
+        <br>
+        <label for="genere">Genere</label>
+        <input type="text" id="genere" name="genere" >
+        <br>
+        <label for="dataPubblicazione">Data Pubblicazione</label>
+        <input type="date" id="dataPubblicazione" name="dataPubblicazione" >
+        <br>
+        <label for="rating">Rating</label>      
+        <input type="number" id="rating" name="rating" step="0.1" >
+        <br>
+        <label for="url">URL</label>
+        <input type="text" id="url" name="url" >
+        <br>
+
+        <input id="crea" type="submit" value="Aggiungi un nuovo libro">
+     </form>
+     
+    </div>
+    
+
+
+
+    <br><br>
+    <a href="/home">Torna alla Home</a>
+
+    
+</body>
+</html>
