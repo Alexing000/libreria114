@@ -5,22 +5,19 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Progetto.models.Autore;
-import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
-import com.example.Progetto.services.ServiceLibro;
-
 import lombok.Data;
 
-@RestController
+@Controller
 @Data
 @RequestMapping("/api/autore")
 public class AutoreController {
@@ -48,7 +45,7 @@ public class AutoreController {
 
     //http://localhost:8080/api/libro/byTitolo?titolo=titolo
     @GetMapping("/byNome")
-    public Autore findByNomeCognome(@RequestParam(name="nome", defaultValue = " ")String nome,
+    public Autore findByNome(@RequestParam(name="nome", defaultValue = " ")String nome,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("autore")&&
         token.split("-")[1].contains(nome)) {

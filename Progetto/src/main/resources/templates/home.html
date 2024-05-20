@@ -19,7 +19,10 @@
             </button>
         </form>
     </div>
-
+    
+    <form action="/all" method="GET" id="libri-recenti">
+        
+    
     <div id="libri-recenti">
         <h2>Le ultime Uscite!</h2>
         <div>
@@ -31,7 +34,7 @@
                     <th>Genere</th>
                     <th>Release</th>
                     <th>Ratings</th>
-                    <a href="/pagina-recenti">...</a>
+                    <a href="/api/libro/all">...</a>
                 </thead>
                 <tbody>
                     <tr th:each="libro:${libri}">
@@ -51,7 +54,7 @@
         
 
     </div>
-
+</form>
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
         <div>
