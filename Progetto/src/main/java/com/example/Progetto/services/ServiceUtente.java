@@ -21,7 +21,7 @@ public class ServiceUtente{
         private ApplicationContext applicationContext;
     
         public void create(Map<String,String> params) {
-            Utente u = applicationContext.getBean("utente",Utente.class);
+            Utente u = applicationContext.getBean(Utente.class, params);
             daoUtente.create(u);
         }
     
@@ -49,9 +49,15 @@ public class ServiceUtente{
         public Utente readByUsernameAndPassword(String username, String password) {
             Map<String,String> map= daoUtente.autentica(username, password);
             if (map!=null) {
+                System.out.println(map);
                 return applicationContext.getBean(Utente.class,map);
             }
+            
             return null;
     
         }
+
+
+       
+
     }

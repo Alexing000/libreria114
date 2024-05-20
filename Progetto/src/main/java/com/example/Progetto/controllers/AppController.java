@@ -30,7 +30,7 @@ public class AppController {
             System.out.println("loggato");
             return "redirect:formLogin";
         }else{
-            return "main.html";
+            return "home.html";
         }
     }
 
@@ -60,9 +60,9 @@ public class AppController {
 
                 System.out.println(utenteLoggato);
 
-                if (ruolo.equalsIgnoreCase("amministratore")) {
+                if (ruolo.equalsIgnoreCase("admin")) {
                     return "redirect:/home";
-                }else if (ruolo.equalsIgnoreCase("visitatore")){
+                }else if (ruolo.equalsIgnoreCase("user")){
                     return "redirect:/home";
                 }else{
                     session.setAttribute("loggato", null);

@@ -29,7 +29,7 @@ public class UtenteController {
     public String register(Model model) {
         Utente u= applicationContext.getBean("utente", Utente.class);
         model.addAttribute("utente", u);
-        return "signup.html";
+        return "registrazioneUtente.html";
     }
 
     
@@ -53,24 +53,19 @@ public class UtenteController {
         //in questo caso memorizzerò l'utente loggato
         if(serviceUtente.readByUserName(utente.getUsername())){
             model.addAttribute("error", "Username già esistente");
-            return "signup.html";
+            return "registrazioneUtente.html";
         }
         //verifico che la password sia lunga almeno 8 caratteri e non superiore ai 12
         if(utente.getPassword().length() < 8 || utente.getPassword().length() > 12){
             model.addAttribute("error", "Password non valida");
-            return "signup.html";
+            return "registrazioneUtente.html";
         }
-
-
-        
-       
-        
             
         
         //verifico che la password sia uguale a quella di conferma
         if(!utente.getPassword().equals(confermaPassword)){
             model.addAttribute("error", "Password non corrispondenti!");
-            return "signup.html";
+            return "registrazioneUtente.html";
         }
         //se la registrazione va a buon fine
         serviceUtente.create(allParams);
