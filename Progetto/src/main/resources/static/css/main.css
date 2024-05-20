@@ -4,15 +4,9 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f8ff; /* Azzurro pastello */
-    height: 100vh; /* Altezza del viewport */
-    display: flex;
-    justify-content: center; /* Allinea il contenuto a sinistra */
-    align-items: center; /* Centra verticalmente il contenuto */
-    overflow: hidden; /* Evita lo scroll della pagina */
-    position: relative; /* Posizionamento relativo per il contenuto */
+    text-align: center; /* Centra il contenuto orizzontalmente */
 }
 
-/* Stile per il video di sfondo */
 #background-video {
     position: absolute;
     top: 50%;
@@ -27,27 +21,18 @@ body {
 /* Stile per l'intestazione */
 h1 {
     color: #008080; /* Verde pastello */
-    margin-bottom: 20px; /* Spazio sotto il titolo */
-    text-align: left; /* Allinea il testo a sinistra */
-}
-
-/* Stile per il contenuto */
-.container {
-    display: flex;
-    align-items: center; /* Centra verticalmente il contenuto */
-    height: 100vh; /* Altezza del viewport */
+    margin-top: 50px; /* Spazio sopra il titolo */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
 }
 
 /* Stile per il form di login */
 form {
     width: 300px; /* Larghezza del form */
+    margin: 0 auto; /* Centra il form orizzontalmente */
     background-color: #b3e0ff; /* Azzurro pastello */
     padding: 20px; /* Spaziatura interna del form */
     border-radius: 10px; /* Bordi arrotondati */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* Stile per le etichette dei campi di input */
@@ -55,23 +40,21 @@ label {
     display: block; /* Visualizza le etichette come blocchi separati */
     color: #005959; /* Verde scuro */
     margin-bottom: 5px; /* Spazio sotto l'etichetta */
-    text-align: center;
 }
 
 /* Stile per i campi di input */
 input[type="text"],
 input[type="password"] {
-    width: 100%; /* Larghezza completa */
+    width: calc(100% - 20px); /* Larghezza completa meno il padding */
     padding: 10px; /* Spaziatura interna */
     margin: 10px 0; /* Spaziatura esterna */
     border: 1px solid #ccc; /* Bordo sottile */
     border-radius: 5px; /* Bordi arrotondati */
-    text-align: center; /* Testo centrato */
 }
 
 /* Stile per il pulsante di login */
 button[type="submit"] {
-    width: 100%; /* Larghezza completa */
+    width: calc(100% - 20px); /* Larghezza completa meno il padding */
     padding: 10px; /* Spaziatura interna */
     margin: 10px 0; /* Spaziatura esterna */
     background-color: #008080; /* Verde pastello */
@@ -90,7 +73,7 @@ button[type="submit"]:hover {
 /* Stile per il link di registrazione */
 form[action="/signup"] input[type="submit"] {
     display: block; /* Visualizza il pulsante di registrazione come blocco separato */
-    width: 100%; /* Larghezza completa */
+    width: calc(100% - 20px); /* Larghezza completa meno il padding */
     padding: 10px; /* Spaziatura interna */
     margin: 10px 0; /* Spaziatura esterna */
     background-color: #008080; /* Verde pastello */
@@ -99,7 +82,6 @@ form[action="/signup"] input[type="submit"] {
     border-radius: 5px; /* Bordi arrotondati */
     cursor: pointer; /* Cambia il cursore al passaggio sopra il pulsante */
     transition: background-color 0.3s ease; /* Effetto di transizione per il cambio di colore */
-    text-align: center;
 }
 
 /* Stile per il link di registrazione al passaggio del mouse */
