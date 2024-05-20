@@ -20,7 +20,7 @@ body {
 
 /* Stile per l'intestazione */
 h1 {
-    color: #008080; /* Verde pastello */
+    color: #ffffff; /* Verde pastello */
     margin-top: 50px; /* Spazio sopra il titolo */
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
 }
