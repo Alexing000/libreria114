@@ -38,5 +38,9 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
         return getDao().orderByAnno();
     }
 
+    public List<Libro> byGenere() {
+        return getDao().orderByGenere();
+    }
+
     
 }

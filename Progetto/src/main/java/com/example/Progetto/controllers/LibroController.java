@@ -43,6 +43,15 @@ public class LibroController {
        
     }
 
+
+    @GetMapping("/genere")
+    public String orderByGenere(Model model){
+        List<Libro> ris = serviceLibro.byGenere();
+        model.addAttribute("libri", ris);
+        return "libriOrderUscita.html";
+       
+    }
+
     @GetMapping("/byId")
     public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
     @RequestHeader("token")String token){
