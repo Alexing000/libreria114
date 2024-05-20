@@ -28,7 +28,7 @@ public class LibroController {
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
     public String all(Model model){
-        List<Libro> ris = serviceLibro.findAll();
+        List<Libro> ris = serviceLibro.byAnno();
         model.addAttribute("libri", ris);
 
         return "libriOrderUscita.html";
