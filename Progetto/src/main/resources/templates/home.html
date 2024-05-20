@@ -7,6 +7,10 @@
     <title>114 Libri</title>
 </head>
 <body>
+    <video autoplay muted loop id="background-video">
+        <source src="https://videos.pexels.com/video-files/4814489/4814489-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Il tuo browser non supporta il tag video.
+    </video>
     <h1>114 Libri</h1>
     <p>Benvenuto su 114 Libri!</p>
     <h4 th:text="${actualUser}"></h4>
@@ -24,20 +28,18 @@
         
     
     <div id="libri-recenti">
-        <h2>Le ultime Uscite!</h2>
+        
         <div>
-                        <table>
+            <table>
+
                 <thead>
-                    <th>ID</th>
-                    <th>Titolo</th>
-                    <th>Autore</th>
-                    <th>Genere</th>
-                    <th>Release</th>
-                    <th>Ratings</th>
+                    <th>ULTIME USCITE</th>
+                    
                     <a href="/api/libro/recenti">...</a>
                 </thead>
                 <tbody>
-                    <tr th:each="libro:${libri}">
+                        <tr th:each="libro:${libri}">
+                            <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
                         <td th:text="${libro.id}"></td>
                         <td th:text="${libro.titolo}"></td>
                         <td th:text="${libro.autore}"></td>
@@ -54,16 +56,13 @@
         
 
     </div>
+    <br>
+    <br>
 </form>
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
         <div>
             <a href="/pagina-genere">...</a>
-            <img src="src\main\resources\img\book.png" alt="Book">
-            <p>Titolo: </p>
-            <p>Autore: </p>
-            <p>Genere: </p>
-            <p>Anno: </p>
         </div>
     
     
