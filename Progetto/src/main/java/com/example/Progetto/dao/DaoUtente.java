@@ -89,6 +89,24 @@ public class DaoUtente implements IDao<Long, Utente>{
         }
         return ruolo;
     }
+    // NUOVI METODI AGGIUNTI
+
+    public boolean userExists(String username){
+        String query = "select * from utenti where username = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, username);
+        return ris.size() > 0;
+    }
+
+
+
+    public Map<String, String> autentica(String username, String password) {
+        String query = "SELECT * FROM utente WHERE username = ? AND password = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, username, password);
+        if (ris.size() == 0) {
+            return null;
+        }
+        return ris.get(0);
+    }
 
 
 }

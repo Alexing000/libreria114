@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styleFormLogin.css" type="text/css">
+        <title>Form Login</title>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <br>
+        <form action="/login" method="post">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Username">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Password">
+            </div>
+            <button type="submit" value="Login" id="login">Login</button>
+            <div th:if="${error}" class="error-messagge">
+                <p th:text="${error}"></p>
+            </div>
+             <!-- Add this closing tag -->
+            <br><br>
+        </form>
+        <form action="/formRegistrazione" method="get">
+            <input type="submit" value="Registrazione">
+        </form>
+    </body>
+</html>
