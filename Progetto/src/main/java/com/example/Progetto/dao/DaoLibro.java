@@ -1,5 +1,7 @@
 package com.example.Progetto.dao;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,15 +98,23 @@ public class DaoLibro implements IDao<Long, Libro>{
         return l;
     }
 
-    public List<Libro> orderByAnno(){
-        String query = "SELECT titolo,autore FROM libro ORDER BY dataPubblicazione desc limit 5";
+
+
+     public List<Libro> orderByAnno(){
+        String query = "SELECT * FROM libro ORDER BY dataPubblicazione desc";
         Map<Long, Map<String, String>> libri = database.executeDQL(query);
-        Libro l = null;
-        List<Libro> libriList = null;
+        Libro l = new Libro();
+        List<Libro> libriList = new ArrayList<Libro>();
+
         for (Map<String, String> map : libri.values()) {
             l = context.getBean(Libro.class, map);
             libriList.add(l);
         }
+
+
+
+        libriList.sort(Comparator.comparing(Libro::getDataPubblicazione).reversed());
         return libriList;
-    } 
+    }
+
 }
