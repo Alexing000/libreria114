@@ -27,7 +27,12 @@
                 <td th:text="${libro.genere}"></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
+
+               <!--<td th:src="${libro.url}"></td>
+                <td><img src="${libro.url}" alt="Book Cover"></td>-->
+=======
                 
+
 
                 <td><a href="|/libro-byAnno?libroDataPubb=${libro.dataPubblicazione}|">...</a></td>
             </tr>
