@@ -1,0 +1,89 @@
+/* Reset del margine e del padding per il corpo del documento */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Azzurro pastello */
+}
+
+/* Intestazione */
+header {
+    background-color: #d1e9e9; /* Verde pastello */
+    padding: 20px;
+    text-align: center;
+}
+
+/* Titolo */
+h1 {
+    font-size: 36px;
+    color: #008080; /* Verde pastello */
+    margin: 0;
+}
+
+/* Sottotitolo */
+h2 {
+    font-size: 24px;
+    color: #005959; /* Verde scuro */
+    margin: 5px 0 20px;
+}
+
+/* Tabella */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff; /* Bianco */
+    margin: 20px auto;
+    border: 2px solid #d1e9e9; /* Verde pastello */
+}
+
+/* Intestazione della tabella */
+thead {
+    background-color: #b3cccc; /* Azzurro pastello */
+}
+
+/* Celle dell'intestazione della tabella */
+thead th {
+    padding: 15px;
+    text-align: left;
+    color: #005959; /* Verde scuro */
+    font-size: 18px;
+}
+
+/* Righe della tabella */
+tbody tr {
+    border-bottom: 1px solid #d1e9e9; /* Verde pastello */
+}
+
+/* Celle del corpo della tabella */
+tbody td {
+    padding: 15px;
+    font-size: 16px;
+    color: #005959; /* Verde scuro */
+}
+
+/* Immagine di copertina */
+td img {
+    width: 100px; /* Larghezza fissa */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
+    display: block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    border-radius: 10px; /* Bordi arrotondati */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+/* Link "Torna alla Home" */
+a {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff; /* Bianco */
+    background-color: #008080; /* Verde pastello */
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #005959; /* Verde scuro */
+}

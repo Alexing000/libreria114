@@ -22,7 +22,7 @@ public class DaoUtente implements IDao<Long, Utente>{
     private ApplicationContext context;
 
     public Long create(Utente e) {
-        String query = "INSERT INTO utente username, password, nome, cognome, email, ruolo VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utente (username, password, nome, cognome, email, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
         Long id = null;
         id = database.executeDML(query, 
                 e.getUsername(),
@@ -92,7 +92,7 @@ public class DaoUtente implements IDao<Long, Utente>{
     // NUOVI METODI AGGIUNTI
 
     public boolean userExists(String username){
-        String query = "select * from utenti where username = ?";
+        String query = "select * from utente where username = ?";
         Map<Long, Map<String, String>> ris = database.executeDQL(query, username);
         return ris.size() > 0;
     }
