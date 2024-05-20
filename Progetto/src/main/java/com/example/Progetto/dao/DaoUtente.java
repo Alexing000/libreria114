@@ -21,9 +21,10 @@ public class DaoUtente implements IDao<Long, Utente>{
     @Autowired
     private ApplicationContext context;
 
+
     public Long create(Utente e) {
         String query = "INSERT INTO utente (username, password, nome, cognome, email, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
-        Long id = null;
+        Long id = 0L;
         id = database.executeDML(query, 
                 e.getUsername(),
                 e.getPassword(),
@@ -99,13 +100,17 @@ public class DaoUtente implements IDao<Long, Utente>{
 
 
 
-    public Map<String, String> autentica(String username, String password) {
+    public Map<String,String> autentica(String username, String password) {
         String query = "SELECT * FROM utente WHERE username = ? AND password = ?";
         Map<Long, Map<String, String>> ris = database.executeDQL(query, username, password);
+         
         if (ris.size() == 0) {
             return null;
         }
-        return ris.get(0);
+        Map<String, String> firstValue = ris.values().iterator().next();
+        System.out.println(firstValue);
+        return firstValue;
+
     }
 
 

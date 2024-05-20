@@ -57,13 +57,13 @@ public class Database implements IDatabase{
     public Connection getConnection(){
         return connection;
     }
+
+    
     @Override
     public Long executeDML(String query, Object... params) {
-      
         Long id=1L;
         PreparedStatement ps=null;
         ResultSet rs=null;
-     
     try{
         ps = connection.prepareStatement(query);
         for(int i=0;i<params.length;i++){
@@ -88,6 +88,8 @@ public class Database implements IDatabase{
     return id;
 
     }
+
+
     @Override
     public Map<Long, Map<String, String>> executeDQL(String query, Object... params) {
         

@@ -60,10 +60,6 @@ public class UtenteController {
             model.addAttribute("error", "Password non valida");
             return "registrazioneUtente.html";
         }
-
-
-        
-       
             
         
         //verifico che la password sia uguale a quella di conferma
