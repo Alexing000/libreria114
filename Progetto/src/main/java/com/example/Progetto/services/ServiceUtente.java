@@ -37,7 +37,7 @@ public class ServiceUtente extends GenericService<Long, Utente, DaoUtente>{
     @Override
     public Utente createEntity(Map<String, String> map) {
         Utente l = getContext().getBean(Utente.class, map);
-        System.out.println("Utente creato");
+
         return l;
        
     }
