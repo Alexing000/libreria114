@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <script th:inline="javascript">
+        var list = /*[[${libri}]]*/ [];
+       </script>
+    <script src="/js/libri.js"></script>
+ 
     <title>114 Libri</title>
 </head>
 <body>
@@ -23,16 +28,16 @@
     <a href="/logout">Logout</a>
     <div class="search-container">
         <form action="/search" method="GET" id="search-form">
+
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
+            <div id="ris-ricerca" ></div>
+      
             <button id="search-button" type="submit">
                 search
             </button>
         </form>
     </div>
-    
-    <form action="/all" method="GET" id="libri-recenti">
-        
-    
+
     <div id="libri-recenti">
         
         <div>
@@ -41,7 +46,7 @@
                 
                 <tbody>
                        
-                    <li th:each="libro:${libr}">      
+                    <li id="listina" th:each="libro:${libr}">      
                         <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
                     </li>
                 </tbody>
@@ -57,7 +62,6 @@
     </div>
     <br>
     <br>
-</form>
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
         <div>
@@ -66,4 +70,62 @@
     
     
 </body>
+
+<script>
+    const input = document.getElementById('search-input');
+    input.addEventListener("keyup",autocomp);
+    const search = document.getElementById('ris-ricerca');
+
+
+    function autocomplete(valore){
+      if(valore.length === 0){
+        return [];
+      }
+
+      //const reg=new RegExp(valore.toLowerCase());
+      var valoreLower=valore.toLowerCase();
+      var controllo=false;
+      
+      return list.filter((libro) => {
+
+for(var i=0;i<valoreLower.length;i++)
+{
+        if(libro.titolo.toLowerCase().charAt(i)===valoreLower.charAt(i) )
+        {
+          
+            controllo=true;
+        }else{
+            controllo=false;
+            break;
+        }
+    }
+ 
+if(controllo===true)
+        return libro.titolo
+      }
+    )
+
+}
+  
+  function autocomp(input){
+   
+    
+    let consigliati= "";
+    const titoli= autocomplete(input.target.value);
+titoli.forEach((titolo) => {
+  consigliati += `<li  onclick="seleziona(event)">${titolo.titolo}</li>`;
+  console.log(consigliati);
+    
+  })
+  search.innerHTML = `<ul>${consigliati}</ul>`;
+ 
+
+}
+function seleziona(event){
+  search.innerHTML = "";
+  input.value = event.target.textContent;
+  
+}
+</script>
+
 </html>

@@ -14,3 +14,7 @@ fetch('/api/libro/byTitolo')
     });
   })
   .catch(error => console.error('Errore durante il recupero dei dati:', error));
+
+    
+
+  
