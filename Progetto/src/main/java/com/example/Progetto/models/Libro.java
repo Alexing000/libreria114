@@ -16,5 +16,6 @@ public class Libro extends Entity{
     private String genere;
     private Date dataPubblicazione;
     private double rating;
+    private String url;
     
 }

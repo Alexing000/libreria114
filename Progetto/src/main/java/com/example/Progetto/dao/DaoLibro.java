@@ -24,7 +24,7 @@ public class DaoLibro implements IDao<Long, Libro>{
 
     @Override
     public Long create(Libro e) {
-        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating, url) VALUES (?, ?, ?, ?, ?, ?, ,?)";
         Long id = null;
         if (e != null && e instanceof Libro){
             id = database.executeDML(query,
@@ -35,6 +35,7 @@ public class DaoLibro implements IDao<Long, Libro>{
             ((Libro)e).getGenere(),
             String.valueOf(((Libro)e).getDataPubblicazione()),
             String.valueOf(((Libro)e).getRating()));
+            ((Libro)e).getUrl();
        }
        return id;
     }
@@ -64,6 +65,7 @@ public class DaoLibro implements IDao<Long, Libro>{
             e.getGenere(),
             String.valueOf(e.getDataPubblicazione()),
             String.valueOf(e.getRating()),
+            String.valueOf(e.getUrl()),
             String.valueOf(e.getId()));
             
 

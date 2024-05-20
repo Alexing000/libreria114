@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="C:\Users\simon\Documents\GitHub\libreria114\Progetto\src\main\resources\templates\libriOrderUscita.html" type="text/css">
+    <link rel="stylesheet" href="Progetto\src\main\resources\static\css\homeStyle.css" type="text/css">
     <title>Nuove Uscite</title>
 </head> 
 <body>
-    <h3>Le Nuove Uscite!</h3>
+    <h3>I tuoi Generi Preferiti!</h3>
     
     <table>
         <thead>
@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr th:each="libro:${libri}">
-                <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
+                <td th:src="${libro.url}"></td>
                 <td th:text="${libro.titolo}"></td>
                 <td th:text="${libro.autore}"></td>
                 <td th:text="${libro.genere}"></td>
