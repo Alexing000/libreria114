@@ -1,6 +1,7 @@
 package com.example.Progetto.dao;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Libro;
+
 import lombok.Data;
 
 @Service
@@ -22,7 +24,7 @@ public class DaoLibro implements IDao<Long, Libro>{
 
     @Override
     public Long create(Libro e) {
-        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating, url) VALUES (?, ?, ?, ?, ?, ?, ,?)";
         Long id = null;
         if (e != null && e instanceof Libro){
             id = database.executeDML(query,
@@ -33,6 +35,7 @@ public class DaoLibro implements IDao<Long, Libro>{
             ((Libro)e).getGenere(),
             String.valueOf(((Libro)e).getDataPubblicazione()),
             String.valueOf(((Libro)e).getRating()));
+            ((Libro)e).getUrl();
        }
        return id;
     }
@@ -62,6 +65,7 @@ public class DaoLibro implements IDao<Long, Libro>{
             e.getGenere(),
             String.valueOf(e.getDataPubblicazione()),
             String.valueOf(e.getRating()),
+            String.valueOf(e.getUrl()),
             String.valueOf(e.getId()));
             
 
@@ -96,15 +100,23 @@ public class DaoLibro implements IDao<Long, Libro>{
         return l;
     }
 
+
+
      public List<Libro> orderByAnno(){
-        String query = "SELECT titolo,autore FROM libro ORDER BY dataPubblicazione desc limit 5";
+        String query = "SELECT * FROM libro ORDER BY dataPubblicazione desc";
         Map<Long, Map<String, String>> libri = database.executeDQL(query);
-        Libro l = null;
+        Libro l = new Libro();
         List<Libro> libriList = new ArrayList<Libro>();
+
         for (Map<String, String> map : libri.values()) {
             l = context.getBean(Libro.class, map);
             libriList.add(l);
         }
+
+
+
+        libriList.sort(Comparator.comparing(Libro::getDataPubblicazione).reversed());
         return libriList;
     }
+
 }
