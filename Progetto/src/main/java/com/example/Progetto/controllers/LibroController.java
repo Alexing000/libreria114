@@ -73,6 +73,20 @@ public class LibroController {
             
         }
     } 
+    @PostMapping("/search")
+    public String search(@RequestBody String titolo,Model model){
+        String titoloOk=titolo.substring(6,titolo.length());
+        if(titoloOk.contains("+"))
+            titoloOk=titoloOk.replace("+"," ");
+        Libro l = serviceLibro.findByTitolo(titoloOk);
+        if (l==null) {
+            model.addAttribute("error", "err ");
+            return "paginaErrore.html";
+
+        }
+        model.addAttribute("libri", l);
+        return "archivioCompleto.html";
+    }
     /*
     @GetMapping("/byAutore")
     public List<Libro> findByAutore(@RequestParam(name="autore", defaultValue = " ")String autore,
