@@ -135,7 +135,6 @@ a:hover {
     background-color: #005959; /* Verde scuro */
 }
 
-
 #background-video {
     position: absolute;
     top: 50%;
@@ -146,7 +145,6 @@ a:hover {
     transform: translate(-50%, -50%);
     z-index: -100; /* Assicura che il video sia sotto il contenuto */
 }
-
 #ris-ricerca li {
     list-style-type: none;
     display: inline-block;
@@ -164,4 +162,3 @@ a:hover {
 #ris-ricerca li:hover {
     background-color: #e6e6e6; 
 }
-
