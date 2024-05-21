@@ -79,7 +79,7 @@ public class LibroController {
             return null;
             
         }
-    } 
+    } */
     @PostMapping("/search")
     public String search(@RequestBody String titolo,Model model){
         String titoloOk=titolo.substring(6,titolo.length());
