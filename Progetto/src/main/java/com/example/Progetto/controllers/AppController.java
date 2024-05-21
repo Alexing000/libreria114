@@ -38,6 +38,7 @@ public class AppController {
         }else{
 
             List<Libro> ris = serviceLibro.byAnno();
+            model.addAttribute("libri", ris);
     List<Libro> ris2 = new ArrayList<Libro>();
     for (int i = 0; i < 5; i++) {
         ris2.add(ris.get(i));
