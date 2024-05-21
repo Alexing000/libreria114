@@ -3,47 +3,22 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f8ff; /* Azzurro pastello */
+    background-color: #ffeddb; /* Arancione chiaro */
     text-align: center; /* Centra il contenuto orizzontalmente */
 }
 
 /* Stile per l'intestazione */
 h3 {
-    color: #008080; /* Verde pastello */
+    color: #f95d6a; /* Rosso corallo */
     margin-top: 50px; /* Spazio sopra il titolo */
 }
 
-#Fiveimg{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 50px;
-    margin-right: 50px;
-    float: right;
-    color: #005959 /* Verde pastello */
-   
-
-
-}
-
-
-#logout{
-    background-color: #008080;
-    margin-top: 50px;
-    margin-right: 50px;
-    float: right;
-    color: #ffffff; /* Verde pastello */
-   
-
-}
-
-#Archivio{
-    background-color: #008080;
-    margin-top: 50px;
-    margin-right: 50px;
-    float: left;
-    color: #ffffff; /* Verde pastello */
-   
-
+#search-container {
+    margin: 20px auto;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -60,33 +35,33 @@ table {
 
 /* Intestazione della tabella */
 thead {
-    background-color: #b3e0ff; /* Azzurro pastello */
+    background-color: #ffe4cc; /* Azzurro pastello */
 }
 
 /* Celle dell'intestazione della tabella */
 thead th {
     padding: 15px;
     text-align: center;
-    color: #005959; /* Verde scuro */
+    color: #f95d6a; /* Rosso corallo */
     font-size: 18px;
 }
 
 /* Righe della tabella */
 tbody tr {
-    border-bottom: 1px solid #d1e9e9; /* Verde pastello */
+    border-bottom: 1px solid #ffc4a6;
     transition: background-color 0.3s ease; /* Transizione per l'effetto hover */
 }
 
 /* Effetto hover sulle righe della tabella */
 tbody tr:hover {
-    background-color: #e6f7ff; /* Azzurro chiarissimo */
+    background-color: #ffe4cc;  /* Azzurro chiarissimo */
 }
 
 /* Celle del corpo della tabella */
 tbody td {
-    padding: 15px;
+    padding: 2px;
     font-size: 16px;
-    color: #005959; /* Verde scuro */
+    color: #f95d6a; /* Rosso corallo */
 }
 
 /* Stile per le immagini di copertina */
@@ -111,7 +86,16 @@ td img {
    
 }
 
-#Fiveimg {
+
+li{
+    list-style-type:  none;
+    display: inline;
+    margin: 0 10px;
+    
+}
+
+#libri-recenti{
+    background-color: #e9dfd1;
     display: inline-block;
     margin: 10px auto;
     padding: 0px 0px;
@@ -122,22 +106,50 @@ td img {
     background-color:none
  
 }
-li{
-    list-style-type:  none;
-    display: inline;
-    margin: 0 10px;
-   
-    
-}
 
+#libri-consigliati{
+    background-color: #e9dfd1;
+    display: inline-block;
+    margin: 5px;
+    padding: 0px 0px;
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color:none; /* Bianco */
+    background-color:none
+ 
+}
 /* Stile per il link "Torna alla Home" */
 a {
     display: inline-block;
     margin: 20px auto;
-    padding: 10px 20px;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #008080; /* Verde pastello */
+    
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#Archivio{
+    display: inline-block;
+    margin: 20px auto;
+    text-decoration: none;
+    color: #fff; /* Bianco */
+    background-color: #f95d6a; /* Rosso corallo */
+    padding: 10px 20px; /* Spaziatura interna */
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+
+#logout{
+    display: inline-block;
+    margin: 20px auto;
+    text-decoration: none;
+    color: #fff; /* Bianco */
+    background-color: #f95d6a; /* Rosso corallo */
+    padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
     transition: background-color 0.3s ease;
@@ -146,11 +158,11 @@ a {
 
 /* Stile per il link "Torna alla Home" al passaggio del mouse */
 a:hover {
-    background-color: #005959; /* Verde scuro */
+    background-color: #ff7e82; /* Rosso chiaro */
 }
 
 #background-video {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     width: 100%;
@@ -176,3 +188,32 @@ a:hover {
 #ris-ricerca li:hover {
     background-color: #e6e6e6; 
 }
+
+
+/* Stile per la barra di ricerca */
+#search-input {
+    width: 600px; /* Imposta la larghezza desiderata */
+    height: 20px;
+    padding: 10px;
+    border: 1px solid #f95d6a; /* Rosso corallo */
+    border-radius: 5px;
+    font-size: 16px;
+    transition: width 0.4s ease-in-out;
+}
+
+/* Stile per il pulsante di ricerca */
+#search-button {
+    padding: 10px 20px;
+    background-color: #f95d6a; /* Rosso corallo */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Stile per il pulsante di ricerca al passaggio del mouse */
+#search-button:hover {
+    background-color: #ff7e82; 
+}
+
