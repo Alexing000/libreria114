@@ -23,12 +23,12 @@
     <h4 th:text="${actualUser}"></h4>
     <a href="/logout">Logout</a>
     <div class="search-container">
-        <form action="/search" method="GET" id="search-form">
+        <form action="/api/libro/search" method="post" id="search-form">
 
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
             <div id="ris-ricerca" ></div>
       
-            <button id="search-button" type="submit">
+            <button id="search-button" type="submit" href="">
                 search
             </button>
         </form>
