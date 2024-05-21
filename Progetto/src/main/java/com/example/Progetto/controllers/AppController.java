@@ -29,7 +29,7 @@ public class AppController {
 
     //la view è la pagina html
     //per indicare il percorso della pagina html
-    @GetMapping("/home")
+    @GetMapping("/homeUtente")
     public String home(HttpSession session,Model model){
         if (session.getAttribute("loggato")==null) {
             System.out.println(session.getAttribute("utente"));
@@ -44,7 +44,7 @@ public class AppController {
         ris2.add(ris.get(i));
     }
     model.addAttribute("libr", ris2);
-            return "home.html";
+            return "homeUtente.html";
         }
     }
 
@@ -75,9 +75,9 @@ public class AppController {
                 System.out.println(utenteLoggato);
 
                 if (ruolo.equalsIgnoreCase("admin")) {
-                    return "redirect:/home";
+                    return "redirect:/homeUtente";
                 }else if (ruolo.equalsIgnoreCase("user")){
-                    return "redirect:/home";
+                    return "redirect:/homeUtente";
                 }else{
                     session.setAttribute("loggato", null);
                     return "redirect:/home";
@@ -99,6 +99,11 @@ public class AppController {
     @GetMapping("/error")
     public String error() {
         return "mainError.html";
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home.html";
     }
     
 
