@@ -217,3 +217,15 @@ a:hover {
     background-color: #ff7e82; 
 }
 
+#inserisci{
+    display: inline-block;
+    margin: 20px auto;
+    text-decoration: none;
+    color: #fff; /* Bianco */
+    background-color: #f95d6a; /* Rosso corallo */
+    padding: 10px 20px; /* Spaziatura interna */
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
