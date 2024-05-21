@@ -12,13 +12,27 @@ h3 {
     color: #008080; /* Verde pastello */
     margin-top: 50px; /* Spazio sopra il titolo */
 }
+
+#Fiveimg{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 50px;
+    margin-right: 50px;
+    float: right;
+    color: #005959 /* Verde pastello */
+   
+
+
+}
+
+
 #logout{
     background-color: #008080;
     margin-top: 50px;
     margin-right: 50px;
     float: right;
     color: #ffffff; /* Verde pastello */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
+   
 
 }
 
@@ -28,7 +42,7 @@ h3 {
     margin-right: 50px;
     float: left;
     color: #ffffff; /* Verde pastello */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
+   
 
 }
 
