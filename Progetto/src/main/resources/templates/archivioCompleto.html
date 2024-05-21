@@ -24,8 +24,13 @@
             <tr th:each="libro:${libri}">
                 <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
                 <td th:text="${libro.titolo}"></td>
-                <td th:text="${libro.autore}"></td>
-                <td th:text="${libro.genere}"></td>
+
+          <!--aggingere collegamento a endpoint /homeUtente-->
+
+            
+          <td><a  style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
+     
+          <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
 

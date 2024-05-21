@@ -36,7 +36,6 @@ public class AppController {
             System.out.println("loggato");
             return "redirect:formLogin";
         }else{
-
             List<Libro> ris = serviceLibro.byAnno();
             model.addAttribute("libri", ris);
     List<Libro> ris2 = new ArrayList<Libro>();

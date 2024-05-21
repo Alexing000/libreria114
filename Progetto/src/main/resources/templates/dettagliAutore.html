@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dettagli Autore</title>
+    <style>
+        /* Add your custom CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Dettagli Autore</h1>
+
+    
+    <!-- Add your content here --><table>
+        <thead>
+            <TH>NOME</TH>
+            <th>COGNOME</th>
+            <TH>RATING</TH>
+        
+            
+        </thead>
+        <tbody>
+            <tr th:each="autori:${autore}">
+
+
+                <td th:text="${autori.nome}"></td>
+                <td th:text="${autori.cognome}"></td>
+                <td th:text="${autori.rating}"></td>
+            
+            </tr>
+        </tbody>
+
+
+
+
+
+ <!--tabella di visualizzazione lista/modifica libro e cancellazione-->
+
+</table>
+</body>
+</html>

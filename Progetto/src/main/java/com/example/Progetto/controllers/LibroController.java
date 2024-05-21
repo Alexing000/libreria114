@@ -52,6 +52,15 @@ public class LibroController {
         return "libriOrderGenere.html";
        
     }
+    @GetMapping("/byGenere")
+    public String orderByGenere(@RequestParam(name="genere",defaultValue = "") String genere,Model model){
+        List<Libro> ris = serviceLibro.findByGenere(genere);
+  
+        model.addAttribute("libri", ris);
+        return "libriOrderGenere.html";
+       
+    }
+
 
 
 

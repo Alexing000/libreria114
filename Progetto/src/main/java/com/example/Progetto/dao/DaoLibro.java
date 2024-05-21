@@ -119,7 +119,17 @@ public class DaoLibro implements IDao<Long, Libro>{
         return libriList;
     }
 
-
+public List<Libro> readByGenere(String genere) {
+        String query = "SELECT * FROM libro WHERE genere = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, genere);
+        Libro l = null;
+        List<Libro> libriList = new ArrayList<Libro>();
+        for (Map<String, String> map : ris.values()) {
+            l = context.getBean(Libro.class, map);
+            libriList.add(l);
+        }
+        return libriList;
+    }
 
     public List<Libro> orderByGenere(){
         String query = "SELECT * FROM libro WHERE genere = (SELECT genere FROM libro GROUP BY genere ORDER BY COUNT(*) DESC LIMIT 1);";
