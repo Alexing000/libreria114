@@ -23,7 +23,6 @@
         <img src="https://i.ibb.co/wM8h3cP/bookwarm.png" alt="bookwarm"></a>
     </h2>
     <p>La tua libreria digitale</p>
-    <h4 th:text="${actualUser}"></h4>
     <a href="/formLogin" id ="logout">Login</a>
     <a href="/api/libro/all" id="Archivio" >Archivio Completo</a>
     
@@ -59,7 +58,6 @@
                         <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
                     </li>
                 </tbody>
-                
 
             </table>
         </div>
@@ -70,20 +68,30 @@
 </form>
 
     <br>
-    <br>
-
-    <div id="libri-consigliati">
-        <h2>Libri Consigliati</h2>
-        <div>
+    <form action="/genere" method="GET" id="libri-popolari">
+        
+    
+        <div id="libri-popolari">
+            <h2>I più Popolari</h2> <a href="/api/libro/genere">...</a>
+            <div>
+                <table>
+    
+                    
+                    <tbody>
+                           
+                        <li id="listina" th:each="libro:${libri3}">      
+                            <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                        </li>
+                    </tbody>
+                    
+    
+                </table>
+            </div>
             
-            <li th:each="libro:${libr}">      
-                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
-            </li>
-            
+    
         </div>
-        <div>
-            <a href="/api/libro/genere">...</a>
-        </div>
+    
+    </form>
 
         
     

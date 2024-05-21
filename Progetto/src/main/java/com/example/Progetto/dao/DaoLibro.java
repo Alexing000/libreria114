@@ -34,8 +34,8 @@ public class DaoLibro implements IDao<Long, Libro>{
             String.valueOf(((Libro)e).getNPagine()),
             ((Libro)e).getGenere(),
             String.valueOf(((Libro)e).getDataPubblicazione()),
-            String.valueOf(((Libro)e).getRating()));
-            ((Libro)e).getUrl();
+            String.valueOf(((Libro)e).getRating()),
+            ((Libro)e).getUrl());
        }
        return id;
     }
