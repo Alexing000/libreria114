@@ -82,7 +82,7 @@ public class AutoreController {
         if (spaceIndex != -1) {
             nome = nome.substring(spaceIndex + 1);
         }
-        System.out.println(nome);
+       
        
        
        

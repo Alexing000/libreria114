@@ -5,18 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-
+import com.example.Progetto.dao.DaoLibro;
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.models.Utente;
 
 @Configuration
 public class ModelsContext {
-    
+    @Autowired
+    private DaoLibro daoLibro;
 
     @Bean
     @Scope("prototype")
@@ -75,6 +77,7 @@ public class ModelsContext {
         u.setCognome(map.get("cognome"));
         u.setEmail(map.get("email"));
         u.setRuolo(map.get("ruolo"));
+        u.setLibri(daoLibro.readByUtente(id));
         return u;
     }
 

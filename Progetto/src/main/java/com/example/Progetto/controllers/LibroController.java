@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model; 
 
 import com.example.Progetto.models.Libro;
+import com.example.Progetto.models.Utente;
 import com.example.Progetto.services.ServiceLibro;
+import com.example.Progetto.services.ServiceUtente;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
 
@@ -28,10 +31,13 @@ public class LibroController {
     @Autowired
     private  ServiceLibro serviceLibro;
 
+
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
     public String all(Model model){
-        List<Libro> ris = serviceLibro.findAll();      
+     List<Libro> ris = serviceLibro.findAll();      
+  
+
         model.addAttribute("libri", ris);
         return "archivioCompleto.html";
     }
@@ -58,7 +64,7 @@ public class LibroController {
         List<Libro> ris = serviceLibro.findByGenere(genere);
   
         model.addAttribute("libri", ris);
-        return "libriOrderGenere.html";
+        return "archivioCompleto.html";
        
     }
 
@@ -75,6 +81,43 @@ public class LibroController {
             return null;
             
         }
+    }
+    @GetMapping("/libriUtente")
+    public String libriUtente(Model model, HttpSession session){
+        Long idUtente = (Long) session.getAttribute("idUtente");
+        List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
+    System.out.println(idUtente);
+        model.addAttribute("libri", ris);
+        return "libriUtente.html";
+    }
+
+    @GetMapping("/aggiungiLibro")
+    public String aggiungiLibro(Model model,HttpSession session,@RequestParam(name="idLibro", defaultValue = "0") Long id){
+        Long idUtente = (Long) session.getAttribute("idUtente");
+        List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
+        for(Libro l:ris){
+            if(l.getId()==id){
+                model.addAttribute("error", "Libro già presente");
+                return "mainError.html";
+            }
+        }
+        serviceLibro.associaLU(id, idUtente);
+        //libro in base all'id
+        Libro l = serviceLibro.findById(id);
+        model.addAttribute("inserito", "Libro inserito!!");
+        model.addAttribute("libri", l);
+       return "libroInserito.html";
+     
+     
+    
+       
+    }
+    @GetMapping("/eliminaDaLista")
+    public String eliminaDaLista(Model model,HttpSession session,@RequestParam(name="idLibro", defaultValue = "0") Long id){
+        Long idUtente = (Long) session.getAttribute("idUtente");
+     
+        serviceLibro.dissociaLU(id, idUtente);
+       return "redirect:/api/libro/libriUtente";
     }
 
 

@@ -77,6 +77,14 @@ public class DaoLibro implements IDao<Long, Libro>{
         String query = "DELETE FROM libro WHERE id = ?";
         database.executeDML(query, String.valueOf(id));
     }
+    public void aLibroUtente(Long idLibro, Long idUtente) {
+        String query = "INSERT INTO associa (id_libro, id_utente) VALUES (?, ?)";
+        database.executeDML(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    }
+    public void dLibroUtente(Long idLibro, Long idUtente) {
+        String query = "DELETE FROM associa WHERE id_libro = ? AND id_utente = ?";
+        database.executeDML(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    }
 
     @Override
     public Libro readById(Long id) {
@@ -145,5 +153,19 @@ public List<Libro> readByGenere(String genere) {
         libriList.sort(Comparator.comparing(Libro::getGenere));
         return libriList;
     }
+
+    public List<Libro> readByUtente(Long id)
+    {
+       String query=" select l.* from libro as l join associa as a on a.id_libro=l.id join utente as u on a.id_utente=u.id where u.id=?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(id));
+        Libro l = null;
+        List<Libro> libriList = new ArrayList<Libro>();
+        for (Map<String, String> map : ris.values()) {
+            l = context.getBean(Libro.class, map);
+            libriList.add(l);
+        }
+        return libriList;
+    }
+
 
 }

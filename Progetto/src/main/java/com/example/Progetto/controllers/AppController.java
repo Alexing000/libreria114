@@ -32,8 +32,8 @@ public class AppController {
     @GetMapping("/homeUtente")
     public String home(HttpSession session,Model model){
         if (session.getAttribute("loggato")==null) {
-            System.out.println(session.getAttribute("utente"));
-            System.out.println("loggato");
+     
+
             return "redirect:formLogin";
         }else{
             List<Libro> ris = serviceLibro.byAnno();
@@ -89,14 +89,16 @@ public class AppController {
             else{
                 session.setAttribute("loggato", "ok");
                 session.setAttribute("utente", utenteLoggato);
+                session.setAttribute("idUtente", utenteLoggato.getId());
                 //verifico il ruolo dell'utente
                 String ruolo= utenteLoggato.getRuolo();
 
-                System.out.println(utenteLoggato);
 
                 if (ruolo.equalsIgnoreCase("admin")) {
+                    session.setAttribute("ruolo", "admin");
                     return "redirect:/homeUtente";
                 }else if (ruolo.equalsIgnoreCase("user")){
+                    session.setAttribute("ruolo", "user");
                     return "redirect:/homeUtente";
                 }else{
                     session.setAttribute("loggato", null);
