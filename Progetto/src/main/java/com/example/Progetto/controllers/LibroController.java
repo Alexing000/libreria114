@@ -68,7 +68,7 @@ public class LibroController {
     }
 
 
-    //http://localhost:8080/api/libro/byTitolo?titolo=titolo
+    /* //http://localhost:8080/api/libro/byTitolo?titolo=titolo
     /*@GetMapping("/byTitolo")
     public Libro findByTitolo(@RequestParam(name="titolo", defaultValue = " ")String titolo,
     @RequestHeader("token")String token){
@@ -79,7 +79,7 @@ public class LibroController {
             return null;
             
         }
-    } 
+    } */
     @PostMapping("/search")
     public String search(@RequestBody String titolo,Model model){
         String titoloOk=titolo.substring(6,titolo.length());
