@@ -20,6 +20,7 @@ import com.example.Progetto.services.ServiceLibro;
 
 import lombok.Data;
 
+
 @Controller
 @RequestMapping("/api/libro")
 @Data
@@ -121,11 +122,8 @@ public class LibroController {
     }*/
 
     @PostMapping("/add")
-    public ResponseEntity<Libro> add(@RequestBody Map<String, String> map){
-        
+    public ResponseEntity<Libro> add(@RequestBody Map<String,String> map){
         Libro l = serviceLibro.insert(map);
         return ResponseEntity.status(HttpStatus.CREATED).body(l);
-
     }
-    
 }

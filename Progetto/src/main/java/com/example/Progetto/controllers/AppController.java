@@ -38,12 +38,33 @@ public class AppController {
         }else{
 
             List<Libro> ris = serviceLibro.byAnno();
+            
             model.addAttribute("libri", ris);
-    List<Libro> ris2 = new ArrayList<Libro>();
-    for (int i = 0; i < 5; i++) {
-        ris2.add(ris.get(i));
-    }
-    model.addAttribute("libr", ris2);
+           
+            List<Libro> ris2 = new ArrayList<Libro>();
+            
+            for (int i = 0; i < 5; i++) {
+                ris2.add(ris.get(i));
+                
+            }
+            int appoggio = 0;
+
+            List<Libro> ris3 = serviceLibro.byGenere();
+            model.addAttribute("libri2", ris3);
+            List<Libro> ris4 = new ArrayList<Libro>();
+            if (ris3.size() > 5) {
+                appoggio = 5;
+            } else {
+                appoggio = ris3.size();
+            }
+            
+            for (int i = 0; i < appoggio; i++) {
+                ris4.add(ris3.get(i));
+            }
+
+            model.addAttribute("libr", ris2);
+
+            model.addAttribute("librG", ris4);
             return "homeUtente.html";
         }
     }
