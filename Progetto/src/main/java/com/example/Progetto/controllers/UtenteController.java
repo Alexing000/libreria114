@@ -29,6 +29,7 @@ public class UtenteController {
     public String register(Model model) {
         Utente u= applicationContext.getBean("utente", Utente.class);
         model.addAttribute("utente", u);
+      
         return "registrazioneUtente.html";
     }
 

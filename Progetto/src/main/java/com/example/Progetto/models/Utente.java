@@ -1,5 +1,7 @@
 package com.example.Progetto.models;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,5 +14,6 @@ public class Utente extends Entity{
     private String cognome;
     private String email;
     private String ruolo;
+    private List    <Libro> libri;
 
 }

@@ -29,7 +29,12 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
             return (Libro) x;
         }).toList();
     }
-
+    public void associaLU(Long idLibro, Long idUtente) {
+         getDao().aLibroUtente(idLibro, idUtente);
+    }
+    public void dissociaLU(Long idLibro, Long idUtente) {
+        getDao().dLibroUtente(idLibro, idUtente);
+    }
     public Libro findByTitolo(String titolo) {
         return getDao().readByTitolo(titolo);
     }
@@ -45,5 +50,8 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
         return getDao().orderByGenere();
     }
 
+    public List<Libro> readByIdUtente(Long id) {
+        return getDao().readByUtente(id);
+    }
     
 }
