@@ -33,6 +33,9 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
     public Libro findByTitolo(String titolo) {
         return getDao().readByTitolo(titolo);
     }
+    public List<Libro> findByGenere(String genere) {
+        return getDao().readByGenere(genere);
+    }
 
     public List<Libro> byAnno() {
         return getDao().orderByAnno();
