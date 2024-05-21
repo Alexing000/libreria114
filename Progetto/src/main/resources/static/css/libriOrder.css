@@ -12,6 +12,26 @@ h3 {
     color: #008080; /* Verde pastello */
     margin-top: 50px; /* Spazio sopra il titolo */
 }
+#logout{
+    background-color: #008080;
+    margin-top: 50px;
+    margin-right: 50px;
+    float: right;
+    color: #ffffff; /* Verde pastello */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
+
+}
+
+#Archivio{
+    background-color: #008080;
+    margin-top: 50px;
+    margin-right: 50px;
+    float: left;
+    color: #ffffff; /* Verde pastello */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
+
+}
+
 
 /* Stile per la tabella */
 table {
@@ -114,6 +134,19 @@ a {
 a:hover {
     background-color: #005959; /* Verde scuro */
 }
+
+
+#background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene le proporzioni e copre tutta la pagina */
+    transform: translate(-50%, -50%);
+    z-index: -100; /* Assicura che il video sia sotto il contenuto */
+}
+
 #ris-ricerca li {
     list-style-type: none;
     display: inline-block;
@@ -131,3 +164,4 @@ a:hover {
 #ris-ricerca li:hover {
     background-color: #e6e6e6; 
 }
+

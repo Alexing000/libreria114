@@ -21,7 +21,9 @@
     <h1>114 Libri</h1>
     <p>Benvenuto su 114 Libri!</p>
     <h4 th:text="${actualUser}"></h4>
-    <a href="/logout">Logout</a>
+    <a href="/logout" id ="logout">Logout</a>
+    <a href="/api/libro/all" id="Archivio" >Archivio Completo</a>
+    <br>
     <div class="search-container">
         <form action="/api/libro/search" method="post" id="search-form">
 
@@ -43,7 +45,7 @@
         
     
     <div id="libri-recenti">
-        
+        <h2>Ultime Uscite</h2>
         <div>
             <table>
 
@@ -64,15 +66,26 @@
         
 
     </div>
+
+</form>
+
     <br>
     <br>
+
     <div id="libri-consigliati">
         <h2>Libri Consigliati</h2>
+        <div>
+            
+            <li th:each="libro:${libr}">      
+                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+            </li>
+            
+        </div>
         <div>
             <a href="/api/libro/genere">...</a>
         </div>
 
-        <a href="/api/libro/all" >Archivio Completo</a>
+        
     
     
 </body>

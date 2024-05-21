@@ -1,6 +1,5 @@
 package com.example.Progetto.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,9 +39,17 @@ public class LibroController {
     public String orderBy(Model model){
         List<Libro> ris = serviceLibro.byAnno();
   
-    
         model.addAttribute("libri", ris);
         return "libriOrderUscita.html";
+       
+    }
+
+    @GetMapping("/genere")
+    public String orderByGenere(Model model){
+        List<Libro> ris = serviceLibro.byGenere();
+  
+        model.addAttribute("libri", ris);
+        return "libriOrderGenere.html";
        
     }
 
@@ -62,7 +69,7 @@ public class LibroController {
 
 
     //http://localhost:8080/api/libro/byTitolo?titolo=titolo
-    @GetMapping("/byTitolo")
+    /*@GetMapping("/byTitolo")
     public Libro findByTitolo(@RequestParam(name="titolo", defaultValue = " ")String titolo,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("libro")&&
@@ -98,15 +105,15 @@ public class LibroController {
             return null;
             
         }
-    }
+    }*/
 
 
-    @GetMapping("/byGenere")
+    /*@GetMapping("/byGenere")
     public List<Libro> findByGenere(@RequestParam(name="genere", defaultValue = " ")String genere,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("libro")&&
         token.split("-")[1].contains(genere)) {
-            return serviceLibro.findByGenere(genere);
+            return serviceLibro.byGenere(genere);
         } else {
             return null;
             
