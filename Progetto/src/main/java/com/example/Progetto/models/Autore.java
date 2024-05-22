@@ -13,6 +13,7 @@ public class Autore extends Entity {
     private String cognome;
     private String biografia;
     private double rating;
+    private String url;
     private List<Libro> libri;
 
     
