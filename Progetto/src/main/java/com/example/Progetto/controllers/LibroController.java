@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model; 
 
 import com.example.Progetto.models.Libro;
-import com.example.Progetto.models.Utente;
 import com.example.Progetto.services.ServiceLibro;
-import com.example.Progetto.services.ServiceUtente;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
