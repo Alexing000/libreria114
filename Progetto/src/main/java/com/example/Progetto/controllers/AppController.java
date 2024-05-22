@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.models.Utente;
+import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
 import com.example.Progetto.services.ServiceUtente;
 
@@ -25,6 +27,8 @@ public class AppController {
     private ServiceUtente serviceUtente;
        @Autowired
     private  ServiceLibro serviceLibro;
+    @Autowired
+    private ServiceAutore serviceAutore;
 
 
     //la view è la pagina html
@@ -37,8 +41,10 @@ public class AppController {
             return "redirect:formLogin";
         }else{
             List<Libro> ris = serviceLibro.byAnno();
+List<Autore > autori = serviceAutore.findAll();
             
             model.addAttribute("libri", ris);
+            model.addAttribute("autori", autori);
            
             List<Libro> ris2 = new ArrayList<Libro>();
             

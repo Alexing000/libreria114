@@ -3,6 +3,7 @@ package com.example.Progetto.controllers;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,19 @@ import lombok.Data;
 @Data
 @RequestMapping("/api/autore")
 public class AutoreController {
-
-     private final ServiceAutore serviceAutore;
+@Autowired
+     private  ServiceAutore serviceAutore;
 
     //htpps://localhost:8080/libro/all
-    @GetMapping("/all")
+    @GetMapping("/alll")
     public ResponseEntity<List<Autore>> all(){
         return ResponseEntity.status(HttpStatus.OK).body(serviceAutore.findAll());
+    }
+    @GetMapping("/all")
+    public String all(Model model){
+        List<Autore> autori = serviceAutore.findAll();
+        model.addAttribute("autore", autori);
+        return "archivioAutori.html";
     }
 
     @GetMapping("/byId")

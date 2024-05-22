@@ -38,6 +38,10 @@ public class ServiceAutore extends GenericService<Long, Autore, DaoAutore>{
 }
 
 // cercare un autore per nome
+public Autore findByCognome(String cognome) {
+    return getDao().readByCognome(cognome);
+}
+//cercare autore per nome
 public Autore findByNome(String nome) {
     return getDao().readByNome(nome);
 }

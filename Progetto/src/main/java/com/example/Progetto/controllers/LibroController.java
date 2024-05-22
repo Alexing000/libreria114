@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model; 
+import org.springframework.ui.Model;
 
+import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.models.Utente;
+import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
 import com.example.Progetto.services.ServiceUtente;
 
@@ -30,6 +32,8 @@ import lombok.Data;
 public class LibroController {
     @Autowired
     private  ServiceLibro serviceLibro;
+    @Autowired
+    private ServiceAutore serviceAutore;
 
 
     //htpps://localhost:8080/libro/all
@@ -135,17 +139,25 @@ public class LibroController {
     } */
     @PostMapping("/search")
     public String search(@RequestBody String titolo,Model model){
+        System.out.println(titolo);
         String titoloOk=titolo.substring(6,titolo.length());
-        if(titoloOk.contains("+"))
+        if(titoloOk.contains("+") )
             titoloOk=titoloOk.replace("+"," ");
+
+            if(titoloOk.contains("%27") )
+            titoloOk=titoloOk.replace("%27","'");
         Libro l = serviceLibro.findByTitolo(titoloOk);
+        Autore a = serviceAutore.findByCognome(titoloOk);
         if (l==null) {
-            model.addAttribute("error", "err ");
-            return "paginaErrore.html";
+       model.addAttribute("autore", a);
+        return "dettagliAutore.html";
+        } else {
+            model.addAttribute("libri", l);
+            return "archivioCompleto.html";
 
         }
-        model.addAttribute("libri", l);
-        return "archivioCompleto.html";
+    
+
     }
     /*
     @GetMapping("/byAutore")
