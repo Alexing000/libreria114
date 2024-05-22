@@ -31,6 +31,7 @@ public class ModelsContext {
         a.setId(id);
         a.setNome(map.get("nome"));
         a.setCognome(map.get("cognome"));
+        a.setBiografia(map.get("biografia"));
         a.setRating(Double.parseDouble(map.get("rating")));
         List<Libro> libri = new ArrayList<>();
         a.setLibri(libri);

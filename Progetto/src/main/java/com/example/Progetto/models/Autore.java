@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 public class Autore extends Entity {
     private String nome;
     private String cognome;
+    private String biografia;
     private double rating;
     private List<Libro> libri;
 
