@@ -93,11 +93,19 @@ public class LibroController {
     public String aggiungiLibro(Model model,HttpSession session,@RequestParam(name="idLibro", defaultValue = "0") Long id){
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
+
+        boolean libroPresente = false;
+
         for(Libro l:ris){
-            if(l.getId()==id){
-                model.addAttribute("error", "Libro già presente");
-                return "mainError.html";
+            if(l.getId().equals(id)){
+                libroPresente = true;
+                break;
             }
+        }
+         // Se il libro è già presente, mostra un messaggio di errore
+        if(libroPresente){
+            model.addAttribute("error", "Libro già presente nella tua lista!");
+            return "mainError.html";
         }
         serviceLibro.associaLU(id, idUtente);
         //libro in base all'id
