@@ -53,5 +53,8 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
     public List<Libro> readByIdUtente(Long id) {
         return getDao().readByUtente(id);
     }
+    public List<Libro> readByAutore(Long id) {
+        return getDao().readLibriAutore(id);
+    }
     
 }
