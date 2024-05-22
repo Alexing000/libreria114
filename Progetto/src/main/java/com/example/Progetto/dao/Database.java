@@ -65,10 +65,12 @@ public class Database implements IDatabase{
         PreparedStatement ps=null;
         ResultSet rs=null;
     try{
-        ps = connection.prepareStatement(query);
+        String[] parametri ={"id"};
+        ps = connection.prepareStatement(query,parametri);
         for(int i=0;i<params.length;i++){
             ps.setString(i+1, params[i].toString());
         }
+        System.out.println(ps.toString());
         ps.executeUpdate();
         rs = ps.getGeneratedKeys();
         if(rs.next()){

@@ -3,31 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/home.css" type="text/css">
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
     <title>DettaglioLibro</title>
 </head>
 <body>
     <!--da aggiungere bottone per arrivare alla pagina-->
     <table>
         <thead>
-            <th>Titolo</th>
-            <th>Autore</th>
-            <th>Genere</th>
-            <th>Anno Pubblicazioone</th>
+            <TH>COVER</TH>
+            <th>TITOLO</th>
+            <th>TRAMA</th>
+            <th>PAGINE</th>
+           
         </thead>
         <tbody>
-            <tr>
-                <td th:text="${libro.titolo}"></td>
-                <td><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
-                <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
-                <td th:text="${libro.annoPubblicazione}"></td>
+            <td th:src="${libri.url}"><img th:src="${libri.url}" alt="Copertina"></td>
+            <td th:text="${libri.titolo}"></td>
+                <td th:text="${libri.trama}"></td>
+                <td th:text="${libri.nPagine}"></td>
+        
+        </tbody>
+    </table>
+    <h3>Recensioni</h3>
+    <table class="table table-striped">
+        <tbody>
+            <tr th:each="recensione:${recensioni}" th:if="${!#strings.isEmpty(recensione.recensione)}">
+                <td th:text="${recensione.username}"></td>
+                <td id="recensione" th:if="${session.username}== ${recensione.username}">
+                    <span class="short-text" th:text="${recensione.recensione}"></span>
+                    <span class="ellipsis" style="cursor:pointer;">...</span>
+                    <span class="full-text" style="display:none; cursor:pointer;" th:text="${recensione.recensione}"></span>
+                </td>
             </tr>
         </tbody>
     </table>
-   
-    <h3>Trama</h3>
-    <p th:text="${libro.trama}"></p>
+  
 
     <h3><a href="/pagina-libri">Torna alla lista</a></h3>
 </body>
+<script>
+    window.onload = function() {
+        var td = document.getElementById('recensione');
+        var shortText = td.getElementsByClassName('short-text')[0];
+        var fullText = td.getElementsByClassName('full-text')[0];
+        var ellipsis = td.getElementsByClassName('ellipsis')[0];
+    
+        var words = shortText.innerText.split(' ');
+    
+        if (words.length > 50) {
+            shortText.innerText = words.slice(0, 50).join(' ') + ' ';
+        } else {
+            ellipsis.style.display = 'none';
+        }
+    
+        ellipsis.onclick = function() {
+            shortText.style.display = 'none';
+            ellipsis.style.display = 'none';
+            fullText.style.display = 'inline';
+        }
+    
+        fullText.onclick = function() {
+            shortText.style.display = 'inline';
+            ellipsis.style.display = 'inline';
+            fullText.style.display = 'none';
+        }
+    }
+    </script>
 </html>

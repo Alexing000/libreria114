@@ -1,6 +1,5 @@
 package com.example.Progetto.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Progetto.models.Autore;
-import com.example.Progetto.models.Libro;
+
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
 

@@ -178,5 +178,25 @@ public List<Libro> readByGenere(String genere) {
         }
         return libri;
     }
+//cercare recensione per ogni libro
+public List<Map<String,String>> readRecensione(Long id) {
+    String query =" select u.id,u.username ,a.recensione from libro as l join associa as a on a.id_libro=l.id join utente as u on a.id_utente=u.id where l.id=?;";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(id));
+    List<Map<String,String>> libriList = new ArrayList<Map<String,String>>();
+    for (Map<String, String> map : ris.values()) {
+        libriList.add(map);
+    }
+    
 
+    return libriList;
+   
+}
+//aggiungere recensione ad un libro in base all'utente in sessione
+public void addRecensione(Long idLibro, Long idUtente, String recensione) {
+    String query = "update associa set recensione=? where id_libro=? and id_utente=?";
+    System.out.println("id libror: "+idLibro+" id utenter: "+idUtente+" recensioner: "+recensione);
+   
+    database.executeDML(query, recensione, String.valueOf(idLibro), String.valueOf(idUtente));
+    System.out.println(query);
+}
 }

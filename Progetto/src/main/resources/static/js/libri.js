@@ -33,6 +33,15 @@ fetch('/api/libro/byTitolo')
   })
   .catch(error => console.error('Errore durante il recupero dei dati:', error));
 
+
+  function aggiungiRec(oggetto){
+   
+    document.getElementById('form-aggiungiRecensione').style.display = 'block';
+
+
+
+
+  }
     
 
   

@@ -17,10 +17,9 @@ import org.springframework.ui.Model;
 
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
-import com.example.Progetto.models.Utente;
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
-import com.example.Progetto.services.ServiceUtente;
+
 
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
@@ -46,6 +45,14 @@ public class LibroController {
         return "archivioCompleto.html";
     }
 
+    @GetMapping("dettagliLibro")
+    public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
+        Libro l = serviceLibro.findById(id);
+        List<Map<String,String>> ris =   serviceLibro.readRecensioni(id);
+        model.addAttribute("recensioni", ris);
+        model.addAttribute("libri", l);
+        return "dettaglioLibro.html";
+    }
     @GetMapping("/recenti")
     public String orderBy(Model model){
         List<Libro> ris = serviceLibro.byAnno();
@@ -72,8 +79,29 @@ public class LibroController {
        
     }
 
+//aggiungere recensione ad un libro in base all'utente in sessione
+
+@PostMapping("/aggiungiRecensione")
+public String aggiungiRecensione(@RequestParam Map<String,String> params,Model model,HttpSession session){
 
 
+    
+    Long idUtente = (Long) session.getAttribute("idUtente");
+   
+    serviceLibro.aggiungiRecensione(params, idUtente);
+ 
+    //ritorna alla pagina dei libriutenti
+    return "redirect:/api/libro/libriUtente";
+
+}
+
+    @GetMapping("/byAutore")
+    public String orderByAutore(@RequestParam(name="idAutore", defaultValue = "0") Long id,Model model){
+        List<Libro> ris = serviceLibro.readByAutore(id);
+  
+        model.addAttribute("libri", ris);
+        return "archivioCompleto.html";
+}
 
     @GetMapping("/byId")
     public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
@@ -90,7 +118,7 @@ public class LibroController {
     public String libriUtente(Model model, HttpSession session){
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
-    System.out.println(idUtente);
+ 
         model.addAttribute("libri", ris);
         return "libriUtente.html";
     }

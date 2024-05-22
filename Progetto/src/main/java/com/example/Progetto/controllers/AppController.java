@@ -88,6 +88,7 @@ List<Autore > autori = serviceAutore.findAll();
         Model model,
         HttpSession session){
             Utente utenteLoggato= serviceUtente.readByUsernameAndPassword(username, password);
+        
             if (utenteLoggato==null) {
                 model.addAttribute("error", "Credenziali non valide");
                 return "formLogin.html";
@@ -96,6 +97,8 @@ List<Autore > autori = serviceAutore.findAll();
                 session.setAttribute("loggato", "ok");
                 session.setAttribute("utente", utenteLoggato);
                 session.setAttribute("idUtente", utenteLoggato.getId());
+                //nome utente in sessione
+                session.setAttribute("username", utenteLoggato.getUsername());
                 //verifico il ruolo dell'utente
                 String ruolo= utenteLoggato.getRuolo();
 

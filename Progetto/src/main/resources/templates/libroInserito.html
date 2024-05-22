@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <script src="js/libri.js"></script>
     <title>Libro Inserito</title>
 </head>
 <body>
@@ -27,8 +28,7 @@
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
 
-
-                <td><a href="|/libro-byAnno?idLibro=${libro.id}|">...</a></td>
+                <td><a  th:href="|/api/libro/dettagliLibro?idLibro=${libro.id}|">...</a></td>
             
             
             </tr>
