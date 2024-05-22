@@ -1,6 +1,5 @@
 package com.example.Progetto.configuration;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class ModelsContext {
         l.setAutore(map.get("autore"));
         l.setNPagine(Integer.parseInt(map.get("nPagine")));
         l.setGenere(map.get("genere"));
-        l.setDataPubblicazione(Date.valueOf((map.get("dataPubblicazione"))));
+        l.setDataPubblicazione(Integer.parseInt(map.get("dataPubblicazione")));
         l.setRating(Double.parseDouble(map.get("rating")));
         l.setUrl(map.get("url"));
         
