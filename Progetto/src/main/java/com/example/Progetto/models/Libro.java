@@ -1,7 +1,5 @@
 package com.example.Progetto.models;
 
-import java.sql.Date;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +12,7 @@ public class Libro extends Entity{
     private String autore;
     private int nPagine;
     private String genere;
-    private Date dataPubblicazione;
+    private int dataPubblicazione;
     private double rating;
     private String url;
     
