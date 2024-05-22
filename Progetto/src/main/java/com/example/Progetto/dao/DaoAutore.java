@@ -1,12 +1,15 @@
 package com.example.Progetto.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Autore;
+import com.example.Progetto.models.Libro;
 
 import lombok.Data;
 
@@ -99,6 +102,8 @@ public class DaoAutore implements IDao<Long, Autore>{
         }
         return a;
     }
+
+
 
 
     

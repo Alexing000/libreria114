@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.example.Progetto.dao.DaoAutore;
 import com.example.Progetto.dao.DaoLibro;
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
@@ -18,6 +19,8 @@ import com.example.Progetto.models.Utente;
 public class ModelsContext {
     @Autowired
     private DaoLibro daoLibro;
+    @Autowired
+    private DaoAutore daoAutore;
 
     @Bean
     @Scope("prototype")
@@ -32,9 +35,8 @@ public class ModelsContext {
         a.setCognome(map.get("cognome"));
         a.setBiografia(map.get("biografia"));
         a.setRating(Double.parseDouble(map.get("rating")));
-        a.setUrl(map.get("url"));
-        List<Libro> libri = new ArrayList<>();
-        a.setLibri(libri);
+        a.setUrl(map.get("url_autore"));
+        a.setLibri(daoLibro.readLibriAutore(id));
         return a;
 
     }
