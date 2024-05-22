@@ -49,7 +49,30 @@ public class LibroController {
     public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
         Libro l = serviceLibro.findById(id);
         List<Map<String,String>> ris =   serviceLibro.readRecensioni(id);
+       //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
+       for(Map<String,String> m:ris){
+           if(m.get("recensione")!=null){
+               model.addAttribute("avereRec", "true");
+               System.out.println(m.get("recensione"));
+               
+              
+               break;
+           }
+           else
+           {
+            System.out.println(m.get("recensione"));
+                model.addAttribute("avereRec", "false");
+                break;
+           }
+        }
+       
+
+       //id del libro
+        model.addAttribute("idLibro", id);
+       
+      
         model.addAttribute("recensioni", ris);
+  
         model.addAttribute("libri", l);
         return "dettaglioLibro.html";
     }
@@ -87,11 +110,11 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
 
     
     Long idUtente = (Long) session.getAttribute("idUtente");
-   
     serviceLibro.aggiungiRecensione(params, idUtente);
- 
+    //ottieni l'id del da params
+    Long id = Long.parseLong(params.get("id"));
     //ritorna alla pagina dei libriutenti
-    return "redirect:/api/libro/libriUtente";
+    return "redirect:/api/libro/dettagliLibro?idLibro="+id;
 
 }
 
