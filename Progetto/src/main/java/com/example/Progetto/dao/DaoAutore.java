@@ -1,12 +1,15 @@
 package com.example.Progetto.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Autore;
+import com.example.Progetto.models.Libro;
 
 import lombok.Data;
 
@@ -70,6 +73,15 @@ public class DaoAutore implements IDao<Long, Autore>{
     }
 
     //cercare un autore per nome 
+    public Autore readByCognome(String cognome) {
+        String query = "SELECT * FROM autore WHERE cognome = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, cognome);
+        Autore a = null;
+        for (Map<String, String> map : ris.values()) {
+            a = context.getBean(Autore.class, map);
+        }
+        return a;
+    }
     public Autore readByNome(String nome) {
         String query = "SELECT * FROM autore WHERE nome = ?";
         Map<Long, Map<String, String>> ris = database.executeDQL(query, nome);
@@ -90,6 +102,8 @@ public class DaoAutore implements IDao<Long, Autore>{
         }
         return a;
     }
+
+
 
 
     

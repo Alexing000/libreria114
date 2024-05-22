@@ -166,6 +166,17 @@ public List<Libro> readByGenere(String genere) {
         }
         return libriList;
     }
-
+    //cercare i libri di un autore
+    public List<Libro> readLibriAutore(Long id) {
+        String query = " select l.* from autore as a join libro as l on l.id_autore=a.id where a.id=?;";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(id));
+        Libro l = null;
+        List<Libro> libri = new ArrayList<>();
+        for (Map<String, String> map : ris.values()) {
+            l = context.getBean(Libro.class, map);
+            libri.add(l);
+        }
+        return libri;
+    }
 
 }

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dettagli Autore</title>
+    <title>Archivio Autori</title>
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
 </head>
 <body>
-    <h1>Dettagli Autore</h1>
-
-    
-    <!-- Add your content here --><table>
+    <h1>Archivio Autori</h1>
+    <table>
         <thead>
             <TH>COVER</TH>
             <TH>NOME</TH>
@@ -16,8 +14,6 @@
             <th>BIOGRAFIA</th>
             <TH>RATING</TH>
             <th>Lista libri</th>
-       
-        
             
         </thead>
         <tbody>
@@ -28,16 +24,20 @@
                 <td th:text="${autori.cognome}"></td>
                 <td th:text="${autori.biografia}"></td>
                 <td th:text="${autori.rating}"></td>
+                <td>
+                    <div th:each="libro : ${autori.libri}">
+                        <span th:text="${libro.titolo}"></span><br>&nbsp;
+                    </div>
+                </td>
                   
             </tr>
         </tbody>
 
+        
 
-
-
-
- <!--tabella di visualizzazione lista/modifica libro e cancellazione-->
 
 </table>
+    
+    <script src="script.js"></script>
 </body>
 </html>
