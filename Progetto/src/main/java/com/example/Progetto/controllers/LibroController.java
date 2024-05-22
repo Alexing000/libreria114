@@ -76,21 +76,24 @@ public class LibroController {
 
 
     @GetMapping("/byId")
-    public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
-    @RequestHeader("token")String token){
-        if (token.split("-")[0].equals("libro")&&
-        Long.parseLong(token.split("-")[1])==id) {
-            return serviceLibro.findById(id);
-        } else {
-            return null;
-            
-        }
+    public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
+    Model model){
+       Libro l= serviceLibro.findById(id);
+       if(id==null){
+        model.addAttribute("error", "id non valido!");
+        return "mainError.html";
+       }
+       model.addAttribute("libro", l);
+         return "dettaglioLibro.html";
     }
+
+
+
     @GetMapping("/libriUtente")
-    public String libriUtente(Model model, HttpSession session){
+    public String libriUtente(Model model, HttpSession session) {
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
-    System.out.println(idUtente);
+        System.out.println(idUtente);
         model.addAttribute("libri", ris);
         return "libriUtente.html";
     }
