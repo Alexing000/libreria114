@@ -21,8 +21,8 @@ public class DaoAutore implements IDao<Long, Autore>{
     //creare un autore
     @Override
     public Long create(Autore e) {
-       String query = "INSERT INTO autore (nome, cognome, rating) VALUES (?, ?, ?)";
-       Long id= database.executeDML(query, e.getNome(), e.getCognome(), String.valueOf(e.getRating()));   
+       String query = "INSERT INTO autore (nome, cognome, biografia, rating) VALUES (?, ?, ?, ?)";
+       Long id= database.executeDML(query, e.getNome(), e.getCognome(), e.getBiografia(), String.valueOf(e.getRating()));   
     return id;
     }
     
