@@ -1,5 +1,6 @@
 package com.example.Progetto.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Progetto.models.Autore;
+import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
+import com.example.Progetto.services.ServiceLibro;
 
 import lombok.Data;
 
@@ -26,6 +29,8 @@ import lombok.Data;
 public class AutoreController {
 @Autowired
      private  ServiceAutore serviceAutore;
+     @Autowired
+     private ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
     @GetMapping("/alll")
@@ -35,6 +40,14 @@ public class AutoreController {
     @GetMapping("/all")
     public String all(Model model){
         List<Autore> autori = serviceAutore.findAll();
+   
+        for (Autore autore : autori) {
+           serviceLibro.readByAutore(autore.getId());
+
+
+            
+        }
+       System.out.println(autori);
         model.addAttribute("autore", autori);
         return "archivioAutori.html";
     }
@@ -62,7 +75,7 @@ public class AutoreController {
  
         Autore a = serviceAutore.findByNome( nomeCognome(nomeC));
          model.addAttribute("autore", a);
-        return  "dettagliAutore.html";
+        return  "archivioAutori.html";
     }
 
 

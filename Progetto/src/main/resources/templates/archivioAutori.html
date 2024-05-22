@@ -24,6 +24,11 @@
                 <td th:text="${autori.cognome}"></td>
                 <td th:text="${autori.biografia}"></td>
                 <td th:text="${autori.rating}"></td>
+                <td>
+                    <div th:each="libro : ${autori.libri}">
+                        <span th:text="${libro.titolo}"></span><br>&nbsp;
+                    </div>
+                </td>
                   
             </tr>
         </tbody>

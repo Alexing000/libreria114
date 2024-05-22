@@ -150,7 +150,7 @@ public class LibroController {
         Autore a = serviceAutore.findByCognome(titoloOk);
         if (l==null) {
        model.addAttribute("autore", a);
-        return "dettagliAutore.html";
+        return "archivioAutori.html";
         } else {
             model.addAttribute("libri", l);
             return "archivioCompleto.html";
