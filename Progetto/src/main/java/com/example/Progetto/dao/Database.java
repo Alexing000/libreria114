@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
+
 import jakarta.annotation.PostConstruct;
 
 
@@ -65,11 +67,13 @@ public class Database implements IDatabase{
         PreparedStatement ps=null;
         ResultSet rs=null;
     try{
-        ps = connection.prepareStatement(query);
+        String[] parametri = {"id"};
+        ps = connection.prepareStatement(query, parametri);
         for(int i=0;i<params.length;i++){
             ps.setString(i+1, params[i].toString());
         }
-        ps.executeUpdate();
+        int var=ps.executeUpdate();
+        id=(long)var;
         rs = ps.getGeneratedKeys();
         if(rs.next()){
             id = rs.getLong(1);

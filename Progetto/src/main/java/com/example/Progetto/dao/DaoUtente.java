@@ -112,6 +112,14 @@ public class DaoUtente implements IDao<Long, Utente>{
         return firstValue;
 
     }
+    public void updateUsername(Long id, String newUsername) {
+        String query = "UPDATE utente SET username = ? WHERE id = ?";
+        database.executeDML(query, newUsername, id);
+    }
+    public void updatePassword(Long id, String newPassword) {
+        String query = "UPDATE utente SET password = ? WHERE id = ?";
+        database.executeDML(query, newPassword, id);
+    }
 
 
 }
