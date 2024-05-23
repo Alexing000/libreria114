@@ -80,18 +80,18 @@ public class UtenteController {
     
 
    
-    @PostMapping("/modificaUsername")
+    /*@PostMapping("/modificaUsername")
     public String modificaUsername(@RequestParam("newUsername") String newUsername, HttpSession session, Model model) {
         Object idSalvato=session.getAttribute("idUtente");
         Long idUtente= (Long) idSalvato;
         System.out.println("idUtente: "+idUtente);
         serviceUtente.updateUsername(idUtente, newUsername);
         return "gestioneAccount.html";
-    }
+    }*/
     //metodo per modificare la password: è identico a modificaUser, però va aggiunto un controllo della password inserita per effettuare il login
     //l'utente deve inserire la vecchia password per poterla modificare: se la vecchia password è corretta, allora si può procedere con la modifica
     //altrimenti si restituisce un errore
-    @PostMapping("/modificaPassword")
+    /*@PostMapping("/modificaPassword")
     public String modificaPassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, HttpSession session, Model model) {
         Object idSalvato=session.getAttribute("idUtente");
         Long idUtente= (Long) idSalvato;
@@ -105,7 +105,7 @@ public class UtenteController {
             model.addAttribute("error", "Password errata");
             return "gestioneAccount.html";
         }
-    }
+    }*/
     
 
     
