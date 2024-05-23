@@ -32,7 +32,7 @@
           <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
-                <td><a  th:href="|/api/libro/dettagliLibro?idLibro=${libro.id}|">...</a></td>
+                <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                 <td th:if="${session.loggato == 'ok'}" ><a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
                         <button >Aggiungi!</button>
                     </a></td>

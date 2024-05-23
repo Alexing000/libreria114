@@ -37,19 +37,15 @@
                     <td th:text="${libro.dataPubblicazione}"></td>
                     <td th:text="${libro.nPagine}"></td>
                     <td th:text="${libro.rating}"></td>
-                    <td><a  th:href="|/api/libro/dettagliLibro?idLibro=${libro.id}|">...</a></td>
+                    <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                     <td>
                         <a th:href="|/api/libro/eliminaDaLista?idLibro=${libro.id}|">
                             <button>Elimina!</button>
                         </a><br>
-                       <!-- <button  
-                        th:libro-id="${libro.id}"
-                        onclick="aggiungiRec(this)" >Aggiungi/modifica recensione</button>-->
+                     
                     </td>
-                    <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
-                    <td><a th:href="|/api/libro/eliminaDaLista?idLibro=${libro.id}|">
-                        <button>Elimina!</button>
-                    </a></td>
+                   <!-- <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
+                   -->
                 
                 </tr>
                 
@@ -60,33 +56,11 @@
            
     
     </div>
-    <!--<div id="form-aggiungiRecensione" hidden>
-        <form action="/api/libro/aggiungiRecensione" method="post">
-           
-            <input type="number" id="libro-id" name="id">
-            <label for="recensione">Recensione</label>
-            <input type="text" id="recensione" name="recensione">
-            <br>
-           <input type="submit" value="Aggiungi">
-        </form>
 
-
-    </div>-->
     
 </body>
 <script >
 
- /* function aggiungiRec(oggetto){
-   
-   document.getElementById('form-aggiungiRecensione').style.display = 'block';
-   var id= document.getElementById("libro-id");
-   id.value=oggetto.getAttribute("libro-id");
 
-
-
-
-
-
- }*/
 </script>
 </html>

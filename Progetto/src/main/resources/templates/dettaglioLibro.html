@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   
     <script src="/js/libri.js"></script>
 
@@ -16,20 +16,51 @@
         <thead>
             <TH>COVER</TH>
             <th>TITOLO</th>
+            <TH>AUTORE</TH>
+            <th>GENERE</th>
             <th>TRAMA</th>
             <th>PAGINE</th>
-           
+            <TH>PAGINE LETTE</TH>
         </thead>
         <tbody>
-            <tr th:each="libro:${libri}">
-            <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
-            <td th:text="${libro.titolo}"></td>
-                <td th:text="${libro.trama}"></td>
-                <td th:text="${libro.nPagine}"></td>
-            </tr>
-        
+            <td class="text-center"><img th:src="${libro.url}" alt="Copertina"></td>
+            <td class="text-center" th:text="${libro.titolo}"></td>    
+            <td class="text-center"><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
+            <td class="text-center"><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>   
+            <td class="text-center" th:text="${libro.trama}"></td>
+            <td class="text-center" th:text="${libro.nPagine}"></td>
+            <td class="text-center"><input type="number" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress()"></td>
+                
         </tbody>
     </table>
+
+    <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
+        <input type="hidden" id="idLibro" th:value="${idLibro}" name="id" >
+        <input type="hidden" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
+    </form>
+    </div>
+    <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
+    <button onclick="confirmProgress()">Salva Progressi</button>
+
+   
+   <script> function confirmProgress() {
+        const pagineLette = document.getElementById('nPagineLette').value;
+        const libroId = document.getElementById('idLibro');
+        const form = document.getElementById('form_invio');
+        const pag = document.getElementById('nPagine');
+        pag.value = pagineLette;
+      // Imposta i valori nei campi del form
+      // Invia il form
+      form.submit();
+      updateProgress();
+        }
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const pagineLette = document.getElementById('nPagineLette').value;
+            progress.value = pagineLette;
+        }
+        </script>
+
     <h3>Recensioni</h3>
     <table class="table table-striped">
         <tbody>
@@ -42,11 +73,10 @@
                 </td>
                 <div id="div-bottoni"  th:if="${session.username}==${recensione.username} ">
                         <td>
-                            <button id="myButton" onclick="modificaRecensione(this)">Modifica recensione</button>
+                            <button id="myButton" class="beautiful-button" onclick="modificaRecensione(this)">Modifica recensione</button>
                             <div id="div-button2" style="display: none;">
                
-                                <button id="myButton1" 
-                                
+                                <button id="myButton1" class="beautiful-button"
                                 th:recensione="${recensione.recensione}"
                                 onclick="modificaRec(this)">Salva la modifica</button>
                                 <form id ="from_invio" action="/api/libro/aggiungiRecensione" method="post">
@@ -54,13 +84,29 @@
                                     <input type="hidden" name="recensione"  id="recensioneee" >
                                 </form>
                             </div>
-                            <button id="deleteButton" onclick="modificaRec(this,this)">Elimina recensione</button>
+                            <button id="deleteButton" class="beautiful-button" onclick="modificaRec(this,this)">Elimina recensione</button>
                 </td>
+            </tbody>
+        </table>
         
                 
             </div>
+       
+            <div th:if="${avereRec=='false' && session.loggato=='ok'}">
+                <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
+            </div>
+            <div id="form-aggiungiRecensione" style="display: none;">
+                <form action="/api/libro/aggiungiRecensione" method="post" class="beautiful-form">
+                    <input type="hidden" id="libro-id" name="id">
+                    <label for="recensione">Recensione</label>
+                    <input type="text" id="recensione" name="recensione" class="beautiful-input">
+                    <br>
+                    <input type="submit" value="Aggiungi" class="beautiful-button">
+                </form>
+            </div>
+        
             
-            <th>Titolo</th>
+           <!-- <th>Titolo</th>
             <th>Autore</th>
             <th>Genere</th>
             <th>Anno Pubblicazioone</th>
@@ -80,42 +126,15 @@
         </tbody>
         
     </table>
-    <div th:if="${avereRec=='false' && session.loggato=='ok'}">
-        <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
-    <div>
-    <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
-        <input type="number" id="idLibro" th:value="${idLibro}" name="id" >
-        <input type="number" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
-    </form>
-    </div>
-    <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
-    <button onclick="confirmProgress()">Salva Progressi</button>
-
-    <script>
-    function confirmProgress() {
-    const pagineLette = document.getElementById('nPagineLette').value;
-    const libroId = document.getElementById('idLibro');
-    const form = document.getElementById('form_invio');
-    const pag = document.getElementById('nPagine');
-    pag.value = pagineLette;
-  
-  
-  // Imposta i valori nei campi del form
-  console.log(pag);
-  console.log(libroId,pagineLette);
-  // Invia il form
-  form.submit();
-  updateProgress();
-    }
-
-    </script>
-
-
-
+    
+-->
    
-    <h3>Trama</h3>
+   <!-- <h3>Trama</h3>
     <p th:text="${libro.trama}"></p> 
-    <h3><a href="/homeUtente">Torna alla Home</a></h3>
+    <h3><a href="/homeUtente">Torna alla Home</a></h3>-->
+    <a  style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
+    <a style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri</a>
+    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio</a>
     <div class="footer" style="text-align: center;
     margin-top: 40px;
     padding: 10px;
@@ -132,20 +151,7 @@
             <a href="/lavoraConNoi" id ="lavoraConNoi">Lavora con noi</a> 
         </footer>
     </div>
-    <div id="form-aggiungiRecensione" style="display: none;">
-        <form action="/api/libro/aggiungiRecensione" method="post" class="beautiful-form">
-            <input type="hidden" id="libro-id" name="id">
-            <label for="recensione">Recensione</label>
-            <input type="text" id="recensione" name="recensione" class="beautiful-input">
-            <br>
-            <input type="submit" value="Aggiungi" class="beautiful-button">
-        </form>
-    </div>
 
-
-    <a  style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
-    <a style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio</a>
 </body>
 <script>
     
@@ -157,6 +163,8 @@
      console.log('Button clicked');
   
    }
+
+
    function modificaRecensione(oggetto) {
     var textarea = document.getElementById('myTextarea');
     textarea.readOnly = false;
@@ -332,20 +340,7 @@ textarea.full-text {
 .full-text:focus {
     outline: none; 
 }
-button {
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 15px 32px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer; /* Mouse pointer on hover */
-    border-radius: 4px; /* Rounded corners */
-    transition-duration: 0.4s; /* Transition effects */
-}
+
 
 button:hover {
     background-color: #45a049; /* Green background on hover */

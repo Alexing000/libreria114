@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,18 +48,19 @@ public class LibroController {
         return "archivioCompleto.html";
     }
 
-    @GetMapping("dettagliLibro")
+    @GetMapping("byId")
     public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
         Libro l = serviceLibro.findById(id);
         List<Map<String,String>> ris =   serviceLibro.readRecensioni(id);
        //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
      
+       if(id==null)
+        model.addAttribute("error", "id non valido!");
+
        for(Map<String,String> m:ris){
 
            if(m.get("recensione")!=null){
-               model.addAttribute("avereRec", "true");
-        
-               
+               model.addAttribute("avereRec", "true")    ; 
               
                break;
            }
@@ -70,14 +72,13 @@ public class LibroController {
            }
         }
        
-
        //id del libro
         model.addAttribute("idLibro", id);
        
       
         model.addAttribute("recensioni", ris);
   
-        model.addAttribute("libri", l);
+        model.addAttribute("libro", l);
         return "dettaglioLibro.html";
     }
     @GetMapping("/recenti")
@@ -119,7 +120,7 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
     //ottieni l'id del da params
     Long id = Long.parseLong(params.get("id"));
     //ritorna alla pagina dei libriutenti
-    return "redirect:/api/libro/dettagliLibro?idLibro="+id;
+    return "redirect:/api/libro/byId?idLibro="+id;
 
 }
 
@@ -131,7 +132,7 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
         return "archivioCompleto.html";
 }
 
-    @GetMapping("/byId")
+    /*@GetMapping("/byId")
     public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
     @RequestHeader("token")String token){
         if (token.split("-")[0].equals("libro")&&
@@ -141,8 +142,8 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
             return null;
             
         }
-    }
-    public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
+    }*/
+   /*  public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
     Model model){
        Libro l= serviceLibro.findById(id);
        if(id==null){
@@ -153,7 +154,7 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
        model.addAttribute("idLibro", id);   
        model.addAttribute("libro", l);
          return "dettaglioLibro.html";
-    }
+    }*/
     @GetMapping("/libriUtente")
     public String libriUtente(Model model, HttpSession session){
         Long idUtente = (Long) session.getAttribute("idUtente");
