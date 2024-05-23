@@ -252,3 +252,66 @@ a:hover {
     transition: background-color 0.3s ease;
 }
 
+
+/* Stile per il contenitore della barra di progresso */
+#progress-container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #ffffff; /* Bianco */
+    padding: 20px;
+    border-radius: 10px; /* Bordi arrotondati */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+/* Stile per l'input del numero di pagine lette */
+#progress-container input[type="number"] {
+    width: 100px; /* Larghezza fissa */
+    padding: 10px;
+    border: 1px solid #f95d6a; /* Rosso corallo */
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Stile per la barra di progresso */
+#progress-container progress {
+    width: 60%;
+    height: 20px;
+    margin-right: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Stile per il pulsante di aggiornamento */
+#progress-container button {
+    padding: 10px 20px;
+    background-color: #f95d6a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Stile per il pulsante di aggiornamento al passaggio del mouse */
+#progress-container button:hover {
+    background-color: #ff7e82; /* Rosso chiaro */
+}
+
+/* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
+#progress-container progress::-webkit-progress-bar {
+    background-color: #ffe4cc; /* Azzurro chiarissimo */
+    border-radius: 5px;
+}
+
+#progress-container progress::-webkit-progress-value {
+    background-color: #f95d6a; /* Rosso corallo */
+    border-radius: 5px;
+}
+
+#progress-container progress::-moz-progress-bar {
+    background-color: #f95d6a; /* Rosso corallo */
+    border-radius: 5px;
+}
+

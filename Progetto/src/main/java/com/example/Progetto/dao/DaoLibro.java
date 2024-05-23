@@ -72,6 +72,12 @@ public class DaoLibro implements IDao<Long, Libro>{
 
     }
 
+    
+    public void updatePagineLette(Long idLibro, Long idUtente, int pagineLette) {
+        String query = "UPDATE associa SET pagineLette = ? WHERE id_libro = ? AND id_utente = ?";
+        database.executeDML(query, String.valueOf(pagineLette), String.valueOf(idLibro), String.valueOf(idUtente));
+    }
+
     @Override
     public void delete(Long id) {
         String query = "DELETE FROM libro WHERE id = ?";

@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-
 import com.example.Progetto.dao.DaoLibro;
 import com.example.Progetto.models.Libro;
 
 @Service
 public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
+
+
+    
 
     @Override
     public Libro createEntity(Map<String, String> map) {
@@ -56,5 +58,12 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
     public List<Libro> readByAutore(Long id) {
         return getDao().readLibriAutore(id);
     }
+
+   public void updatePagine( Long idLibro, Long idUtente, int pagineLette){
+    System.out.println(idLibro + " " + idUtente + " " + pagineLette);
+     getDao().updatePagineLette( idLibro, idUtente, pagineLette);
+   }
+   
+
     
 }
