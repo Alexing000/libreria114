@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,6 +48,39 @@ public class LibroController {
         return "archivioCompleto.html";
     }
 
+    @GetMapping("byId")
+    public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
+        Libro l = serviceLibro.findById(id);
+        List<Map<String,String>> ris =   serviceLibro.readRecensioni(id);
+       //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
+     
+       if(id==null)
+        model.addAttribute("error", "id non valido!");
+
+       for(Map<String,String> m:ris){
+
+           if(m.get("recensione")!=null){
+               model.addAttribute("avereRec", "true")    ; 
+              
+               break;
+           }
+           else
+           {
+    
+                model.addAttribute("avereRec", "false");
+                break;
+           }
+        }
+       
+       //id del libro
+        model.addAttribute("idLibro", id);
+       
+      
+        model.addAttribute("recensioni", ris);
+  
+        model.addAttribute("libro", l);
+        return "dettaglioLibro.html";
+    }
     @GetMapping("/recenti")
     public String orderBy(Model model){
         List<Libro> ris = serviceLibro.byAnno();
@@ -73,11 +107,43 @@ public class LibroController {
        
     }
 
+//aggiungere recensione ad un libro in base all'utente in sessione
+
+@PostMapping("/aggiungiRecensione")
+public String aggiungiRecensione(@RequestParam Map<String,String> params,Model model,HttpSession session){
 
 
+    
+    Long idUtente = (Long) session.getAttribute("idUtente");
+   
+    serviceLibro.aggiungiRecensione(params, idUtente);
+    //ottieni l'id del da params
+    Long id = Long.parseLong(params.get("id"));
+    //ritorna alla pagina dei libriutenti
+    return "redirect:/api/libro/byId?idLibro="+id;
 
-    @GetMapping("/byId")
-    public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
+}
+
+    @GetMapping("/byAutore")
+    public String orderByAutore(@RequestParam(name="idAutore", defaultValue = "0") Long id,Model model){
+        List<Libro> ris = serviceLibro.readByAutore(id);
+  
+        model.addAttribute("libri", ris);
+        return "archivioCompleto.html";
+}
+
+    /*@GetMapping("/byId")
+    public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
+    @RequestHeader("token")String token){
+        if (token.split("-")[0].equals("libro")&&
+        Long.parseLong(token.split("-")[1])==id) {
+            return serviceLibro.findById(id);
+        } else {
+            return null;
+            
+        }
+    }*/
+   /*  public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
     Model model){
        Libro l= serviceLibro.findById(id);
        if(id==null){
@@ -88,15 +154,12 @@ public class LibroController {
        model.addAttribute("idLibro", id);   
        model.addAttribute("libro", l);
          return "dettaglioLibro.html";
-    }
-
-
-
+    }*/
     @GetMapping("/libriUtente")
-    public String libriUtente(Model model, HttpSession session) {
+    public String libriUtente(Model model, HttpSession session){
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
-        System.out.println(idUtente);
+ 
         model.addAttribute("libri", ris);
         return "libriUtente.html";
     }

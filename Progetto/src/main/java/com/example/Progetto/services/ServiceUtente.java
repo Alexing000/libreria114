@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.dao.DaoUtente;
+
 import com.example.Progetto.models.Entity;
 import com.example.Progetto.models.Utente;
 
@@ -57,6 +58,9 @@ public class ServiceUtente{
             return null;
     
         }
+        
+
+
         public void updateUsername(Long id, String newUsername) {
             daoUtente.updateUsername(id, newUsername);
         }

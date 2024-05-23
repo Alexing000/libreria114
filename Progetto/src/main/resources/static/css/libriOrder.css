@@ -20,7 +20,15 @@ h3 {
     justify-content: center;
     align-items: center;
 }
-
+textarea.full-text {
+    width: 100%; /* Or any other value */
+}
+.full-text {
+    resize: horizontal;
+    overflow: auto;
+    min-width: 100px; /* adjust as needed */
+    max-width: 100%; /* adjust as needed */
+}
 
 /* Stile per la tabella */
 table {
@@ -175,6 +183,9 @@ a {
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
     transition: background-color 0.3s ease;
+}
+#recensione {
+    height: auto;
 }
 
 

@@ -4,15 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
     <script src="/js/libri.js"></script>
 
     <title>DettaglioLibro</title>
 </head>
-<body>
+<body onload="adjustInputSizeOnLoad()">
     <!--da aggiungere bottone per arrivare alla pagina-->
     <table>
         <thead>
-            <th>Titolo</th>
+            <TH>COVER</TH>
+            <th>TITOLO</th>
+            <TH>AUTORE</TH>
+            <th>GENERE</th>
+            <th>TRAMA</th>
+            <th>PAGINE</th>
+            <TH>PAGINE LETTE</TH>
+        </thead>
+        <tbody>
+            <td class="text-center"><img th:src="${libro.url}" alt="Copertina"></td>
+            <td class="text-center" th:text="${libro.titolo}"></td>    
+            <td class="text-center"><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
+            <td class="text-center"><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>   
+            <td class="text-center" th:text="${libro.trama}"></td>
+            <td class="text-center" th:text="${libro.nPagine}"></td>
+            <td class="text-center"><input type="number" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress()"></td>
+                
+        </tbody>
+    </table>
+
+    <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
+        <input type="hidden" id="idLibro" th:value="${idLibro}" name="id" >
+        <input type="hidden" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
+    </form>
+    </div>
+    <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
+    <button onclick="confirmProgress()">Salva Progressi</button>
+
+   
+   <script> function confirmProgress() {
+        const pagineLette = document.getElementById('nPagineLette').value;
+        const libroId = document.getElementById('idLibro');
+        const form = document.getElementById('form_invio');
+        const pag = document.getElementById('nPagine');
+        pag.value = pagineLette;
+      // Imposta i valori nei campi del form
+      // Invia il form
+      form.submit();
+      updateProgress();
+        }
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const pagineLette = document.getElementById('nPagineLette').value;
+            progress.value = pagineLette;
+        }
+        </script>
+
+    <h3>Recensioni</h3>
+    <table class="table table-striped">
+        <tbody>
+            <tr th:each="recensione:${recensioni}" th:if="${!#strings.isEmpty(recensione.recensione)}">
+                <td th:text="${recensione.username}"></td>
+                <td id="recensione">
+            
+                    <textarea id="myTextarea" class="full-text" th:text="${recensione.recensione}" readonly></textarea>
+
+                </td>
+                <div id="div-bottoni"  th:if="${session.username}==${recensione.username} ">
+                        <td>
+                            <button id="myButton" class="beautiful-button" onclick="modificaRecensione(this)">Modifica recensione</button>
+                            <div id="div-button2" style="display: none;">
+               
+                                <button id="myButton1" class="beautiful-button"
+                                th:recensione="${recensione.recensione}"
+                                onclick="modificaRec(this)">Salva la modifica</button>
+                                <form id ="from_invio" action="/api/libro/aggiungiRecensione" method="post">
+                                    <input type="hidden" name="id" th:value="${idLibro}" >
+                                    <input type="hidden" name="recensione"  id="recensioneee" >
+                                </form>
+                            </div>
+                            <button id="deleteButton" class="beautiful-button" onclick="modificaRec(this,this)">Elimina recensione</button>
+                </td>
+            </tbody>
+        </table>
+        
+                
+            </div>
+       
+            <div th:if="${avereRec=='false' && session.loggato=='ok'}">
+                <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
+            </div>
+            <div id="form-aggiungiRecensione" style="display: none;">
+                <form action="/api/libro/aggiungiRecensione" method="post" class="beautiful-form">
+                    <input type="hidden" id="libro-id" name="id">
+                    <label for="recensione">Recensione</label>
+                    <input type="text" id="recensione" name="recensione" class="beautiful-input">
+                    <br>
+                    <input type="submit" value="Aggiungi" class="beautiful-button">
+                </form>
+            </div>
+        
+            
+           <!-- <th>Titolo</th>
             <th>Autore</th>
             <th>Genere</th>
             <th>Anno Pubblicazioone</th>
@@ -32,40 +126,15 @@
         </tbody>
         
     </table>
-    <div>
-    <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
-        <input type="number" id="idLibro" th:value="${idLibro}" name="id" >
-        <input type="number" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
-    </form>
-    </div>
-    <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
-    <button onclick="confirmProgress()">Salva Progressi</button>
-
-    <script>
-    function confirmProgress() {
-    const pagineLette = document.getElementById('nPagineLette').value;
-    const libroId = document.getElementById('idLibro');
-    const form = document.getElementById('form_invio');
-    const pag = document.getElementById('nPagine');
-    pag.value = pagineLette;
-  
-  
-  // Imposta i valori nei campi del form
-  console.log(pag);
-  console.log(libroId,pagineLette);
-  // Invia il form
-  form.submit();
-  updateProgress();
-    }
-
-    </script>
-
-
-
+    
+-->
    
-    <h3>Trama</h3>
+   <!-- <h3>Trama</h3>
     <p th:text="${libro.trama}"></p> 
-    <h3><a href="/homeUtente">Torna alla Home</a></h3>
+    <h3><a href="/homeUtente">Torna alla Home</a></h3>-->
+    <a  style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
+    <a style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri</a>
+    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio</a>
     <div class="footer" style="text-align: center;
     margin-top: 40px;
     padding: 10px;
@@ -82,5 +151,207 @@
             <a href="/lavoraConNoi" id ="lavoraConNoi">Lavora con noi</a> 
         </footer>
     </div>
+
 </body>
+<script>
+    
+    function aggiungiRec(oggetto){
+     
+     document.getElementById('form-aggiungiRecensione').style.display = 'block';
+     var id= document.getElementById("libro-id");
+     id.value=oggetto.getAttribute("libro-id");
+     console.log('Button clicked');
+  
+   }
+
+
+   function modificaRecensione(oggetto) {
+    var textarea = document.getElementById('myTextarea');
+    textarea.readOnly = false;
+    oggetto.style.display = 'none';
+    var button = document.getElementById('div-button2');
+    button.style.display = 'block';
+ 
+}
+function modificaRec(oggetto, clickedButton) {
+    var textarea = document.getElementById('myTextarea');
+    textarea.readOnly = true;
+    oggetto.style.display = 'none';
+    var button = document.getElementById('myButton');
+    var button2 = document.getElementById('deleteButton');
+    button.style.display = 'block';
+    var form = document.getElementById('from_invio');
+    var recensioneInput = document.getElementById('recensioneee');
+
+    if (clickedButton === button2) {
+        recensioneInput.value = null;
+    } else {
+        recensioneInput.value = textarea.value;
+    }
+
+    form.submit();
+}
+window.onload = function() {
+    var textarea = document.querySelector('textarea.full-text');
+    var words = textarea.value.split(' ').length;
+    if (words < 5) {
+        textarea.style.width = '20%';
+        textarea.style.height = '50px';
+        textarea.style.maxWidht = '20%';
+        textarea.style.minWidht = '50px';
+       
+    }else if
+     (words < 20) {
+        textarea.style.width = '50%';
+        textarea.style.height = '80px';
+        textarea.style.maxWidht = '50%';
+        textarea.style.minWidht = '80px';
+       
+    }
+    else if (words < 50) {
+        textarea.style.width = '70%';
+        textarea.style.height = '100px';
+        textarea.style.maxWidht = '70%';
+        textarea.style.minWidht = '100px';
+       
+    } else {
+        textarea.style.width = '100%';
+        textarea.style.height = '200px';
+        textarea.style.maxWidht = '100%';
+        textarea.style.minWidht = '200px';
+       
+    
+}
+}
+
+/*function adjustInputSize(input) {
+    var words = input.value.split(' ');
+    for (var j = 99; j < words.length; j += 100) {
+        words[j] += '\n';
+    }
+    input.value = words.join(' ');
+    var lines = input.value.split('\n');
+    var longestLine = lines.reduce(function(a, b) { return a.length > b.length ? a : b; });
+    input.rows = lines.length;
+    input.cols = longestLine.length;
+    input.cols = Math.max(longestLine.length, 50);
+}
+
+function adjustInputSizeOnLoad() {
+    var inputs = document.querySelectorAll('textarea.full-text');
+    for (var i = 0; i < inputs.length; i++) {
+        var words = inputs[i].value.split(' ');
+        for (var j = 99; j < words.length; j += 100) {
+            words[j] += '\n';S
+        inputs[i].value = words.join(' ');
+        var lines = inputs[i].value.split('\n').length;
+        inputs[i].rows = lines;
+    }
+    input.cols = Math.max(longestLine.length, 50);
+}*/
+
+ /*  function modificaRecensione(button) {
+    var tr = button.closest('tr');
+    var recensione = tr.querySelector('span.full-text');
+    var newRecensione = prompt('Enter new recensione:');
+    if (newRecensione) {
+        recensione.textContent = newRecensione;
+    }
+}*/
+    /*window.onload = function() {
+        var td = document.getElementById('recensione');
+        var shortText = td.getElementsByClassName('short-text')[0];
+        var fullText = td.getElementsByClassName('full-text')[0];
+        var ellipsis = td.getElementsByClassName('ellipsis')[0];
+    
+        var words = shortText.innerText.split(' ');
+    
+        if (words.length > 50) {
+            shortText.innerText = words.slice(0, 50).join(' ') + ' ';
+        } else {
+            ellipsis.style.display = 'none';
+        }
+    
+        ellipsis.onclick = function() {
+            shortText.style.display = 'none';
+            ellipsis.style.display = 'none';
+            fullText.style.display = 'inline';
+        }
+    
+        fullText.onclick = function() {
+            shortText.style.display = 'inline';
+            ellipsis.style.display = 'inline';
+            fullText.style.display = 'none';
+        }
+    }*/
+    </script>
+    <style>
+        
+        .beautiful-button {
+    background-color: #4CAF50; 
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effects */
+}
+
+.beautiful-button:hover {
+    background-color: #45a049; /* Green background on hover */
+}
+
+.beautiful-form {
+    background-color: #f2f2f2; /* Light grey background */
+    padding: 20px; /* Some padding */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.beautiful-input {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+.full-text {
+    resize: vertical;
+    overflow: auto;
+    min-width: 100px; /* adjust as needed */
+    max-width: 100%; /* adjust as needed */
+    background-color: #ffe4cc;
+    border-color: transparent; /* This will make the border transparent */
+    padding: 10px; /* Add some padding */
+    border-radius: 5px; /* Round the corners */
+   
+}
+textarea.full-text {
+    width: 100%; /* Or any other value */
+    background-color: #ffe4cc; 
+}
+.full-text:focus {
+    outline: none; 
+}
+
+
+button:hover {
+    background-color: #45a049; /* Green background on hover */
+}
+
+#deleteButton {
+    background-color: #f44336; /* Red background */
+}
+
+#deleteButton:hover {
+    background-color: #da190b; /* Red background on hover */
+}
+    </style>
 </html>

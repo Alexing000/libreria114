@@ -58,6 +58,23 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
     public List<Libro> readByAutore(Long id) {
         return getDao().readLibriAutore(id);
     }
+    //lista delle recensioni di un determinato libro
+    public List<Map<String,String>> readRecensioni(Long id) {
+        return getDao().readRecensione(id);
+    }
+
+    public void aggiungiRecensione(Map<String,String> map,Long idUtente) {
+
+        //prendimi dalla mappa il value della primary key id
+    Long idLibro= Long.parseLong(map.get("id"));
+    String recensione= map.get("recensione");
+if(map.get("recensione")!=null){
+       System.out.println("id libro: "+idLibro+" id utente: "+idUtente+" recensione: "+recensione);
+
+        getDao().addRecensione(idLibro, idUtente, recensione);
+}
+    }
+            
 
    public void updatePagine( Long idLibro, Long idUtente, int pagineLette){
     System.out.println(idLibro + " " + idUtente + " " + pagineLette);
@@ -65,5 +82,6 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
    }
    
 
-    
+
+
 }
