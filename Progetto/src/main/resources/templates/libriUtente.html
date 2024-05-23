@@ -17,8 +17,10 @@
                 <TH>AUTORE</TH>
                 <th>GENERE</th>
                 <TH>DATA PUBBLICAZIONE</TH>
+                <TH>PAGINE</TH>
                 <TH>RATING</TH>
                 <th>See More</th>
+                <th>Elimina</th>
                 
             </thead>
             <tbody>
@@ -33,6 +35,7 @@
          
               <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                     <td th:text="${libro.dataPubblicazione}"></td>
+                    <td th:text="${libro.nPagine}"></td>
                     <td th:text="${libro.rating}"></td>
                     <td><a  th:href="|/api/libro/dettagliLibro?idLibro=${libro.id}|">...</a></td>
                     <td>
@@ -45,10 +48,12 @@
                     </td>
                 
                 </tr>
-            </tbody>
+                
 
+            </tbody>
+            
             <a style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
-    
+           
     
     </div>
     <!--<div id="form-aggiungiRecensione" hidden>

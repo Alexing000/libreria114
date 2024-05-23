@@ -136,6 +136,27 @@ List<Autore > autori = serviceAutore.findAll();
     public String home() {
         return "home.html";
     }
+
+    @GetMapping("/gestioneAccount")
+    public String gestioneAccount() {
+        return "gestioneAccount.html";
+    }
+    @GetMapping("/chiSiamo")
+    public String chiSiamo() {
+        return "chiSiamo.html";
+    }
+    @GetMapping("/FAQ")
+    public String FAQ() {
+        return "FAQ.html";
+    }
+    @GetMapping("/lavoraConNoi")
+    public String lavoraConNoi() {
+        return "lavoraConNoi.html";
+    }
+    @GetMapping("/privacyPolicy")
+    public String privacyPolicy() {
+        return "privacyPolicy.html";
+    }
     
 
 }
