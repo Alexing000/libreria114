@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <script src="/js/libri.js"></script>
+
     <title>DettaglioLibro</title>
 </head>
 <body>
@@ -14,6 +16,8 @@
             <th>Autore</th>
             <th>Genere</th>
             <th>Anno Pubblicazioone</th>
+            <th>PAGINE</th>
+            <TH>PAGINE LETTE</TH>
         </thead>
         <tbody>
             <tr>
@@ -21,13 +25,47 @@
                 <td><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
                 <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
+                <td th:text="${libro.nPagine}"></td>
+                <td><input type="number" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress()"></td>
+                
             </tr>
         </tbody>
+        
     </table>
+    <div>
+    <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
+        <input type="number" id="idLibro" th:value="${idLibro}" name="id" >
+        <input type="number" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
+    </form>
+    </div>
+    <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
+    <button onclick="confirmProgress()">Salva Progressi</button>
+
+    <script>
+    function confirmProgress() {
+    const pagineLette = document.getElementById('nPagineLette').value;
+    const libroId = document.getElementById('idLibro');
+    const form = document.getElementById('form_invio');
+    const pag = document.getElementById('nPagine');
+    pag.value = pagineLette;
+  
+  
+  // Imposta i valori nei campi del form
+  console.log(pag);
+  console.log(libroId,pagineLette);
+  // Invia il form
+  form.submit();
+  updateProgress();
+    }
+
+    </script>
+
+
+
    
     <h3>Trama</h3>
     <p th:text="${libro.trama}"></p> 
-    <h3><a href="/pagina-libri">Torna alla lista</a></h3>
+    <h3><a href="/homeUtente">Torna alla Home</a></h3>
     <div class="footer" style="text-align: center;
     margin-top: 40px;
     padding: 10px;

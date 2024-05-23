@@ -2,51 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/main.css" type="text/css">
-    <title>Registrazione utente</title>
+    <title>Registrazione Utente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
 </head>
 <body>
-    <h1>Registrazione utente</h1>
-    <form action="/register" name="registrazioneutente" 
-    th:object="${utente}" method="post">
-    <span>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" th:field="${utente.nome}" required>
-    </span>
-    <span>
-        <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" name="cognome" th:field="${utente.cognome}" required>
-    </span>
-    <span>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" th:field="${utente.username}" required>
-    </span>
-    <span>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:field="${utente.email}" required>
-    </span>
-    <span>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" th:field="${utente.password}" required>
-    </span>
-    <span>
-        <label for="confermaPassword">Conferma password:</label>
-        <input type="password" id="confermaPassword" name="confermaPassword" required>
-    </span>
-    <span>
-        <label for="ruolo">Ruolo</label>
-        <select id="ruolo" name="ruolo" th:field="${utente.ruolo}" required>
-            <option value="USER">Utente</option>
-            <option value="ADMIN">Amministratore</option>
-        </select>
-    </span>
-    <span>
-        <input type="submit" value="Registrati">
-    </span>
-    <span th:if="${error}" class="error-messagge">
-        <span th:text="${error}">Errore</span>  
-    </span>
-    </form>
+    <div class="container">
+        <h2>Registrazione Utente</h2>
+
+        <!-- Form di registrazione -->
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" th:value="${utente.nome}" required>
+            </div>
+            <div class="form-group">
+                <label for="cognome">Cognome:</label>
+                <input type="text" class="form-control" id="cognome" name="cognome" th:value="${utente.cognome}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" th:value="${utente.email}" required>
+            </div>
+            <!-- Rimani con i campi esistenti per username, password e conferma password -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" th:value="${utente.username}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" th:value="${utente.password}" required>
+            </div>
+            <div class="form-group">
+                <label for="confermaPassword">Conferma Password:</label>
+                <input type="password" class="form-control" id="confermaPassword" name="confermaPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrati</button>
+        </form>
+    </div>
+
+    <!-- Modal per informare che l'utente esiste già -->
+    <div class="modal fade" id="utenteEsistenteModal" tabindex="-1" role="dialog" aria-labelledby="utenteEsistenteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="utenteEsistenteModalLabel">Errore Registrazione</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div th:if="${utenteEsistente}">
+                        Un utente con questo username esiste già. Per favore scegli un altro username.
+                    </div>
+                    <div th:if="${emailEsistente}">
+                        L'email associato è già esistente. Per favore inserisci un'altra email.
+                    </div>
+                    <div th:if="${passwordNonValida}">
+                        La password deve essere lunga almeno 8 caratteri e non superiore ai 12.
+                    </div>
+                    <div th:if="${passwordNonCorrispondenti}">
+                        Le password non corrispondono. Per favore, riprova.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script di Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Script per mostrare il modal di errore -->
+    <script th:inline="javascript">
+        var utenteEsistente = /*[[${utenteEsistente}]]*/ false;
+        var passwordNonValida = /*[[${passwordNonValida}]]*/ false;
+        var passwordNonCorrispondenti = /*[[${passwordNonCorrispondenti}]]*/ false;
+
+        if (utenteEsistente || passwordNonValida || passwordNonCorrispondenti) {
+            $('#utenteEsistenteModal').modal('show');
+        }
+    </script>
 </body>
 </html>

@@ -88,3 +88,8 @@ form[action="/signup"] input[type="submit"] {
 form[action="/signup"] input[type="submit"]:hover {
     background-color: #ff6b6b; /* Verde scuro */
 }
+
+
+progress{
+    
+}

@@ -4,24 +4,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
-import com.example.Progetto.models.Utente;
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
-import com.example.Progetto.services.ServiceUtente;
-
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
@@ -34,6 +33,8 @@ public class LibroController {
     private  ServiceLibro serviceLibro;
     @Autowired
     private ServiceAutore serviceAutore;
+
+   
 
 
     //htpps://localhost:8080/libro/all
@@ -81,8 +82,10 @@ public class LibroController {
        Libro l= serviceLibro.findById(id);
        if(id==null){
         model.addAttribute("error", "id non valido!");
+
         return "mainError.html";
        }
+       model.addAttribute("idLibro", id);   
        model.addAttribute("libro", l);
          return "dettaglioLibro.html";
     }
@@ -189,8 +192,29 @@ public class LibroController {
     }*/
 
     @PostMapping("/add")
-    public ResponseEntity<Libro> add(@RequestBody Map<String,String> map){
-        Libro l = serviceLibro.insert(map);
-        return ResponseEntity.status(HttpStatus.CREATED).body(l);
+    public String add(@RequestBody Map<String,String> map){
+        serviceLibro.insert(map);
+        return "redirect:/api/libro/all";
+    }
+
+
+
+   @PostMapping("/updatePagineLette")
+    @ResponseBody
+    public String updatePagineLette(HttpSession session, @RequestParam(name="id", defaultValue = "0") Long idLibro, 
+    @RequestParam(name= "nPagineLette", defaultValue = "0") int pagineLette) {
+        
+        Long idUtente= (Long) session.getAttribute("idUtente");
+        try {
+            System.out.println("Id libro: " + idLibro + ", Pagine lette: " + pagineLette + ", Id utente: " + idUtente);
+        // Chiamata al servizio per aggiornare le pagine lette
+        
+        serviceLibro.updatePagine(idLibro, idUtente, pagineLette);
+        
+
+            return "Aggiornamento completato con successo";
+        } catch (Exception e) {
+            return "Errore nell'aggiornamento delle pagine lette: " + e.getMessage();
+        }
     }
 }

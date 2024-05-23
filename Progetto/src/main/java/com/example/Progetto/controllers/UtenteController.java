@@ -44,38 +44,7 @@ public class UtenteController {
     //e che il db non sia già presente nel db
 
 
-    @PostMapping("/register")
-    public String registerUser(Model model,
-    @RequestParam("confermaPassword") String confermaPassword,
-    @ModelAttribute Utente utente,
-    HttpSession session,
-    @RequestParam Map<String,String> allParams){//il paramento HttpSession rappresenta una sessione Http
-        //è un oggetto che permette di memorizzare informazioni relative alla sessione
-        //in questo caso memorizzerò l'utente loggato
-        if(serviceUtente.readByUserName(utente.getUsername())){
-            model.addAttribute("error", "Username già esistente");
-            return "registrazioneUtente.html";
-        }
-        //verifico che la password sia lunga almeno 8 caratteri e non superiore ai 12
-        if(utente.getPassword().length() < 8 || utente.getPassword().length() > 12){
-            model.addAttribute("error", "Password non valida");
-            return "registrazioneUtente.html";
-        }
-            
-        
-        //verifico che la password sia uguale a quella di conferma
-        if(!utente.getPassword().equals(confermaPassword)){
-            model.addAttribute("error", "Password non corrispondenti!");
-            return "registrazioneUtente.html";
-        }
-        //se la registrazione va a buon fine
-        serviceUtente.create(allParams);
-        //aggiungo l'utente alla sessione
-        session.setAttribute("utente", utente);
-
-        return "confermaRegistrazione.html";
-        
-    }
+    
 
     
 
@@ -123,7 +92,31 @@ public class UtenteController {
    
 
 
-    
+    @PostMapping("/register")
+    public String registerUser(Model model,
+                           @RequestParam("confermaPassword") String confermaPassword,
+                           @ModelAttribute Utente utente,
+                           HttpSession session,
+                           @RequestParam Map<String, String> allParams) {
+    boolean utenteEsistente = serviceUtente.readByUserName(utente.getUsername());
+    boolean emailEsistente = serviceUtente.readByEmail(utente.getEmail());
+    boolean passwordNonValida = utente.getPassword().length() < 8 || utente.getPassword().length() > 12;
+    boolean passwordNonCorrispondenti = !utente.getPassword().equals(confermaPassword);
+if (utenteEsistente || emailEsistente || passwordNonValida || passwordNonCorrispondenti) {
+        model.addAttribute("utenteEsistente", utenteEsistente);
+        model.addAttribute("emailEsistente", emailEsistente);
+        model.addAttribute("passwordNonValida", passwordNonValida);
+        model.addAttribute("passwordNonCorrispondenti", passwordNonCorrispondenti);
+
+        // Mostra un messaggio di errore nella vista
+        return "registrazioneUtente.html";
+    }
+    System.out.println(allParams);
+    // Altrimenti, procedi con la registrazione dell'utente
+    serviceUtente.create(allParams);
+    session.setAttribute("utente", utente);
+    return "confermaRegistrazione.html";
+}
 
 
 

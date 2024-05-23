@@ -20,7 +20,9 @@ public class ServiceUtente{
         private ApplicationContext applicationContext;
     
         public void create(Map<String,String> params) {
+            params.put("ruolo", "user");       
             Utente u = applicationContext.getBean(Utente.class, params);
+
             daoUtente.create(u);
         }
     
@@ -60,6 +62,11 @@ public class ServiceUtente{
         }
         public void updatePassword(Long id, String newPassword) {
             daoUtente.updatePassword(id, newPassword);
+        }
+
+
+        public boolean readByEmail(String email) {
+            return daoUtente.userExistsByEmail(email);
         }
        
 
