@@ -78,6 +78,7 @@ public class Database implements IDatabase{
         
             ps.setString(i+1, params[i].toString());
         }
+
         int var=ps.executeUpdate();
         id=(long)var;
         rs = ps.getGeneratedKeys();
@@ -107,19 +108,35 @@ public class Database implements IDatabase{
       PreparedStatement ps = null;
         ResultSet rs = null;
         try{
+           
+        
             ps = connection.prepareStatement(query);
             for(int i=0;i<params.length;i++){
                 ps.setString(i+1, params[i].toString());
             }
+            //se ps non contiene id, mette id a 0
+
             rs = ps.executeQuery();
+
             Map<String,String> row;
             while(rs.next()){
                  row = new HashMap<>();
                 for(int i=1;i<=rs.getMetaData().getColumnCount();i++){
                     row.put(rs.getMetaData().getColumnName(i), rs.getString(i));
                 }
-                result.put(rs.getLong("id"), row);
-            }
+           
+
+          //se rs non contiene id, mette id a 0
+          long id = 0;
+          try {
+              id = rs.getLong("id");
+        
+          } catch (SQLException e) {
+              System.out.println("non cè colonna id");
+          }
+          result.put(id, row);
+        }
+            
             if(ps != null){
                 ps.close();
             }
@@ -133,5 +150,6 @@ public class Database implements IDatabase{
     return result;
     }
 }
+
 
 
