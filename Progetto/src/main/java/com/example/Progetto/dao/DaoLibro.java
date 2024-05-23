@@ -200,9 +200,32 @@ public List<Map<String,String>> readRecensione(Long id) {
 //aggiungere recensione ad un libro in base all'utente in sessione
 public void addRecensione(Long idLibro, Long idUtente, String recensione) {
     String query = "update associa set recensione=? where id_libro=? and id_utente=?";
-    System.out.println("id libror: "+idLibro+" id utenter: "+idUtente+" recensioner: "+recensione);
+
    
     database.executeDML(query, recensione, String.valueOf(idLibro), String.valueOf(idUtente));
     System.out.println(query);
+}
+public int readPagineLette(Long idLibro, Long idUtente) {
+    String query = "SELECT pagineLette FROM associa WHERE id_libro =? AND id_utente =?";
+    System.out.println("id libror: "+idLibro+" id utenter: "+idUtente);
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    int pagineLette = 0;
+    for (Map<String, String> map : ris.values()) {
+        //se la mappa non è vuota allora la variabile pagineLette è uguale a 0
+        if (map.get("pagineLette") != null)
+        pagineLette = Integer.parseInt(map.get("pagineLette"));
+        
+    }
+    return pagineLette;
+}
+//se esiste un'associazione tra l'id del libro e l'id dell'utente allora la variabile associazione è true
+public boolean readAssociazione(Long idLibro, Long idUtente) {
+    String query = "SELECT * FROM associa WHERE id_libro = ? AND id_utente = ?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    System.out.println("dimensione"+ris.size());
+    if (ris.size() > 0) {
+        return true;
+    }
+    return false;
 }
 }

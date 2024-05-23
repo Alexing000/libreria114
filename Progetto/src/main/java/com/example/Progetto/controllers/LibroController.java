@@ -22,6 +22,8 @@ import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
@@ -49,35 +51,43 @@ public class LibroController {
     }
 
     @GetMapping("byId")
-    public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
+    public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model,HttpSession session){
         Libro l = serviceLibro.findById(id);
         List<Map<String,String>> ris =   serviceLibro.readRecensioni(id);
+        Long idUtente = (Long) session.getAttribute("idUtente");
+        int paginelette = serviceLibro.readPagineLette(id, idUtente);
+        String username = (String) session.getAttribute("username");
+//se esiste un'associazione tra l'id del libro e l'id dell'utente allora la variabile associazione è true
+        boolean associazione=serviceLibro.readAssociazione(id, idUtente);
+        System.out.println("bellali"+associazione);
        //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
-     
        if(id==null)
         model.addAttribute("error", "id non valido!");
 
        for(Map<String,String> m:ris){
 
-           if(m.get("recensione")!=null){
+           if(m.get("recensione")!=null&&m.get("username").equals(username)){
                model.addAttribute("avereRec", "true")    ; 
-              
-               break;
+        
+              break;
            }
            else
            {
-    
+
                 model.addAttribute("avereRec", "false");
-                break;
+             
+               break;
            }
         }
-       
+
        //id del libro
+       System.out.println("paginelette: "+paginelette);
+       System.out.println("recensioni: "+ris);
         model.addAttribute("idLibro", id);
-       
-      
-        model.addAttribute("recensioni", ris);
+       model.addAttribute("paginelette", paginelette);
+      model.addAttribute("associazione", associazione);
   
+        model.addAttribute("recensioni", ris);
         model.addAttribute("libro", l);
         return "dettaglioLibro.html";
     }
@@ -263,21 +273,20 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
 
 
    @PostMapping("/updatePagineLette")
-    @ResponseBody
     public String updatePagineLette(HttpSession session, @RequestParam(name="id", defaultValue = "0") Long idLibro, 
-    @RequestParam(name= "nPagineLette", defaultValue = "0") int pagineLette) {
+    @RequestParam(name= "nPagineLette", defaultValue = "0") int pagineLette,Model model) {
         
         Long idUtente= (Long) session.getAttribute("idUtente");
         try {
-            System.out.println("Id libro: " + idLibro + ", Pagine lette: " + pagineLette + ", Id utente: " + idUtente);
         // Chiamata al servizio per aggiornare le pagine lette
         
         serviceLibro.updatePagine(idLibro, idUtente, pagineLette);
         
 
-            return "Aggiornamento completato con successo";
+            return "redirect:/api/libro/byId?idLibro="+idLibro;
         } catch (Exception e) {
-            return "Errore nell'aggiornamento delle pagine lette: " + e.getMessage();
+            model.addAttribute("error", "Errore nell'aggiornamento delle pagine lette");
+            return "mainError.html";
         }
     }
 }

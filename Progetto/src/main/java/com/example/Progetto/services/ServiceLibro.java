@@ -80,6 +80,12 @@ if(map.get("recensione")!=null){
     System.out.println(idLibro + " " + idUtente + " " + pagineLette);
      getDao().updatePagineLette( idLibro, idUtente, pagineLette);
    }
+   public int readPagineLette(Long idLibro, Long idUtente){
+       return getDao().readPagineLette(idLibro, idUtente);
+   }
+    public boolean readAssociazione(Long idLibro, Long idUtente){
+         return getDao().readAssociazione(idLibro, idUtente);
+    }
    
 
 

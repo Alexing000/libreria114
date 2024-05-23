@@ -10,7 +10,7 @@
 
     <title>DettaglioLibro</title>
 </head>
-<body onload="adjustInputSizeOnLoad()">
+<body onload="adjustInputSizeOnLoad();updateProgress()">
     <!--da aggiungere bottone per arrivare alla pagina-->
     <table>
         <thead>
@@ -29,48 +29,34 @@
             <td class="text-center"><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>   
             <td class="text-center" th:text="${libro.trama}"></td>
             <td class="text-center" th:text="${libro.nPagine}"></td>
-            <td class="text-center"><input type="number" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress()"></td>
+            <td class="text-center"><input type="number"  th:value="${paginelette}" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress();validateInput(this)"></td>
                 
         </tbody>
     </table>
-
+<div th:if="${associazione}" >
+    
     <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
         <input type="hidden" id="idLibro" th:value="${idLibro}" name="id" >
         <input type="hidden" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
     </form>
-    </div>
     <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
     <button onclick="confirmProgress()">Salva Progressi</button>
+    </div>
 
    
-   <script> function confirmProgress() {
-        const pagineLette = document.getElementById('nPagineLette').value;
-        const libroId = document.getElementById('idLibro');
-        const form = document.getElementById('form_invio');
-        const pag = document.getElementById('nPagine');
-        pag.value = pagineLette;
-      // Imposta i valori nei campi del form
-      // Invia il form
-      form.submit();
-      updateProgress();
-        }
-        function updateProgress() {
-            const progress = document.getElementById('progress');
-            const pagineLette = document.getElementById('nPagineLette').value;
-            progress.value = pagineLette;
-        }
-        </script>
 
     <h3>Recensioni</h3>
     <table class="table table-striped">
         <tbody>
             <tr th:each="recensione:${recensioni}" th:if="${!#strings.isEmpty(recensione.recensione)}">
-                <td th:text="${recensione.username}"></td>
+                <td id="listRec" th:text="${recensione.username}"></td>
                 <td id="recensione">
             
                     <textarea id="myTextarea" class="full-text" th:text="${recensione.recensione}" readonly></textarea>
 
                 </td>
+
+
                 <div id="div-bottoni"  th:if="${session.username}==${recensione.username} ">
                         <td>
                             <button id="myButton" class="beautiful-button" onclick="modificaRecensione(this)">Modifica recensione</button>
@@ -79,18 +65,19 @@
                                 <button id="myButton1" class="beautiful-button"
                                 th:recensione="${recensione.recensione}"
                                 onclick="modificaRec(this)">Salva la modifica</button>
-                                <form id ="from_invio" action="/api/libro/aggiungiRecensione" method="post">
+                                <form id ="from_invio_rec" action="/api/libro/aggiungiRecensione" method="post">
                                     <input type="hidden" name="id" th:value="${idLibro}" >
                                     <input type="hidden" name="recensione"  id="recensioneee" >
                                 </form>
                             </div>
                             <button id="deleteButton" class="beautiful-button" onclick="modificaRec(this,this)">Elimina recensione</button>
                 </td>
+                 </div>
+            </tr>
             </tbody>
         </table>
-        
-                
-            </div>
+             
+            
        
             <div th:if="${avereRec=='false' && session.loggato=='ok'}">
                 <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
@@ -154,7 +141,43 @@
 
 </body>
 <script>
-    
+     function validateInput(input) {
+    var max = parseInt(input.max);
+    if (input.value > max) {
+        input.value = max;
+    }
+    if (input.value < 0) {
+        input.value = 0;
+    }
+    updateProgress();
+}
+   
+   
+   function confirmProgress() {
+        const pagineLette = document.getElementById('nPagineLette').value;
+        const libroId = document.getElementById('idLibro');
+        const form = document.getElementById('form_invio');
+        const pag = document.getElementById('nPagine');
+        pag.value = pagineLette;
+      // Imposta i valori nei campi del form
+      // Invia il form
+      form.submit();
+      updateProgress();
+        }
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const pagineLette = document.getElementById('nPagineLette').value;
+            console.log(pagineLette);
+            progress.value = pagineLette;
+            const recensioni = document.getElementById('listRec');
+            if (recensioni.length > 0) {
+    console.log('recensioni.length > 0');
+  } else {
+    console.log('recensioni.length <= 0');
+
+  }
+        }
+   
     function aggiungiRec(oggetto){
      
      document.getElementById('form-aggiungiRecensione').style.display = 'block';
@@ -180,7 +203,7 @@ function modificaRec(oggetto, clickedButton) {
     var button = document.getElementById('myButton');
     var button2 = document.getElementById('deleteButton');
     button.style.display = 'block';
-    var form = document.getElementById('from_invio');
+    var form = document.getElementById('from_invio_rec');
     var recensioneInput = document.getElementById('recensioneee');
 
     if (clickedButton === button2) {
@@ -192,6 +215,7 @@ function modificaRec(oggetto, clickedButton) {
     form.submit();
 }
 window.onload = function() {
+    updateProgress();
     var textarea = document.querySelector('textarea.full-text');
     var words = textarea.value.split(' ').length;
     if (words < 5) {
@@ -222,6 +246,7 @@ window.onload = function() {
        
     
 }
+
 }
 
 /*function adjustInputSize(input) {
