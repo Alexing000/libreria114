@@ -66,9 +66,13 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
         //prendimi dalla mappa il value della primary key id
     Long idLibro= Long.parseLong(map.get("id"));
     String recensione= map.get("recensione");
-
+if(map.get("recensione")!=null){
        System.out.println("id libro: "+idLibro+" id utente: "+idUtente+" recensione: "+recensione);
+
         getDao().addRecensione(idLibro, idUtente, recensione);
-    }
     
+            
+    
+}
+}
 }

@@ -68,6 +68,12 @@ public class Database implements IDatabase{
         String[] parametri ={"id"};
         ps = connection.prepareStatement(query,parametri);
         for(int i=0;i<params.length;i++){
+            //se un param è vuoto lo mette a null
+            if(params[i].toString().equals("")){
+                ps.setNull(i+1, java.sql.Types.NULL);
+            }
+            else
+        
             ps.setString(i+1, params[i].toString());
         }
         System.out.println(ps.toString());

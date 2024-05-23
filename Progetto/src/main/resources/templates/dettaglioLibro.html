@@ -38,7 +38,7 @@
                     <textarea id="myTextarea" class="full-text" th:text="${recensione.recensione}" readonly></textarea>
 
                 </td>
-                <div  th:if="${session.username}==${recensione.username} ">
+                <div id="div-bottoni"  th:if="${session.username}==${recensione.username} ">
                         <td>
                             <button id="myButton" onclick="modificaRecensione(this)">Modifica recensione</button>
                             <div id="div-button2" style="display: none;">
@@ -52,6 +52,7 @@
                                     <input type="hidden" name="recensione"  id="recensioneee" >
                                 </form>
                             </div>
+                            <button id="deleteButton" onclick="modificaRec(this,this)">Elimina recensione</button>
                 </td>
         
                 
@@ -60,26 +61,23 @@
             </tr>
         </tbody>
     </table>
-    <div th:if="${avereRec}=='false'">
-        <button type="button"  th:libro-id="${idLibro}"
-        onclick="aggiungiRec(this)"
-        >Aggiungi recensione</button> 
-    </div><div id="form-aggiungiRecensione" style="display: none;">
-        <form action="/api/libro/aggiungiRecensione" method="post">
-           
-            <input type="number" id="libro-id" name="id">
+    <div th:if="${avereRec=='false' && session.loggato=='ok'}">
+        <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
+    </div>
+    <div id="form-aggiungiRecensione" style="display: none;">
+        <form action="/api/libro/aggiungiRecensione" method="post" class="beautiful-form">
+            <input type="hidden" id="libro-id" name="id">
             <label for="recensione">Recensione</label>
-            <input type="text" id="recensione" name="recensione">
+            <input type="text" id="recensione" name="recensione" class="beautiful-input">
             <br>
-           <input type="submit" value="Aggiungi">
+            <input type="submit" value="Aggiungi" class="beautiful-button">
         </form>
-
-
     </div>
 
-    
 
-    <h3><a href="/pagina-libri">Torna alla lista</a></h3>
+    <a  style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
+    <a style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri</a>
+    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio</a>
 </body>
 <script>
     
@@ -99,29 +97,57 @@
     button.style.display = 'block';
  
 }
-function modificaRec(oggetto) {
+function modificaRec(oggetto, clickedButton) {
     var textarea = document.getElementById('myTextarea');
     textarea.readOnly = true;
     oggetto.style.display = 'none';
     var button = document.getElementById('myButton');
+    var button2 = document.getElementById('deleteButton');
     button.style.display = 'block';
     var form = document.getElementById('from_invio');
     var recensioneInput = document.getElementById('recensioneee');
-    recensioneInput.value = textarea.value;
 
+    if (clickedButton === button2) {
+        recensioneInput.value = null;
+    } else {
+        recensioneInput.value = textarea.value;
+    }
 
     form.submit();
-
-    
 }
-/*window.onload = function() {
+window.onload = function() {
     var textarea = document.querySelector('textarea.full-text');
     var words = textarea.value.split(' ').length;
-    if (words < 20) {
+    if (words < 5) {
         textarea.style.width = '20%';
         textarea.style.height = '50px';
+        textarea.style.maxWidht = '20%';
+        textarea.style.minWidht = '50px';
+       
+    }else if
+     (words < 20) {
+        textarea.style.width = '50%';
+        textarea.style.height = '80px';
+        textarea.style.maxWidht = '50%';
+        textarea.style.minWidht = '80px';
+       
     }
-}*/
+    else if (words < 50) {
+        textarea.style.width = '70%';
+        textarea.style.height = '100px';
+        textarea.style.maxWidht = '70%';
+        textarea.style.minWidht = '100px';
+       
+    } else {
+        textarea.style.width = '100%';
+        textarea.style.height = '200px';
+        textarea.style.maxWidht = '100%';
+        textarea.style.minWidht = '200px';
+       
+    
+}
+}
+
 /*function adjustInputSize(input) {
     var words = input.value.split(' ');
     for (var j = 99; j < words.length; j += 100) {
@@ -140,8 +166,7 @@ function adjustInputSizeOnLoad() {
     for (var i = 0; i < inputs.length; i++) {
         var words = inputs[i].value.split(' ');
         for (var j = 99; j < words.length; j += 100) {
-            words[j] += '\n';
-        }
+            words[j] += '\n';S
         inputs[i].value = words.join(' ');
         var lines = inputs[i].value.split('\n').length;
         inputs[i].rows = lines;
@@ -185,15 +210,85 @@ function adjustInputSizeOnLoad() {
     }*/
     </script>
     <style>
-        .full-text {
+        
+        .beautiful-button {
+    background-color: #4CAF50; 
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effects */
+}
 
-    resize:vertical;
+.beautiful-button:hover {
+    background-color: #45a049; /* Green background on hover */
+}
+
+.beautiful-form {
+    background-color: #f2f2f2; /* Light grey background */
+    padding: 20px; /* Some padding */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.beautiful-input {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+.full-text {
+    resize: vertical;
     overflow: auto;
     min-width: 100px; /* adjust as needed */
     max-width: 100%; /* adjust as needed */
+    background-color: #ffe4cc;
+    border-color: transparent; /* This will make the border transparent */
+    padding: 10px; /* Add some padding */
+    border-radius: 5px; /* Round the corners */
+   
 }
 textarea.full-text {
     width: 100%; /* Or any other value */
+    background-color: #ffe4cc; 
+}
+.full-text:focus {
+    outline: none; 
+}
+button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effects */
+}
+
+button:hover {
+    background-color: #45a049; /* Green background on hover */
+}
+
+#deleteButton {
+    background-color: #f44336; /* Red background */
+}
+
+#deleteButton:hover {
+    background-color: #da190b; /* Red background on hover */
 }
     </style>
 </html>
