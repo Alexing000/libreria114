@@ -46,6 +46,10 @@
                         th:libro-id="${libro.id}"
                         onclick="aggiungiRec(this)" >Aggiungi/modifica recensione</button>-->
                     </td>
+                    <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
+                    <td><a th:href="|/api/libro/eliminaDaLista?idLibro=${libro.id}|">
+                        <button>Elimina!</button>
+                    </a></td>
                 
                 </tr>
                 

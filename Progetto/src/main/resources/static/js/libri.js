@@ -44,4 +44,18 @@ fetch('/api/libro/byTitolo')
   }
     
 
+  function updateProgress() {
+    const pagineLette = parseInt(document.getElementById('nPagineLette').value, 10);
+const maxPagine = parseInt(document.getElementById('progress').getAttribute('max'), 10);
+
+
+    document.getElementById('progress').value = pagineLette;
+
+    if (pagineLette >= maxPagine) {
+        alert('Hai completato il libro!');
+    }
+}
+
+
+
   

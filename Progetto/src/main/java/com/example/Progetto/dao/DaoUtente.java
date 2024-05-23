@@ -121,5 +121,11 @@ public class DaoUtente implements IDao<Long, Utente>{
         database.executeDML(query, newPassword, id);
     }
 
+    
+    public boolean userExistsByEmail(String email) {
+        String query = "SELECT * FROM utente WHERE email = ?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, email);
+        return !ris.isEmpty();
+    }
 
 }
