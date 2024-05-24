@@ -3,19 +3,12 @@
 <head>
     <title>Archivio Autori</title>
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
-    <style>
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 10px;
-            background-color: grey;
-            color: #fff;
-        }
-    </style>
 </head>
 <body>
     <h1>Archivio Autori</h1>
-    <a href="/home">Torna alla Home</a>
+    
+    <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
+    <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
     <table>
         <thead>
             <TH>COVER</TH>
@@ -50,7 +43,11 @@
 
     
     <script src="script.js"></script>
-    <div class="footer">
+    <div class="footer" style="text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: grey;
+    color: #fff;">
         <footer style="
         left: 0;
         bottom: 0;
