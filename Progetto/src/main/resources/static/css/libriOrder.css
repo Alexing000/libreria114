@@ -7,9 +7,67 @@ body {
     text-align: center; /* Centra il contenuto orizzontalmente */
 }
 
+.left-box {
+    display: flex;
+    flex-direction: column;
+    width: 180px; /* Puoi regolare questa larghezza come desideri */
+    background-color: #ffefe8; /* Colore di sfondo del box */
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fissa il box nella posizione */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Altezza del box per occupare tutta la pagina */
+    overflow-y: auto; /* Permette di scorrere verticalmente se il contenuto è più alto del box */
+    transform: translateX(-80%); /* Sposta il box completamente fuori dalla sinistra */
+    transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
+}
+.left-box:hover {
+    transform: translateX(0);  /* Sposta il box di 20px a destra quando il mouse passa sopra */
+}
+
+.right-box {
+    display: flex;
+    flex-direction: column;
+    width: 180px; /* Puoi regolare questa larghezza come desideri */
+    background-color: #ffefe8; /* Colore di sfondo del box */
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fissa il box nella posizione */
+    top: 0;
+    right: 0;
+    height: 100vh; /* Altezza del box per occupare tutta la pagina */
+    overflow-y: auto; /* Permette di scorrere verticalmente se il contenuto è più alto del box */
+    transform: translateX(80%); /* Sposta il box completamente fuori dalla sinistra */
+    transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
+}
+.right-box:hover {
+    transform: translateX(0);  /* Sposta il box di 20px a destra quando il mouse passa sopra */
+}
+
+
+#TreImg img {
+    width: 80%; /* Le immagini occupano tutta la larghezza del box */
+    margin-bottom: 35px; /* Spazio tra le immagini */
+    height: auto; /* Altezza fissa per mantenere le proporzioni */
+     /* Taglia l'immagine per riempire le dimensioni */
+    display: block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    border-radius: 5px; /* Bordi leggermente arrotondati */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+#TreImg img:hover {
+    transform: scale(1.1); /* Ingrandisce l'immagine al passaggio del mouse */
+}
+
+  
+
 /* Stile per l'intestazione */
 h3 {
-    color: #f95d6a; /* Rosso corallo */
+    color: #ce441a; /* Rosso corallo */
     margin-top: 50px; /* Spazio sopra il titolo */
 }
 
@@ -51,7 +109,7 @@ thead {
 thead th {
     padding: 15px;
     text-align: center;
-    color: #f95d6a; /* Rosso corallo */
+    color: #ce441a; /* Rosso corallo */
     font-size: 18px;
 }
 
@@ -70,7 +128,7 @@ tbody tr:hover {
 tbody td {
     padding: 2px;
     font-size: 16px;
-    color: #f95d6a; /* Rosso corallo */
+    color: #ce441a; /* Rosso corallo */
 }
 
 /* Stile per le immagini di copertina */
@@ -104,23 +162,22 @@ li{
 }
 
 #libri-recenti{
-    background-color: #e9dfd1;
-    display: inline-block;
-    margin: 10px auto;
-    padding: 0px 0px;
+    background-color: #fdd9c8;
+    display: block;
+    width: 90%;
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
     transition: background-color 0.3s ease;
-    color:none; /* Bianco */
-    background-color:none
- 
+    color: #000; /* Colore del testo */
+    margin: auto;
+    padding: 1px; /* Aggiungi un padding per evitare che il testo tocchi i bordi */
 }
 
 #libri-consigliati{
-    background-color: #e9dfd1;
+    background-color: #fdd9c8;
     display: inline-block;
-    margin: 5px;
-    padding: 0px 0px;
+    width: 90%;
+
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
     transition: background-color 0.3s ease;
@@ -131,10 +188,9 @@ li{
 /* Stile per il link "Torna alla Home" */
 a {
     display: inline-block;
-    margin: 20px auto;
+    margin: 5px  auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    
     font-weight: bold;
     transition: background-color 0.3s ease;
 }
@@ -144,7 +200,7 @@ a {
     margin: 20px auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
@@ -157,7 +213,7 @@ a {
     margin: 20px auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
@@ -168,7 +224,7 @@ a {
     margin: 20px auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
@@ -179,7 +235,7 @@ a {
     margin: 20px auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
@@ -193,7 +249,9 @@ a {
 
 /* Stile per il link "Torna alla Home" al passaggio del mouse */
 a:hover {
-    background-color: #ff7e82; /* Rosso chiaro */
+    background-color: #f39353; /* Rosso chiaro */
+    
+    border-radius: 5px;
 }
 
 #background-video {
@@ -230,7 +288,7 @@ a:hover {
     width: 600px; /* Imposta la larghezza desiderata */
     height: 20px;
     padding: 10px;
-    border: 1px solid #f95d6a; /* Rosso corallo */
+    border: 1px solid #ce441a; /* Rosso corallo */
     border-radius: 5px;
     font-size: 16px;
     transition: width 0.4s ease-in-out;
@@ -238,8 +296,11 @@ a:hover {
 
 /* Stile per il pulsante di ricerca */
 #search-button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     padding: 10px 20px;
-    background-color: #f95d6a; /* Rosso corallo */
+    width: 150px; /* Larghezza fissa */
+    background-color: #ce441a; /* Rosso corallo */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -249,7 +310,7 @@ a:hover {
 
 /* Stile per il pulsante di ricerca al passaggio del mouse */
 #search-button:hover {
-    background-color: #ff7e82; 
+    background-color: #f39353; 
 }
 
 #inserisci{
@@ -257,7 +318,7 @@ a:hover {
     margin: 20px auto;
     text-decoration: none;
     color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     padding: 10px 20px; /* Spaziatura interna */
     border-radius: 5px; /* Bordi arrotondati */
     font-weight: bold;
@@ -280,7 +341,7 @@ a:hover {
 #progress-container input[type="number"] {
     width: 100px; /* Larghezza fissa */
     padding: 10px;
-    border: 1px solid #f95d6a; /* Rosso corallo */
+    border: 1px solid #ce441a; /* Rosso corallo */
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
@@ -298,7 +359,7 @@ a:hover {
 /* Stile per il pulsante di aggiornamento */
 #progress-container button {
     padding: 10px 20px;
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     color: #fff; /* Bianco */
     border: none;
     border-radius: 5px;
@@ -308,7 +369,7 @@ a:hover {
 
 /* Stile per il pulsante di aggiornamento al passaggio del mouse */
 #progress-container button:hover {
-    background-color: #ff7e82; /* Rosso chiaro */
+    background-color: #f39353; /* Rosso chiaro */
 }
 
 /* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
@@ -318,12 +379,12 @@ a:hover {
 }
 
 #progress-container progress::-webkit-progress-value {
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     border-radius: 5px;
 }
 
 #progress-container progress::-moz-progress-bar {
-    background-color: #f95d6a; /* Rosso corallo */
+    background-color: #ce441a; /* Rosso corallo */
     border-radius: 5px;
 }
 
