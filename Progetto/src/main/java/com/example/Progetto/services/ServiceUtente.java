@@ -72,6 +72,12 @@ public class ServiceUtente{
         public boolean readByEmail(String email) {
             return daoUtente.userExistsByEmail(email);
         }
-       
+        public int readLibriChallenge(Long idUtente) {
+            return daoUtente.readLibriChallenge(idUtente);
+        }
+       public void addLibroChallenge(Long idUtente,int libCh)
+       {
+              daoUtente.addLibroChallenge(idUtente, libCh);
+       }
 
     }
