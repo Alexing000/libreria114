@@ -4,26 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
@@ -43,9 +35,9 @@ public class LibroController {
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
     public String all(Model model,HttpSession session){
-        List<Libro> ris = serviceLibro.findAll();   
-      
+     List<Libro> ris = serviceLibro.findAll();      
   
+
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris2 = serviceLibro.readByIdUtente(idUtente);
         for(Libro l:ris){
@@ -61,7 +53,7 @@ public class LibroController {
         model.addAttribute("libri", ris);
         return "archivioCompleto.html";
     }
-    
+
     @PostMapping("/votoo")
  public String voto(@RequestParam(name="idLibro", defaultValue = "0") Long id, 
  @RequestParam(name="rating", defaultValue = "0") double voto,@RequestParam(name="votoVecchio", defaultValue = "0") double votoVecchio,Model model,HttpSession session){
@@ -125,6 +117,15 @@ public class LibroController {
        
     }
 
+    @GetMapping("/ratings")
+    public String orderByRatings(Model model){
+        List<Libro> ris = serviceLibro.byRatings();
+  
+        model.addAttribute("libri", ris);
+        return "libriOrderRatings.html";
+       
+    }
+
     @GetMapping("/genere")
     public String orderByGenere(Model model){
         List<Libro> ris = serviceLibro.byGenere();
@@ -157,7 +158,7 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
     //ritorna alla pagina dei libriutenti
     return "redirect:/api/libro/byId?idLibro="+id;
 
-    
+
 }
 
     @GetMapping("/byAutore")
