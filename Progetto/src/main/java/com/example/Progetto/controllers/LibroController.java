@@ -16,6 +16,12 @@ import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
+
+import com.example.Progetto.services.ServiceUtente;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
+
+
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
@@ -28,6 +34,8 @@ public class LibroController {
     private  ServiceLibro serviceLibro;
     @Autowired
     private ServiceAutore serviceAutore;
+    @Autowired
+    private ServiceUtente serviceUtente;
 
    
 
@@ -167,6 +175,13 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
   
         model.addAttribute("libri", ris);
         return "archivioCompleto.html";
+}
+@PostMapping("challenge")
+public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue = "0") int idLibroCh,Model model,HttpSession session){
+    //id utenete in sessione
+    Long idUtente = (Long) session.getAttribute("idUtente");
+    serviceUtente.addLibroChallenge(idUtente, idLibroCh);
+    return "redirect:/homeUtente";
 }
 
     /*@GetMapping("/byId")

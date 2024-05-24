@@ -41,11 +41,22 @@ public class AppController {
             return "redirect:formLogin";
         }else{
             List<Libro> ris = serviceLibro.byAnno();
+
+List<Autore > autori = serviceAutore.findAll();
+//id dell'utente in sessione
+            Long idUtente = (Long) session.getAttribute("idUtente");
+       
+
             List<Autore > autori = serviceAutore.findAll();
             
+
             model.addAttribute("libri", ris);
             model.addAttribute("autori", autori);
-           
+            model.addAttribute("libriChallenge", serviceUtente.readLibriChallenge(idUtente));
+          int nlibriUtente= nLibriUtente(idUtente);
+            model.addAttribute("nlibriUtente", nlibriUtente);
+          boolean merito=merito(nlibriUtente, serviceUtente.readLibriChallenge(idUtente));
+            model.addAttribute("merito",merito);
             List<Libro> ris2 = new ArrayList<Libro>();
             
             for (int i = 0; i < 5; i++) {
@@ -72,6 +83,24 @@ public class AppController {
             model.addAttribute("librG", ris4);
             return "homeUtente.html";
         }
+    }
+
+private boolean merito(int nLibriUtente, int libriChallenge){
+boolean merito=false;
+    if(nLibriUtente>libriChallenge){
+        merito=true;
+    }
+    return merito;
+
+
+}
+    private int nLibriUtente(Long idUtente){
+int ris=0;
+List<Libro> lista = serviceLibro.readByIdUtente(idUtente);
+ris=lista.size();
+
+        return ris;
+
     }
 
     @GetMapping("/formLogin")
@@ -134,6 +163,13 @@ public class AppController {
 
     @GetMapping("/home")
     public String home(Model model) {
+
+        List<Libro> ris = serviceLibro.byAnno();
+        List<Autore > autori = serviceAutore.findAll();
+        //id dell'utente in sessione
+        model.addAttribute("libri", ris);
+        model.addAttribute("autori", autori);
+
         List<Libro> ris = serviceLibro.byRatings();
             List<Autore > autori = serviceAutore.findAll();
             
@@ -164,6 +200,7 @@ public class AppController {
             model.addAttribute("libr", ris2);
 
             model.addAttribute("librG", ris4);
+
         return "home.html";
     }
 
