@@ -72,7 +72,9 @@
             <input type="text" id="newUsername" name="newUsername" required>
             <input type="submit" value="Modifica Username">
         </form>
-
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
         <form action="/modificaPassword" method="POST">
             <label for="oldPassword">Vecchia Password:</label>
             <input type="password" id="oldPassword" name="oldPassword" required>
@@ -80,7 +82,9 @@
             <input type="password" id="newPassword" name="newPassword" required>
             <input type="submit" value="Modifica Password">
         </form>
-        
+        <div th:if="${error != null}">
+            <p th:text="${error}" style="color: red;"></p>
+        </div>
         <form id="deleteAccountForm" action="/eliminaAccount" method="POST">
             <input type="submit" value="Elimina Account">
         </form>
