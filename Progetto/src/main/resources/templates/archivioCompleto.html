@@ -59,14 +59,20 @@
     Se faccio una richiesta inserimento dati
     e uso il body allora probabilmente sfrutterò il verbo POST
     questi dati potranno così essere recuperati dal backend e li passiamo al server-->
-    <button id="crea" th:if="${isAdmin}">Aggiungi</button>
+    
     <form action="/api/libro/add" method="post">
        
         <label for="titolo"> Titolo</label>
         <input type="text" id="titolo" name="titolo" >
         <br>
+        <label for="trama">Trama</label>
+        <input type="text" id="trama" name="trama" >
+        <br>
         <label for="autore">Autore</label>
         <input type="text" id="autore" name="autore">
+        <br>
+        <label for="nPagine">Numero Pagine</label>
+        <input type="number" id="nPagine" name="nPagine" >
         <br>
         <label for="genere">Genere</label>
         <input type="text" id="genere" name="genere" >
@@ -80,8 +86,12 @@
         <label for="url">URL</label>
         <input type="text" id="url" name="url" >
         <br>
+        <label for="id_autore">Id_autore</label>
+        <input type="number" id="id_autore" name="id_autore" >
+        <br>
 
-        <input id="crea" type="submit" value="Aggiungi un nuovo libro">
+        <button id="crea">Aggiungi</button>
+       <!--<input id="crea" type="submit" value="Aggiungi un nuovo libro">--> 
     </form>
      
     </div>

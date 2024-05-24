@@ -291,8 +291,9 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
     }*/
 
     @PostMapping("/add")
-    public String add(@RequestBody Map<String,String> map){
+    public String add(@RequestParam Map<String,String> map){
         serviceLibro.insert(map);
+        System.out.println(map);
         return "redirect:/api/libro/all";
     }
 
