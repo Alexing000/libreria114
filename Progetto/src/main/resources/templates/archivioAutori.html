@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Archivio Autori</title>
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <style>
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: grey;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Archivio Autori</h1>
+    <table>
+        <thead>
+            <TH>COVER</TH>
+            <TH>NOME</TH>
+            <th>COGNOME</th>
+            <th>BIOGRAFIA</th>
+            <TH>RATING</TH>
+            <th>Lista libri</th>
+            
+        </thead>
+        <tbody>
+            <tr th:each="autori:${autore}">
+
+                <td th:src="${autori.url}"><img th:src="${autori.url}" alt="Copertina"></td>
+                <td th:text="${autori.nome}"></td>
+                <td th:text="${autori.cognome}"></td>
+                <td th:text="${autori.biografia}"></td>
+                <td th:text="${autori.rating}"></td>
+                <td>
+                    <div th:each="libro : ${autori.libri}">
+                        <span th:text="${libro.titolo}"></span><br>&nbsp;
+                    </div>
+                </td>
+                  
+            </tr>
+        </tbody>
+
+        
+
+
+</table>
+
+    
+    <script src="script.js"></script>
+    <div class="footer">
+        <footer style="
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;">
+            <a href="/chiSiamo" id ="chiSiamo">Chi siamo</a>
+            <a href="/FAQ" id ="FAQ">FAQ</a>
+            <a href="/privacyPolicy" id ="privacyPolicy">Privacy policy</a>
+            <a href="/lavoraConNoi" id ="lavoraConNoi">Lavora con noi</a> 
+        </footer>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/main.css" type="text/css">
+        <title>Form Login</title>
+    </head>
+    <body>
+        
+        <video autoplay muted loop id="background-video">
+            <source src="https://videos.pexels.com/video-files/854417/854417-uhd_3840_2160_25fps.mp4" type="video/mp4">
+            Il tuo browser non supporta il tag video.
+        </video>
+        <h2>
+            <img src="https://i.ibb.co/wM8h3cP/bookwarm.png" alt="bookwarm"></a>
+        </h2>
+        <form action="/login" method="post">
+            <h3>Login</h3>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Username">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Password">
+            </div>
+            <button type="submit" value="Login" id="login">Login</button>
+            <div th:if="${error}" class="error-messagge">
+                <p th:text="${error}"></p>
+            </div>
+             <!-- Add this closing tag -->
+            <br><br>
+        </form>
+        <br>
+        <form action="/signup" method="get">
+            <input type="submit" value="Registrazione">
+        </form>
+    </body>
+</html>
