@@ -56,6 +56,9 @@
 <body>
     <div class="container">
         <h1>Lavora con Noi</h1>
+        
+        <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
+        <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
         <p>Se sei appassionato di libri e desideri far parte di un team dedicato a connettere lettori di tutto il mondo, BookWarm è il posto giusto per te. Siamo sempre alla ricerca di talenti entusiasti e creativi per unirsi alla nostra squadra. Di seguito troverai le posizioni attualmente aperte e le modalità per candidarti.</p>
 
         <div class="job-position">

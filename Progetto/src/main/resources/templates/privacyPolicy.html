@@ -40,6 +40,9 @@
 <body>
     <div class="container">
         <h1>Privacy Policy di BookWarm</h1>
+        
+        <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
+        <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
         <h2>Introduzione</h2>
         <p>Benvenuti su BookWarm! La tua privacy è molto importante per noi. Questa Privacy Policy descrive le modalità con cui raccogliamo, utilizziamo, divulghiamo e proteggiamo le informazioni personali dei nostri utenti. Utilizzando il nostro sito web, accetti le pratiche descritte in questa politica.</p>
 

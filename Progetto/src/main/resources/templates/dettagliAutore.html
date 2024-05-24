@@ -7,7 +7,9 @@
 </head>
 <body>
     <h1>Dettagli Autore</h1>
-
+    
+    <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
+    <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
     
     <!-- Add your content here --><table>
         <thead>

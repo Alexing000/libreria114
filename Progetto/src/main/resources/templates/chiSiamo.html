@@ -48,6 +48,9 @@
 <body>
 <div class="container">
     <h1>Chi siamo</h1>
+    
+    <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
+    <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
     <p>Benvenuti su BookWarm, il vostro compagno di lettura ideale! Siamo una comunità di appassionati di libri, creata da lettori per lettori, con l'obiettivo di coltivare e condividere l'amore per la lettura.</p>
 
     <div class="section-title">La nostra Missione</div>
