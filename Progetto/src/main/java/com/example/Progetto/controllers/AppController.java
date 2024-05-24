@@ -50,7 +50,6 @@ List<Autore > autori = serviceAutore.findAll();
             model.addAttribute("libriChallenge", serviceUtente.readLibriChallenge(idUtente));
           int nlibriUtente= nLibriUtente(idUtente);
             model.addAttribute("nlibriUtente", nlibriUtente);
-      System.out.println( "dfdfd"+merito(nlibriUtente, serviceUtente.readLibriChallenge(idUtente)));
           boolean merito=merito(nlibriUtente, serviceUtente.readLibriChallenge(idUtente));
             model.addAttribute("merito",merito);
             List<Libro> ris2 = new ArrayList<Libro>();
@@ -158,7 +157,12 @@ ris=lista.size();
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        List<Libro> ris = serviceLibro.byAnno();
+        List<Autore > autori = serviceAutore.findAll();
+        //id dell'utente in sessione
+        model.addAttribute("libri", ris);
+        model.addAttribute("autori", autori);
         return "home.html";
     }
 

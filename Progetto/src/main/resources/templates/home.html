@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
     <script th:inline="javascript">
         var list = /*[[${libri}]]*/ [];
+        var list1 = /*[[${autori}]]*/ [];
+        
        </script>
     <script src="/js/libri.js"></script>
  
@@ -39,7 +41,6 @@
             </button>
         </form>
     </div>
-    
     
 
 
@@ -116,17 +117,16 @@
 </body>
 
 <script>
-    const input = document.getElementById('search-input');
+     const input = document.getElementById('search-input');
     input.addEventListener("keyup",autocomp);
     const search = document.getElementById('ris-ricerca');
 
 
     function autocomplete(valore){
+        console.log(list);
       if(valore.length === 0){
         return [];
       }
-
-      //const reg=new RegExp(valore.toLowerCase());
       var valoreLower=valore.toLowerCase();
       var controllo=false;
       
@@ -148,27 +148,74 @@ if(controllo===true)
         return libro.titolo
       }
     )
+  
 
 }
+function autocompleteA(valore){
+
+    if(valore.length === 0){
+        return [];
+      }
+      var valoreLower=valore.toLowerCase();
+      var controllo=false;
+
+  return list1.filter((autore) => {
+
+for(var i=0;i<valoreLower.length;i++)
+{
+        if(autore.cognome.toLowerCase().charAt(i)===valoreLower.charAt(i) )
+        {
+          
+            controllo=true;
+        }else{
+            controllo=false;
+            break;
+        }
+    }
+ 
+if(controllo===true)
+        return autore.cognome;
+      }
+    )
+    }
   
   function autocomp(input){
    
-    
+   
     let consigliati= "";
+    let consigliati1= "";
+    var cLibro=0;
+    var cAutore=0;
     const titoli= autocomplete(input.target.value);
+    const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-  consigliati += `<li  onclick="seleziona(event)">${titolo.titolo}</li>`;
-  console.log(consigliati);
+    if(cLibro<4)
+  consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
+
+  cLibro++;
+
+ 
     
   })
-  search.innerHTML = `<ul>${consigliati}</ul>`;
+    autori.forEach((autore) => {
+        if(cAutore<4)
+
+        consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
+        cAutore++;
+    })
+  let consigliatiSuper=consigliati+" "+consigliati1+" ";
+
+  search.innerHTML = `<ul>${consigliatiSuper}</ul>`;
  
 
 }
 function seleziona(event){
   search.innerHTML = "";
-  input.value = event.target.textContent;
+  input.value = event.target.textContent.substring(3);
   
+}
+window.onpageshow = function() {
+    document.getElementById('search-input').value = '';
 }
 </script>
 
