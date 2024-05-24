@@ -47,7 +47,6 @@ List<Autore > autori = serviceAutore.findAll();
             Long idUtente = (Long) session.getAttribute("idUtente");
        
 
-            List<Autore > autori = serviceAutore.findAll();
             
 
             model.addAttribute("libri", ris);
@@ -164,14 +163,12 @@ ris=lista.size();
     @GetMapping("/home")
     public String home(Model model) {
 
-        List<Libro> ris = serviceLibro.byAnno();
+        
         List<Autore > autori = serviceAutore.findAll();
         //id dell'utente in sessione
-        model.addAttribute("libri", ris);
-        model.addAttribute("autori", autori);
 
         List<Libro> ris = serviceLibro.byRatings();
-            List<Autore > autori = serviceAutore.findAll();
+            
             
             model.addAttribute("libri", ris);
             model.addAttribute("autori", autori);
