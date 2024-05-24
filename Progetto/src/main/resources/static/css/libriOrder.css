@@ -326,3 +326,15 @@ a:hover {
     border-radius: 5px;
 }
 
+/* Aggiungi queste regole alla fine del tuo file libriOrder.css */
+.social-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0 10px; /* Margine tra le icone */
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2); /* Effetto hover */
+}
