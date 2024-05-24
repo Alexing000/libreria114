@@ -228,4 +228,29 @@ public boolean readAssociazione(Long idLibro, Long idUtente) {
     }
     return false;
 }
+public void vota(Long idLibro, double voto) {
+    String query = "UPDATE libro SET rating = ? WHERE id = ?";
+    database.executeDML(query, String.valueOf(voto), String.valueOf(idLibro));
+}
+public double readRatingPersonale(Long idLibro, Long idUtente) {
+    String query = "SELECT ratingPersonale FROM associa WHERE id_libro = ? AND id_utente = ?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    double voto = 0;
+    for (Map<String, String> map : ris.values()) {
+        if(map.get("ratingPersonale")!=null)
+        {
+        voto = Double.parseDouble(map.get("ratingPersonale"));
+        return voto;
+        }
+       
+    }
+     
+    return -1;
+  
+}
+public void addRatingPersonale(Long idLibro, Long idUtente, double voto) {
+    String query = "UPDATE associa SET ratingPersonale = ? WHERE id_libro = ? AND id_utente = ?";
+    database.executeDML(query, String.valueOf(voto), String.valueOf(idLibro), String.valueOf(idUtente));
+   
+}
 }

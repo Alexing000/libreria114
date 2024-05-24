@@ -19,8 +19,10 @@
             <TH>AUTORE</TH>
             <th>GENERE</th>
             <th>TRAMA</th>
+            <th>RATING</th>
+            <th th:if="${session.loggato=='ok'}  and ${ratingPersonale != -1}">RATING PERSONALE</th>
             <th>PAGINE</th>
-            <TH>PAGINE LETTE</TH>
+            <TH th:if="${session.loggato=='ok'}">PAGINE LETTE</TH>
         </thead>
         <tbody>
             <td class="text-center"><img th:src="${libro.url}" alt="Copertina"></td>
@@ -28,12 +30,18 @@
             <td class="text-center"><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
             <td class="text-center"><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>   
             <td class="text-center" th:text="${libro.trama}"></td>
+            <td class="text-center" th:text="${libro.rating}"></td>
+            <td th:if="${session.loggato=='ok'} and ${ratingPersonale != -1}" class="text-center" th:text="${ratingPersonale}"></td>
             <td class="text-center" th:text="${libro.nPagine}"></td>
-            <td class="text-center"><input type="number"  th:value="${paginelette}" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress();validateInput(this)"></td>
+            <td class="text-center">
+                <input type="number" th:value="${paginelette}" id="nPagineLette" min="0" th:max="${libro.nPagine}" 
+                       oninput="updateProgress();validateInput(this)" th:readonly="${!associazione}" th:if="${session.loggato=='ok'}">
+            </td>
                 
         </tbody>
     </table>
-<div th:if="${associazione}" >
+
+<div th:if="${associazione && session.loggato=='ok'}" >
     
     <form id ="form_invio" action="/api/libro/updatePagineLette" method="post">
         <input type="hidden" id="idLibro" th:value="${idLibro}" name="id" >
@@ -57,7 +65,7 @@
                 </td>
 
 
-                <div id="div-bottoni"  th:if="${session.username}==${recensione.username} ">
+                <div id="div-bottoni" th:if="${session.username}==${recensione.username} and ${session.loggato}=='ok'">
                         <td>
                             <button id="myButton" class="beautiful-button" onclick="modificaRecensione(this)">Modifica recensione</button>
                             <div id="div-button2" style="display: none;">
@@ -79,7 +87,7 @@
              
             
        
-            <div th:if="${avereRec=='false' && session.loggato=='ok'}">
+            <div th:if="${avereRec=='false' && session.loggato=='ok' && associazione==true}">
                 <button type="button" th:libro-id="${idLibro}" onclick="aggiungiRec(this)" class="beautiful-button">Aggiungi recensione</button> 
             </div>
             <div id="form-aggiungiRecensione" style="display: none;">
@@ -91,34 +99,19 @@
                     <input type="submit" value="Aggiungi" class="beautiful-button">
                 </form>
             </div>
-        
-            
-           <!-- <th>Titolo</th>
-            <th>Autore</th>
-            <th>Genere</th>
-            <th>Anno Pubblicazioone</th>
-            <th>PAGINE</th>
-            <TH>PAGINE LETTE</TH>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${libro.titolo}"></td>
-                <td><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
-                <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
-                <td th:text="${libro.dataPubblicazione}"></td>
-                <td th:text="${libro.nPagine}"></td>
-                <td><input type="number" id="nPagineLette" min="0" th:max="${libro.nPagine}" oninput="updateProgress()"></td>
-                
-            </tr>
-        </tbody>
-        
-    </table>
-    
--->
-   
-   <!-- <h3>Trama</h3>
-    <p th:text="${libro.trama}"></p> 
-    <h3><a href="/homeUtente">Torna alla Home</a></h3>-->
+ 
+<div th:if="${session.loggato=='ok' && associazione==true}">
+<h3>Dai un voto</h3>
+
+<form action="/api/libro/votoo" method="post">
+<input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
+<input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
+<input type="number" name="rating" id="rating" min="0" max="5" value="0" step="0.1" oninput="validateInput1(this)">
+<input type="submit" value="Vota!" class="beautiful-button">
+</form>
+            </div>
+
+
     <a  style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home</a>
     <a style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri</a>
     <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio</a>
@@ -141,6 +134,15 @@
 
 </body>
 <script>
+
+function Vota(button){
+    
+}
+function validateInput1(input) {
+    var value = input.value;
+    if (value < 0) input.value = 0;
+    if (value > 5) input.value = 5;
+}
      function validateInput(input) {
     var max = parseInt(input.max);
     if (input.value > max) {

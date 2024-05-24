@@ -42,13 +42,38 @@ public class LibroController {
 
     //htpps://localhost:8080/libro/all
     @GetMapping("/all")
-    public String all(Model model){
-     List<Libro> ris = serviceLibro.findAll();      
+    public String all(Model model,HttpSession session){
+        List<Libro> ris = serviceLibro.findAll();   
+      
+    //se esiste un'associaizone tra il liro nella lista e l'id dell'utente allora mettimi un + alla fine del libro
+        Long idUtente = (Long) session.getAttribute("idUtente");
+        List<Libro> ris2 = serviceLibro.readByIdUtente(idUtente);
+        for(Libro l:ris){
+            for(Libro l2:ris2){
+                if(l.getId()==l2.getId()){
+                    l.setTitolo(l.getTitolo()+" ");
+                }
+            }
+        }
+
+     
   
 
         model.addAttribute("libri", ris);
         return "archivioCompleto.html";
     }
+    
+    @PostMapping("/votoo")
+ public String voto(@RequestParam(name="idLibro", defaultValue = "0") Long id, 
+ @RequestParam(name="rating", defaultValue = "0") double voto,@RequestParam(name="votoVecchio", defaultValue = "0") double votoVecchio,Model model,HttpSession session){
+ Long idUtente = (Long) session.getAttribute("idUtente");
+    double votoFinale=(voto+votoVecchio)/2;
+      serviceLibro.vota(id, votoFinale);
+      serviceLibro.addRatingPersonale(id,idUtente, voto);
+        return "redirect:/api/libro/byId?idLibro="+id;
+    }
+
+    
 
     @GetMapping("byId")
     public String dettagliLibro(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model,HttpSession session){
@@ -57,9 +82,10 @@ public class LibroController {
         Long idUtente = (Long) session.getAttribute("idUtente");
         int paginelette = serviceLibro.readPagineLette(id, idUtente);
         String username = (String) session.getAttribute("username");
+        double votoUtente=serviceLibro.readRatingPersonale(id, idUtente);
 //se esiste un'associazione tra l'id del libro e l'id dell'utente allora la variabile associazione è true
         boolean associazione=serviceLibro.readAssociazione(id, idUtente);
-        System.out.println("bellali"+associazione);
+     
        //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
        if(id==null)
         model.addAttribute("error", "id non valido!");
@@ -81,8 +107,8 @@ public class LibroController {
         }
 
        //id del libro
-       System.out.println("paginelette: "+paginelette);
-       System.out.println("recensioni: "+ris);
+    System.out.println("ratingPersonale"+votoUtente);
+       model.addAttribute("ratingPersonale", votoUtente);
         model.addAttribute("idLibro", id);
        model.addAttribute("paginelette", paginelette);
       model.addAttribute("associazione", associazione);
@@ -132,6 +158,7 @@ public String aggiungiRecensione(@RequestParam Map<String,String> params,Model m
     //ritorna alla pagina dei libriutenti
     return "redirect:/api/libro/byId?idLibro="+id;
 
+    
 }
 
     @GetMapping("/byAutore")

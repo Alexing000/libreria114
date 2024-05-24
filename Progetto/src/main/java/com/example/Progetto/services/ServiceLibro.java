@@ -86,7 +86,17 @@ if(map.get("recensione")!=null){
     public boolean readAssociazione(Long idLibro, Long idUtente){
          return getDao().readAssociazione(idLibro, idUtente);
     }
-   
+    public void vota(Long idLibro, double voto){
+  
+
+        getDao().vota(idLibro,voto);
+    }
+   public double readRatingPersonale(Long idLibro, Long idUtente){
+       return getDao().readRatingPersonale(idLibro, idUtente);
+   }
+   public void addRatingPersonale(Long idLibro, Long idUtente, double voto){
+       getDao().addRatingPersonale(idLibro, idUtente, voto);
+   }
 
 
 
