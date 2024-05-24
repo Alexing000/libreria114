@@ -48,24 +48,7 @@
 
     
     
-    <form action="/recenti" method="GET" id="libri-recenti">
-        
     
-    <div id="libri-recenti">
-        <h2>Ultime Uscite</h2> <a href="/api/libro/recenti">...</a>
-        <div>
-            <table>
-
-                
-                <tbody>
-                       
-                    <li id="listina" th:each="libro:${libr}">      
-                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
-                    </li>
-                </tbody>
-
-            </table>
-        </div>
 
     <div class="left-box" id="left-box">
         <h3>Gruppi di Lettura:</h3>
