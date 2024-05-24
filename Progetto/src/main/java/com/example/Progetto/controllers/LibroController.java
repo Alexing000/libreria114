@@ -45,7 +45,7 @@ public class LibroController {
     public String all(Model model,HttpSession session){
         List<Libro> ris = serviceLibro.findAll();   
       
-    //se esiste un'associaizone tra il liro nella lista e l'id dell'utente allora mettimi un + alla fine del libro
+  
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris2 = serviceLibro.readByIdUtente(idUtente);
         for(Libro l:ris){
@@ -56,8 +56,7 @@ public class LibroController {
             }
         }
 
-     
-  
+    
 
         model.addAttribute("libri", ris);
         return "archivioCompleto.html";
