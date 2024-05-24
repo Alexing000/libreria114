@@ -78,11 +78,10 @@ public class ModelsContext {
         u.setCognome(map.get("cognome"));
         u.setEmail(map.get("email"));
         u.setRuolo(map.get("ruolo"));
-        u.setLibriChallenge(Integer.parseInt(map.get("libriChallenge")));
+    //    u.setLibriChallenge(Integer.parseInt(map.get("libriChallenge")));
         u.setLibri(daoLibro.readByUtente(id));
         return u;
     }
-
 
 
 }
