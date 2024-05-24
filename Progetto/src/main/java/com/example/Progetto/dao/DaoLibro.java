@@ -160,6 +160,23 @@ public List<Libro> readByGenere(String genere) {
         return libriList;
     }
 
+    public List<Libro> orderByRatings(){
+        String query = "SELECT * FROM libro ORDER BY rating desc";
+        Map<Long, Map<String, String>> libri = database.executeDQL(query);
+        Libro l = new Libro();
+        List<Libro> libriList = new ArrayList<Libro>();
+
+        for (Map<String, String> map : libri.values()) {
+            l = context.getBean(Libro.class, map);
+            libriList.add(l);
+        }
+    
+        libriList.sort(Comparator.comparing(Libro::getRating).reversed());
+        return libriList;
+    }
+
+
+
     public List<Libro> readByUtente(Long id)
     {
        String query=" select l.* from libro as l join associa as a on a.id_libro=l.id join utente as u on a.id_utente=u.id where u.id=?";
