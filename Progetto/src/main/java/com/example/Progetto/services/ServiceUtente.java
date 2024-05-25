@@ -79,5 +79,13 @@ public class ServiceUtente{
        {
               daoUtente.addLibroChallenge(idUtente, libCh);
        }
+         public void addLibroLetti(Long idUtente,int libLetti)
+         {
+                  daoUtente.addLibroLetti(idUtente, libLetti);
+         }
+            public int readLibriLetti(Long idUtente)
+            {
+                return daoUtente.readLibriLetti(idUtente);
+            }
 
     }

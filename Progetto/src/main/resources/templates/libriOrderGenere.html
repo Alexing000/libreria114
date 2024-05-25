@@ -37,6 +37,14 @@
 
 
                 <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
+                <td th:if="${session.loggato == 'ok'}">
+                    <a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
+                        <button th:disabled="${#strings.endsWith(libro.titolo, ' ')}" 
+                                th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
+                        </button>
+                    </a>
+                </td>
+            
             </tr>
         </tbody>
 

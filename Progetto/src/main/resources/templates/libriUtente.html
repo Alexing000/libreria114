@@ -46,15 +46,20 @@ min-height: 100vh;">
                     <td th:text="${libro.rating}"></td>
                     <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                     <td>
-                        <a th:href="|/api/libro/eliminaDaLista?idLibro=${libro.id}|">
-                            <button>Elimina!</button>
-                        </a><br>
+
+                        
+               <form action="/api/libro/eliminaDaLista" method="post">
+                    <input type="numer" name="idLibro" th:value="${libro.id}">
+                    <input type="hidden" th:value="${count}" name="conto">
+
+                    <button class="deleteButton">Elimina!</button>
+                </form>
+                   
                      
                     </td>
-                   <!-- <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
-                   -->
-                
+                                            
                 </tr>
+        
                 
 
             </tbody>
@@ -81,6 +86,25 @@ min-height: 100vh;">
 
 </body>
 <script >
+
+
+window.onbeforeunload = function() {
+   
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/api/count', true);
+    xhr.setRequestHeader("Content-Type", 'application/json');
+    var countValue = document.getElementsByName('conto')[0].value;
+
+    xhr.send(JSON.stringify({
+        count: countValue
+    }));
+    window.location.href = "/homeUtente";
+}
+
+
+
+
 
 
 </script>

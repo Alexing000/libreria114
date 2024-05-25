@@ -90,10 +90,24 @@
             
         </div>
         <div>
-            <a href="/api/libro/genere">...</a>
+            <a href="/api/libro/genereUtente">...</a>
         </div>
     </div>
-        <div id="reading-challenge"  th:if="${session.loggato=='ok'}">
+    <!--<div id="libri-consigliati">
+        <h2>Libri Consigliati</h2>
+        <div>
+            
+            <li th:each="libro:${librG}">      
+                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+            </li>
+            
+        </div>
+        <div>
+            <a href="/api/libro/genere">...</a>
+        </div>
+    </div>-->
+
+        <div id="reading-challenge"  th:if="${session.loggato=='ok'&& libriChallenge>0 }">
             <h2>Reading Challenge</h2>
             
             <form action="/api/libro/challenge" method="post" id="challenge-form">

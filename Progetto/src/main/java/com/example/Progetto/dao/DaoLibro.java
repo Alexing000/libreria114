@@ -265,9 +265,52 @@ public double readRatingPersonale(Long idLibro, Long idUtente) {
     return -1;
   
 }
-public void addRatingPersonale(Long idLibro, Long idUtente, double voto) {
+public void addRatingPersonale(Long idLibro, Long idUtente, Double voto) {
     String query = "UPDATE associa SET ratingPersonale = ? WHERE id_libro = ? AND id_utente = ?";
+    if(voto==-1)
+    {
+        
+        database.executeDML(query,"", String.valueOf(idLibro), String.valueOf(idUtente));
+    }
+    else{
+    System.out.println("il vtooo"+voto);
     database.executeDML(query, String.valueOf(voto), String.valueOf(idLibro), String.valueOf(idUtente));
+    }
    
+}
+public int numeroVotazioni(double idLibro){
+    String query = "SELECT COUNT(*) FROM associa WHERE ratingPersonale IS NOT NULL and id_libro=?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+    int numeroVotazioni = 0;
+    for (Map<String, String> map : ris.values()) {
+        //se la mappa è vuota allora la variabile numeroVotazioni è uguale a 0
+
+      
+        numeroVotazioni = Integer.parseInt(map.get("COUNT(*)"));
+    }
+    return numeroVotazioni;
+}
+public double sommaVotazioni(double idLibro){
+    String query = "SELECT SUM(ratingPersonale) FROM associa WHERE ratingPersonale IS NOT NULL and id_libro=?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+    double sommaVotazioni = 0;
+    for (Map<String, String> map : ris.values()) {
+        if(map.get("SUM(ratingPersonale)")!=null)
+        sommaVotazioni = Double.parseDouble(map.get("SUM(ratingPersonale)"));
+    }
+    return sommaVotazioni;
+}
+public double readVoti(Long idLibro){
+   //voto del libro con id =idLibro
+   String query ="select rating from libro where id=?";
+   System.out.println(query);
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+    System.out.println(ris);
+    double voti = 0;
+    for (Map<String, String> map : ris.values()) {
+        voti = Double.parseDouble(map.get("rating"));
+    }
+    System.out.println("voti: "+voti);
+    return voti;
 }
 }

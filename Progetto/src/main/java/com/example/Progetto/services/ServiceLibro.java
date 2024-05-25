@@ -78,15 +78,20 @@ if(map.get("recensione")!=null){
         getDao().addRecensione(idLibro, idUtente, recensione);
 }
     }
+    public Libro findById(Long id) {
+        return getDao().readById(id);
+    }
             
 
    public void updatePagine( Long idLibro, Long idUtente, int pagineLette){
     System.out.println(idLibro + " " + idUtente + " " + pagineLette);
      getDao().updatePagineLette( idLibro, idUtente, pagineLette);
    }
+
    public int readPagineLette(Long idLibro, Long idUtente){
        return getDao().readPagineLette(idLibro, idUtente);
    }
+
     public boolean readAssociazione(Long idLibro, Long idUtente){
          return getDao().readAssociazione(idLibro, idUtente);
     }
@@ -95,11 +100,22 @@ if(map.get("recensione")!=null){
 
         getDao().vota(idLibro,voto);
     }
+
    public double readRatingPersonale(Long idLibro, Long idUtente){
        return getDao().readRatingPersonale(idLibro, idUtente);
    }
+
    public void addRatingPersonale(Long idLibro, Long idUtente, double voto){
        getDao().addRatingPersonale(idLibro, idUtente, voto);
+   }
+   public int numeroVotazioni(double idLibro){
+         return getDao().numeroVotazioni(idLibro);
+   }
+   public double sommaVotazioni(double idLibro){
+       return getDao().sommaVotazioni(idLibro);
+   }
+   public double readVoti(Long idLibro){
+       return getDao().readVoti(idLibro);
    }
 
 

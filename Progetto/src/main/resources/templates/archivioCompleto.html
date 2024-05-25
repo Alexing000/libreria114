@@ -53,7 +53,7 @@
 </table>
 
 
-<div class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin'}">
+<div class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'}">
     <h4>Aggiungi</h4>
     <!--Uso la form per permettere l'inserimento di dati da parte dell'utente
     Se faccio una richiesta inserimento dati

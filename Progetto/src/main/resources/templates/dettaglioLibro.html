@@ -30,12 +30,13 @@
             <td class="text-center"><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
             <td class="text-center"><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>   
             <td class="text-center" th:text="${libro.trama}"></td>
-            <td class="text-center" th:text="${libro.rating}"></td>
+            <td class="text-center" th:text="${#numbers.formatDecimal(libro.rating, 1, 2)}"></td>
             <td th:if="${session.loggato=='ok'} and ${ratingPersonale != -1}" class="text-center" th:text="${ratingPersonale}"></td>
             <td class="text-center" th:text="${libro.nPagine}"></td>
             <td class="text-center">
                 <input type="number" th:value="${paginelette}" id="nPagineLette" min="0" th:max="${libro.nPagine}" 
                        oninput="updateProgress();validateInput(this)" th:readonly="${!associazione}" th:if="${session.loggato=='ok'}">
+                     
             </td>
                 
         </tbody>
@@ -106,9 +107,18 @@
 <form action="/api/libro/votoo" method="post">
 <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
 <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
-<input type="number" name="rating" id="rating" min="0" max="5" value="0" step="0.1" oninput="validateInput1(this)">
-<input type="submit" value="Vota!" class="beautiful-button">
+<input type="number" name="rating" id="rating" min="1" max="5" value="0" step="0.1" oninput="validateInput1(this)">
+<input th:if="${ratingPersonale == -1}" type="submit" value="Vota!" class="beautiful-button">
+<input th:if="${ratingPersonale != -1}" type="submit" value="Modifica voto" class="beautiful-button">
+
 </form>
+<div th:if="${ratingPersonale != -1}">
+    <form action="/api/libro/eliminaVoto" method="get">
+        <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
+        <input type="submit" value="Elimina voto" class="beautiful-button-del">
+        <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
+    </form>
+</div>
             </div>
 
 
@@ -140,11 +150,14 @@ function Vota(button){
 }
 function validateInput1(input) {
     var value = input.value;
-    if (value < 0) input.value = 0;
+    if (value < 1) input.value = 1;
     if (value > 5) input.value = 5;
 }
      function validateInput(input) {
     var max = parseInt(input.max);
+
+
+    console.log(max);
     if (input.value > max) {
         input.value = max;
     }
@@ -169,15 +182,12 @@ function validateInput1(input) {
         function updateProgress() {
             const progress = document.getElementById('progress');
             const pagineLette = document.getElementById('nPagineLette').value;
-            console.log(pagineLette);
+        
             progress.value = pagineLette;
             const recensioni = document.getElementById('listRec');
-            if (recensioni.length > 0) {
-    console.log('recensioni.length > 0');
-  } else {
-    console.log('recensioni.length <= 0');
+          
 
-  }
+  
         }
    
     function aggiungiRec(oggetto){
@@ -220,13 +230,9 @@ window.onload = function() {
     updateProgress();
     var textarea = document.querySelector('textarea.full-text');
     var words = textarea.value.split(' ').length;
-    if (words < 5) {
-        textarea.style.width = '20%';
-        textarea.style.height = '50px';
-        textarea.style.maxWidht = '20%';
-        textarea.style.minWidht = '50px';
+   
        
-    }else if
+     if
      (words < 20) {
         textarea.style.width = '50%';
         textarea.style.height = '80px';
@@ -316,6 +322,20 @@ function adjustInputSizeOnLoad() {
         
         .beautiful-button {
     background-color: #4CAF50; 
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effects */
+}
+.beautiful-button-del {
+    background-color: red; 
     border: none; /* Remove borders */
     color: white; /* White text */
     padding: 15px 32px; /* Some padding */

@@ -23,7 +23,7 @@ public class DaoUtente implements IDao<Long, Utente>{
 
 
     public Long create(Utente e) {
-        String query = "INSERT INTO utente (username, password, nome, cognome, email, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utente (username, password, nome, cognome, email, ruolo,libriChallenge,libriLetti) VALUES (?, ?, ?, ?, ?, ?,?,?)";
         Long id = 0L;
         id = database.executeDML(query, 
                 e.getUsername(),
@@ -31,7 +31,9 @@ public class DaoUtente implements IDao<Long, Utente>{
                 e.getNome(),
                 e.getCognome(),
                 e.getEmail(),
-                e.getRuolo());
+                e.getRuolo(),
+                0,
+                0);
         return id;
     }
 
@@ -145,6 +147,25 @@ public class DaoUtente implements IDao<Long, Utente>{
     {
         String query = "UPDATE utente SET libriChallenge = ? WHERE id = ?";
         database.executeDML(query, libCh, idUtente);
+    }
+    public int readLibriLetti (Long idUtente)
+    {
+        String query ="select libriLetti from utente where id=?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idUtente));
+        int libriLetti = 0;
+        for (Map<String, String> map : ris.values()) {
+            if (map.get("libriLetti") != null)
+            {
+            libriLetti = Integer.parseInt(map.get("libriLetti"));
+            return libriLetti;
+            }
+        }
+        return libriLetti;
+    }
+    public void addLibroLetti(Long idUtente,int libLett)
+    {
+        String query = "UPDATE utente SET libriLetti = ? WHERE id = ?";
+        database.executeDML(query, libLett, idUtente);
     }
 
 

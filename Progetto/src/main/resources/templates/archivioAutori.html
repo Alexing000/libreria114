@@ -29,7 +29,7 @@
                 <td th:text="${autori.rating}"></td>
                 <td>
                     <div th:each="libro : ${autori.libri}">
-                        <span th:text="${libro.titolo}"></span><br>&nbsp;
+                        <span><a  style="color: red;" th:text="${libro.titolo}" th:href="@{|/api/libro/libroById?idLibro=${libro.id}|}">  </a></span><br>&nbsp;
                     </div>
                 </td>
                   
