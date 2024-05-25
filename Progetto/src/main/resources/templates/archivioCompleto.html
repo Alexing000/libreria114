@@ -59,32 +59,44 @@
     Se faccio una richiesta inserimento dati
     e uso il body allora probabilmente sfrutterò il verbo POST
     questi dati potranno così essere recuperati dal backend e li passiamo al server-->
-    <button id="crea" th:if="${isAdmin}">Aggiungi</button>
+    
     <form action="/api/libro/add" method="post">
        
         <label for="titolo"> Titolo</label>
-        <input type="text" id="titolo" name="titolo" >
+        <input type="text" id="titolo" name="titolo">
         <br>
-        <label for="autore">Autore</label>
+	    <label for="trama">Trama</label>
+        <input type="text" id="trama" name="trama" >
+        <br>
+	  <label for="autore">Autore</label>
         <input type="text" id="autore" name="autore">
         <br>
-        <label for="genere">Genere</label>
-        <input type="text" id="genere" name="genere" >
+	 <label for="nPagine">Numero Pagine</label>
+        <input type="number" id="nPagine" name="nPagine">
         <br>
-        <label for="dataPubblicazione">Data Pubblicazione</label>
-        <input type="number" id="dataPubblicazione" name="dataPubblicazione" >
+	 <label for="genere">Genere</label>
+        <input type="text" id="genere" name="genere">
         <br>
-        <label for="rating">Rating</label>      
-        <input type="number" id="rating" name="rating" step="0.1" >
+        <label for="dataPubblicazione"> Data Pubblicazione</label>
+        <input type="int" id="dataPubblicazione" name="dataPubblicazione">
         <br>
-        <label for="url">URL</label>
-        <input type="text" id="url" name="url" >
+        <label for="rating">Rating</label>
+        <input type="number" id="rating" name="rating" step=".01">
+        <br>
+	    <label for="url">URL</label>
+        <input type="text" id="url" name="url">
+        <br>
+	<label for="id_autore">Id Autore</label>
+	<input type="number" id="id_autore" name="id_autore">
         <br>
 
-        <input id="crea" type="submit" value="Aggiungi un nuovo libro">
+
+ <button id="crea">Aggiungi</button>
+ <!--<input id="crea" type="submit" value="Aggiungi un nuovo libro">--> 
     </form>
      
     </div>
+
     <div class="footer" style="text-align: center;
     margin-top: 40px;
     padding: 10px;
@@ -99,6 +111,12 @@
             <a href="/FAQ" id ="FAQ">FAQ</a>
             <a href="/privacyPolicy" id ="privacyPolicy">Privacy policy</a>
             <a href="/lavoraConNoi" id ="lavoraConNoi">Lavora con noi</a> 
+            <!-- Aggiungi link ai social -->
+            <a href="https://www.facebook.com/BookWarm" target="_blank" id="facebook">
+                <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/facebook-2752192-2285009.png" alt="Facebook" style="width: 20px; height: 20px; vertical-align: middle;">
+                </a>
+                <a href="https://www.instagram.com/BookWarm" target="_blank" id="instagram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
         </footer>
     </div>
 
