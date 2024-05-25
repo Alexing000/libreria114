@@ -47,6 +47,7 @@ List<Autore > autori = serviceAutore.findAll();
             Long idUtente = (Long) session.getAttribute("idUtente");
        
 
+            
           
         
 
