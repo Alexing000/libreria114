@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 20px 0;
+    color: #333;
+}
+
+.social-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    margin: 10px;
+    text-decoration: none;
+    color: #333;
+   
+}
+
+/* Aggiungi queste regole alla fine del tuo file pagineSocial.css */
+.social-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin: 0 10px; /* Margine tra le icone */
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2); /* Effetto hover */
+}
