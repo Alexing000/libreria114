@@ -307,8 +307,9 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     }*/
 
     @PostMapping("/add")
-    public String add(@RequestBody Map<String,String> map){
+    public String add(@RequestParam Map<String,String> map){
         serviceLibro.insert(map);
+        System.out.println(map);
         return "redirect:/api/libro/all";
     }
 

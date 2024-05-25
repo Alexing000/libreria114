@@ -15,5 +15,6 @@ public class Libro extends Entity{
     private int dataPubblicazione;
     private double rating;
     private String url;
+    private int id_autore;
     
 }
