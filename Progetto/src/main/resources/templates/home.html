@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
     <script th:inline="javascript">
         var list = /*[[${libri}]]*/ [];
+        var list1 = /*[[${autori}]]*/ [];
+
+       
        </script>
     <script src="/js/libri.js"></script>
  
@@ -40,51 +43,68 @@
         </form>
     </div>
     
-    
 
 
+
     
     
-    <form action="/recenti" method="GET" id="libri-recenti">
+    
+
+    <div class="left-box" id="left-box">
+        <h3>Gruppi di Lettura:</h3>
+        <a id ="TreImg" href="https://amzn.eu/d/btZKFps">
+            <img src="https://m.media-amazon.com/images/I/71cEHsFnW5L._AC_UF1000,1000_QL80_.jpg" alt="Copertina 1"></a>
+            <br>
+            <a id ="TreImg" href="https://www.libraccio.it/libro/9791256210091/zerocalcare/quando-muori-resta-a-me.html?tr=nov100">
+            <img src="https://www.libraccio.it/images/9791256210091_0_500_0_75.jpg" alt="Copertina 1"></a>
+            <br>
+            <a id ="TreImg" href="https://www.lafeltrinelli.it/eredita-di-giudice-trent-anni-libro-maria-falcone-lara-sirignano/e/9788804752622">
+            <img src="https://www.lafeltrinelli.it/images/9788804752622_0_424_0_75.jpg" alt="Copertina 1"></a>
+            <br>
+        </a>
+        <br>
+
         
-    
-    <div id="libri-recenti">
-        <h2>Ultime Uscite</h2> <a href="/api/libro/recenti">...</a>
-        <div>
-            <table>
-
-                
-                <tbody>
-                       
-                    <li id="listina" th:each="libro:${libr}">      
-                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
-                    </li>
-                </tbody>
-
-            </table>
-        </div>
-        
-
     </div>
 
-</form>
+    <div class="right-box" id="right-box">
+        <h3>Gestione Account</h3>
+        <form action="/formLogin">
+        <button id="search-button" type="submit" href="/formLogin">
+            Loggati per Gestire <br> i tuoi dati!
+        </button>
+    </form>
+        <br>
+        <br>
+        <form action="/signup"> 
+        <button id="search-button" type="submit" href="/signup">
+            Non sei ancora registrato? <br> Clicca qui!
+        </button>
+    </form>
+    </div>
+    
 
-    <br>
-    <form action="/genere" method="GET" id="libri-popolari">
+
+    
+    
+    <form action="/ratings" method="GET" id="libri-recenti">
         
     
-        <div id="libri-popolari">
-            <h2>I più Popolari</h2> <a href="/api/libro/genere">...</a>
+        <div id="libri-recenti">
+            <h2>I più Votati</h2>
             <div>
                 <table>
     
                     
                     <tbody>
                            
-                        <li id="listina" th:each="libro:${libri3}">      
+                        <li id="listina" th:each="libro:${libr}">      
                             <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
                         </li>
                     </tbody>
+                    <div>
+                        <a href="/api/libro/ratings">...</a>
+                    </div>
                     
     
                 </table>
@@ -92,8 +112,30 @@
             
     
         </div>
+        <br>
+        <br>
+    
+        
+    
+        <div id="libri-consigliati">
+            <h2>Il Genere più Popolare</h2>
+            <div>
+                
+                <li th:each="libro:${librG}">      
+                    <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                </li>
+                
+            </div>
+            <div>
+                <a href="/api/libro/genere">...</a>
+            </div>
+    
     
     </form>
+
+    
+    
+    <br>
 
     <div class="footer" style="text-align: center;
         margin-top: 40px;
@@ -110,23 +152,22 @@
                 <a href="/privacyPolicy" id ="privacyPolicy">Privacy policy</a>
                 <a href="/lavoraConNoi" id ="lavoraConNoi">Lavora con noi</a> 
             </footer>
-        </div> 
+    </div> 
     
     
 </body>
 
 <script>
-    const input = document.getElementById('search-input');
+     const input = document.getElementById('search-input');
     input.addEventListener("keyup",autocomp);
     const search = document.getElementById('ris-ricerca');
 
 
     function autocomplete(valore){
+        console.log(list);
       if(valore.length === 0){
         return [];
       }
-
-      //const reg=new RegExp(valore.toLowerCase());
       var valoreLower=valore.toLowerCase();
       var controllo=false;
       
@@ -148,27 +189,74 @@ if(controllo===true)
         return libro.titolo
       }
     )
+  
 
 }
+function autocompleteA(valore){
+
+    if(valore.length === 0){
+        return [];
+      }
+      var valoreLower=valore.toLowerCase();
+      var controllo=false;
+
+  return list1.filter((autore) => {
+
+for(var i=0;i<valoreLower.length;i++)
+{
+        if(autore.cognome.toLowerCase().charAt(i)===valoreLower.charAt(i) )
+        {
+          
+            controllo=true;
+        }else{
+            controllo=false;
+            break;
+        }
+    }
+ 
+if(controllo===true)
+        return autore.cognome;
+      }
+    )
+    }
   
   function autocomp(input){
    
-    
+   
     let consigliati= "";
+    let consigliati1= "";
+    var cLibro=0;
+    var cAutore=0;
     const titoli= autocomplete(input.target.value);
+    const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-  consigliati += `<li  onclick="seleziona(event)">${titolo.titolo}</li>`;
-  console.log(consigliati);
+    if(cLibro<4)
+  consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
+
+  cLibro++;
+
+ 
     
   })
-  search.innerHTML = `<ul>${consigliati}</ul>`;
+    autori.forEach((autore) => {
+        if(cAutore<4)
+
+        consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
+        cAutore++;
+    })
+  let consigliatiSuper=consigliati+" "+consigliati1+" ";
+
+  search.innerHTML = `<ul>${consigliatiSuper}</ul>`;
  
 
 }
 function seleziona(event){
   search.innerHTML = "";
-  input.value = event.target.textContent;
+  input.value = event.target.textContent.substring(3);
   
+}
+window.onpageshow = function() {
+    document.getElementById('search-input').value = '';
 }
 </script>
 

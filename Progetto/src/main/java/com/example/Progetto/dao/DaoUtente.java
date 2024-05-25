@@ -127,5 +127,25 @@ public class DaoUtente implements IDao<Long, Utente>{
         Map<Long, Map<String, String>> ris = database.executeDQL(query, email);
         return !ris.isEmpty();
     }
+    public int readLibriChallenge(Long idUtente)
+    {
+        String query ="select libriChallenge from utente where id=?";
+        Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idUtente));
+        int libriChallenge = 0;
+        for (Map<String, String> map : ris.values()) {
+            if (map.get("libriChallenge") != null)
+            {
+            libriChallenge = Integer.parseInt(map.get("libriChallenge"));
+            return libriChallenge;
+            }
+        }
+        return libriChallenge;
+    }
+    public void addLibroChallenge(Long idUtente,int libCh)
+    {
+        String query = "UPDATE utente SET libriChallenge = ? WHERE id = ?";
+        database.executeDML(query, libCh, idUtente);
+    }
+
 
 }

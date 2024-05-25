@@ -28,16 +28,9 @@
     <a href="/api/libro/all" id="Archivio" >Archivio Completo</a>
     <a href="/api/autore/all" id="Autori" >Archivio Autori</a>
     <a href="/api/libro/libriUtente" id="libriP" >I tuoi libri</a>
-    <a href="/gestioneAccount" id="gestioneAccount" style="display: inline-block;
-    margin: 20px auto;
-    text-decoration: none;
-    color: #fff; /* Bianco */
-    background-color: #f95d6a; /* Rosso corallo */
-    padding: 10px 20px; /* Spaziatura interna */
-    border-radius: 5px; /* Bordi arrotondati */
-    font-weight: bold;
-    transition: background-color 0.3s ease;">Gestione Account</a>
+    <a href="/gestioneAccount" id="gestioneAccount" >Gestione Account</a>
     <br>
+    
     <div class="search-container">
         <form action="/api/libro/search" method="post" id="search-form">
 
@@ -49,6 +42,7 @@
             </button>
         </form>
     </div>
+    
     
     
 
@@ -98,16 +92,33 @@
         <div>
             <a href="/api/libro/genere">...</a>
         </div>
+    </div>
+        <div id="reading-challenge"  th:if="${session.loggato=='ok'}">
+            <h2>Reading Challenge</h2>
+            
+            <form action="/api/libro/challenge" method="post" id="challenge-form">
+                <div class="flex-container">
+                    <a th:text="${nlibriUtente}" style="color: #CC7722;"></a>
+                    <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 50px; background-color: transparent;">
+                    <button id="challenge" type="submit">Aggiorna</button>
+                </div>
+             
+            </form>
+            <div th:if="${merito}">
+                <div th:if="${merito}">
+                    <h2 class="animated color-changing">Bravo,hai superato la tua reading challenge!</h2>
+                </div>
+        </div>
+        </div>
 
         <div class="footer" style="text-align: center;
         margin-top: 40px;
         padding: 10px;
         background-color: grey;
-        color: #fff;
-        width: 100%;">
+        color: #fff;">
             <footer style="
             left: 0;
-            bottom: 0;
+             bottom: 0;
             width: 100%;
             text-align: center;">
                 <a href="/chiSiamo" id ="chiSiamo">Chi siamo</a>
@@ -123,7 +134,8 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
             </footer>
         </div>
-    
+
+      
     
 </body>
 
@@ -229,5 +241,67 @@ window.onpageshow = function() {
 }
 //ad ogni apertura della pagina il campo di ricerca viene resettato,anche se si torna indietro tramite freccia
 </script>
+
+<style>
+ 
+    @keyframes colorchange {
+        0% { color: red; }
+        25% { color: yellow; }
+        50% { color: blue; }
+        75% { color: green; }
+        100% { color: red; }
+    }
+
+    .color-changing {
+        animation: colorchange 5s infinite;
+       
+    }
+
+
+    .flex-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .flex-container > * {
+        margin-right: 10px;
+    }
+#reading-challenge {
+        width: 200px;
+        padding: 20px;
+        border: 1px solid #ddd;
+
+        
+        background-color: bisque;
+    }
+
+    #reading-challenge h2 {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    #challenge-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #challenge-form input, #challenge-form button {
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #challenge-form button {
+        color: #fff;
+        background-color: #333;
+        cursor: pointer;
+    }
+
+    #challenge-form button:hover {
+        background-color: #555;
+    }
+</style>
 
 </html>

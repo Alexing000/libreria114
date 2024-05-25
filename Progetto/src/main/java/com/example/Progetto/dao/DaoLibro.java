@@ -24,8 +24,8 @@ public class DaoLibro implements IDao<Long, Libro>{
 
     @Override
     public Long create(Libro e) {
-        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating, url) VALUES (?, ?, ?, ?, ?, ?, ,?)";
-        Long id = null;
+        String query = "INSERT INTO libro (titolo, trama, autore, nPagine, genere, dataPubblicazione, rating, url, id_autore) VALUES (?,?,?,?,?,?,?,?,?)";
+        Long id = 0L;
         if (e != null && e instanceof Libro){
             id = database.executeDML(query,
             ((Libro)e).getTitolo(),
@@ -35,7 +35,8 @@ public class DaoLibro implements IDao<Long, Libro>{
             ((Libro)e).getGenere(),
             String.valueOf(((Libro)e).getDataPubblicazione()),
             String.valueOf(((Libro)e).getRating()),
-            ((Libro)e).getUrl());
+            ((Libro)e).getUrl(),
+            String.valueOf(((Libro)e).getId_autore()));
        }
        return id;
     }
@@ -159,6 +160,23 @@ public List<Libro> readByGenere(String genere) {
         libriList.sort(Comparator.comparing(Libro::getGenere));
         return libriList;
     }
+
+    public List<Libro> orderByRatings(){
+        String query = "SELECT * FROM libro ORDER BY rating desc";
+        Map<Long, Map<String, String>> libri = database.executeDQL(query);
+        Libro l = new Libro();
+        List<Libro> libriList = new ArrayList<Libro>();
+
+        for (Map<String, String> map : libri.values()) {
+            l = context.getBean(Libro.class, map);
+            libriList.add(l);
+        }
+    
+        libriList.sort(Comparator.comparing(Libro::getRating).reversed());
+        return libriList;
+    }
+
+
 
     public List<Libro> readByUtente(Long id)
     {

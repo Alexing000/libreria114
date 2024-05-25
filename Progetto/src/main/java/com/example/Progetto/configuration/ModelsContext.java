@@ -59,9 +59,9 @@ public class ModelsContext {
         l.setDataPubblicazione(Integer.parseInt(map.get("dataPubblicazione")));
         l.setRating(Double.parseDouble(map.get("rating")));
         l.setUrl(map.get("url"));
+        l.setId_autore(Integer.parseInt(map.get("id_autore")));
         
-
-        return l;
+     return l;
     }
 
     //creare bean di tipo Utente
