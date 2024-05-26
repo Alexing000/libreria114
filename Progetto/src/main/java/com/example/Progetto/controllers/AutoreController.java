@@ -32,10 +32,7 @@ public class AutoreController {
      private ServiceLibro serviceLibro;
 
     //htpps://localhost:8080/libro/all
-    @GetMapping("/alll")
-    public ResponseEntity<List<Autore>> all(){
-        return ResponseEntity.status(HttpStatus.OK).body(serviceAutore.findAll());
-    }
+
     @GetMapping("/all")
     public String all(Model model){
         List<Autore> autori = serviceAutore.findAll();
@@ -46,7 +43,7 @@ public class AutoreController {
 
             
         }
-       System.out.println(autori);
+      
         model.addAttribute("autore", autori);
         return "archivioAutori.html";
     }
@@ -81,11 +78,13 @@ public class AutoreController {
 
     
 
-    @PostMapping("/add")
-    public ResponseEntity<Autore> add(@RequestBody Map<String, String> map){
+    @PostMapping("/addu")
+    public String add(@RequestParam Map<String, String> map){
         
-        Autore l = serviceAutore.insert(map);
-        return ResponseEntity.status(HttpStatus.CREATED).body(l);
+      serviceAutore.insert(map);
+    
+
+        return "redirect:/api/autore/all";
 
     }
 

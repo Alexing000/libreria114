@@ -49,8 +49,12 @@
     <div class="container">
         <h1>FAQ</h1>
         
-        <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
-        <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
+        <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
+        <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
+        <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
+        <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
+        <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+       
         <h2>Account e Registrazione</h2>
         <h3>Ho dimenticato la mia password. Come posso recuperarla?</h3>
         <p>Clicca su "Hai dimenticato la password?" nella pagina di login. Inserisci il tuo indirizzo email e riceverai un link per reimpostare la password.</p>

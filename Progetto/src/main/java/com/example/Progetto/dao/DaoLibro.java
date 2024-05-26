@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class DaoLibro implements IDao<Long, Libro>{
     private final IDatabase database;
 
     private final ApplicationContext context;
+    @Autowired
+    private Database databasee;
 
     @Override
     public Long create(Libro e) {
@@ -205,6 +208,7 @@ public List<Libro> readByGenere(String genere) {
 //cercare recensione per ogni libro
 public List<Map<String,String>> readRecensione(Long id) {
     String query =" select u.id,u.username ,a.recensione from libro as l join associa as a on a.id_libro=l.id join utente as u on a.id_utente=u.id where l.id=?;";
+   // String query="SELECT recensione FROM associa WHERE id_libro = ?;";
     Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(id));
     List<Map<String,String>> libriList = new ArrayList<Map<String,String>>();
     for (Map<String, String> map : ris.values()) {
@@ -221,11 +225,11 @@ public void addRecensione(Long idLibro, Long idUtente, String recensione) {
 
    
     database.executeDML(query, recensione, String.valueOf(idLibro), String.valueOf(idUtente));
-    System.out.println(query);
+  
 }
 public int readPagineLette(Long idLibro, Long idUtente) {
     String query = "SELECT pagineLette FROM associa WHERE id_libro =? AND id_utente =?";
-    System.out.println("id libror: "+idLibro+" id utenter: "+idUtente);
+
     Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
     int pagineLette = 0;
     for (Map<String, String> map : ris.values()) {
@@ -240,7 +244,7 @@ public int readPagineLette(Long idLibro, Long idUtente) {
 public boolean readAssociazione(Long idLibro, Long idUtente) {
     String query = "SELECT * FROM associa WHERE id_libro = ? AND id_utente = ?";
     Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
-    System.out.println("dimensione"+ris.size());
+
     if (ris.size() > 0) {
         return true;
     }
@@ -266,9 +270,68 @@ public double readRatingPersonale(Long idLibro, Long idUtente) {
     return -1;
   
 }
-public void addRatingPersonale(Long idLibro, Long idUtente, double voto) {
+public void addRatingPersonale(Long idLibro, Long idUtente, Double voto) {
     String query = "UPDATE associa SET ratingPersonale = ? WHERE id_libro = ? AND id_utente = ?";
+    if(voto==-1)
+    {
+        
+        database.executeDML(query,"", String.valueOf(idLibro), String.valueOf(idUtente));
+    }
+    else{
     database.executeDML(query, String.valueOf(voto), String.valueOf(idLibro), String.valueOf(idUtente));
+    }
    
+}
+public int numeroVotazioni(double idLibro){
+    String query = "SELECT COUNT(*) FROM associa WHERE ratingPersonale IS NOT NULL and id_libro=?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+    int numeroVotazioni = 0;
+    for (Map<String, String> map : ris.values()) {
+        //se la mappa è vuota allora la variabile numeroVotazioni è uguale a 0
+
+      
+        numeroVotazioni = Integer.parseInt(map.get("COUNT(*)"));
+    }
+    return numeroVotazioni;
+}
+public double sommaVotazioni(double idLibro){
+    String query = "SELECT SUM(ratingPersonale) FROM associa WHERE ratingPersonale IS NOT NULL and id_libro=?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+    double sommaVotazioni = 0;
+    for (Map<String, String> map : ris.values()) {
+        if(map.get("SUM(ratingPersonale)")!=null)
+        sommaVotazioni = Double.parseDouble(map.get("SUM(ratingPersonale)"));
+    }
+    return sommaVotazioni;
+}
+public double readVoti(Long idLibro){
+   //voto del libro con id =idLibro
+   String query ="select rating from libro where id=?";
+  
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro));
+  
+    double voti = 0;
+    for (Map<String, String> map : ris.values()) {
+        voti = Double.parseDouble(map.get("rating"));
+    }
+
+    return voti;
+}
+
+
+
+public void deleteUtenteWhenAssocia(Long idLibro, Long idUtente){
+    String query="update associa set id_utente=null where id_libro=? and id_utente=?";
+    database.executeDML(query, String.valueOf(idLibro), String.valueOf(idUtente));
+
+}
+public String readRecensione(Long idLibro, Long idUtente){
+    String query = "SELECT recensione FROM associa WHERE id_libro = ? AND id_utente = ?";
+    Map<Long, Map<String, String>> ris = database.executeDQL(query, String.valueOf(idLibro), String.valueOf(idUtente));
+    String recensione = "";
+    for (Map<String, String> map : ris.values()) {
+        recensione = map.get("recensione");
+    }
+    return recensione;
 }
 }

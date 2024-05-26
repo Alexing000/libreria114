@@ -4,7 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -132,7 +134,7 @@ public class Database implements IDatabase{
               id = rs.getLong("id");
         
           } catch (SQLException e) {
-              System.out.println("non cè colonna id");
+            
           }
           result.put(id, row);
         }
@@ -149,6 +151,11 @@ public class Database implements IDatabase{
     }
     return result;
     }
+
+
+
+ 
+
 }
 
 

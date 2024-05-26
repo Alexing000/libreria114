@@ -8,8 +8,12 @@
 <body>
     <h3>Archivio</h3>
     
-    <a href="/homeUtente" th:if="${session.loggato=='ok'}">Torna alla Home</a>
-    <a href="/home" th:if="${session.loggato!='ok'}">Torna alla home</a>
+    <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
+    <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
+    <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
+    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
+    <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+   
     <table>
         <thead>
             <TH>COVER</TH>
@@ -53,7 +57,12 @@
 </table>
 
 
-<div class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin'}">
+
+<div th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
+    <button id="inserisciButton">Inserisci un nuovo libro!</button>
+</div>
+
+<div style="display: none; " class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'} " >
     <h4>Aggiungi</h4>
     <!--Uso la form per permettere l'inserimento di dati da parte dell'utente
     Se faccio una richiesta inserimento dati
@@ -63,35 +72,38 @@
     <form action="/api/libro/add" method="post">
        
         <label for="titolo"> Titolo</label>
-        <input type="text" id="titolo" name="titolo">
+        <input type="text" id="titolo" name="titolo" required>
         <br>
-	    <label for="trama">Trama</label>
-        <input type="text" id="trama" name="trama" >
+        <label for="trama">Trama</label>
+        <input type="text" id="trama" name="trama" required>
         <br>
-	  <label for="autore">Autore</label>
-        <input type="text" id="autore" name="autore">
+        <label for="autore">Autore</label>
+        <input type="text" id="autore" name="autore" required>
         <br>
-	 <label for="nPagine">Numero Pagine</label>
-        <input type="number" id="nPagine" name="nPagine">
+        <label for="nPagine">Numero Pagine</label>
+        <input type="number" id="nPagine" name="nPagine" required>
         <br>
-	 <label for="genere">Genere</label>
-        <input type="text" id="genere" name="genere">
+        <label for="genere">Genere</label>
+        <input type="text" id="genere" name="genere" required>
         <br>
         <label for="dataPubblicazione"> Data Pubblicazione</label>
-        <input type="int" id="dataPubblicazione" name="dataPubblicazione">
+        <input type="int" id="dataPubblicazione" name="dataPubblicazione" required>
         <br>
         <label for="rating">Rating</label>
-        <input type="number" id="rating" name="rating" step=".01">
+        <input type="number" id="rating" name="rating" step=".01" required>
         <br>
-	    <label for="url">URL</label>
-        <input type="text" id="url" name="url">
+        <label for="url">URL</label>
+        <input type="text" id="url" name="url" required>
+      
         <br>
-	<label for="id_autore">Id Autore</label>
-	<input type="number" id="id_autore" name="id_autore">
+
+	<input type="hidden" id="id_autore" name="id_autore" value="0">
+
         <br>
 
 
  <button id="crea">Aggiungi</button>
+ <button id="annulla">Annulla</button>
  <!--<input id="crea" type="submit" value="Aggiungi un nuovo libro">--> 
     </form>
      
@@ -122,9 +134,16 @@
 
 
 
-   
-    
-
     
 </body>
+<script>
+    document.getElementById('inserisciButton').addEventListener('click', function() {
+        document.getElementById('inserisciButton').style.display = 'none';
+        document.getElementById('inserisci').style.display = 'block';
+    });
+    document.getElementById('annulla').addEventListener('click', function() {
+    document.getElementById('inserisci').style.display = 'none';
+    document.getElementById('inserisciButton').style.display = 'block';
+});
+    </script>
 </html>

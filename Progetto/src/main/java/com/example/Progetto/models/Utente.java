@@ -15,6 +15,7 @@ public class Utente extends Entity{
     private String email;
     private String ruolo;
     private int libriChallenge;
+    private int libriLetti;
     private List    <Libro> libri;
 
 }

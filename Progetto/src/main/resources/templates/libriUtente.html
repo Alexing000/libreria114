@@ -14,7 +14,12 @@ min-height: 100vh;">
     <style>
     </style>
     <div>
-    <a href="/homeUtente">Torna alla Home</a>
+        <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
+        <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
+        <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
+        <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
+        <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+   
 </div>
     <div id="libri-container">
         <table>
@@ -46,15 +51,20 @@ min-height: 100vh;">
                     <td th:text="${libro.rating}"></td>
                     <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                     <td>
-                        <a th:href="|/api/libro/eliminaDaLista?idLibro=${libro.id}|">
-                            <button>Elimina!</button>
-                        </a><br>
+
+                        
+               <form action="/api/libro/eliminaDaLista" method="post">
+                    <input type="hidden" name="idLibro" th:value="${libro.id}">
+                    <input type="hidden" th:value="${count}" name="conto">
+
+                    <button id="deleteButton" class="deleteButton">Elimina!</button>
+                </form>
+                   
                      
                     </td>
-                   <!-- <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
-                   -->
-                
+                                            
                 </tr>
+        
                 
 
             </tbody>
@@ -87,6 +97,36 @@ min-height: 100vh;">
 
 </body>
 <script >
+
+
+document.getElementById('deleteButton').addEventListener('click', function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/api/count', true);
+    xhr.setRequestHeader("Content-Type", 'application/json');
+    var countValue = document.getElementsByName('conto')[0].value;
+
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            console.log('Success:', xhr.responseText);
+        } else {
+            console.log('Error:', xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function() {
+        console.log('Request failed');
+    };
+
+    xhr.send(JSON.stringify({
+        count: countValue+1
+    }));
+});
+  
+
+
+
+
+
 
 
 </script>
