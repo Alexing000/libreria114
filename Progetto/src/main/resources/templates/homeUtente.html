@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <link rel="stylesheet" href="/css/homeUtente.css" type="text/css">
     <script th:inline="javascript">
         var list = /*[[${libri}]]*/ [];
         var list1 = /*[[${autori}]]*/ [];
@@ -17,33 +17,65 @@
     
 
     <video autoplay muted loop id="background-video">
-        <source src="https://videos.pexels.com/video-files/2268807/2268807-hd_1920_1080_24fps.mp4" type="video/mp4">
+        <source src="https://videos.pexels.com/video-files/4864405/4864405-uhd_4096_2160_25fps.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
     <h2>
         <img src="https://i.ibb.co/wM8h3cP/bookwarm.png" alt="bookwarm"></a>
     </h2>
     <h4 th:text="${actualUser}"></h4>
-    <a href="/logout" id ="logout">Logout</a>
+    
     <a href="/api/libro/all" id="Archivio" >Archivio Completo</a>
     <a href="/api/autore/all" id="Autori" >Archivio Autori</a>
     <a href="/api/libro/libriUtente" id="libriP" >I tuoi libri</a>
-    <a href="/gestioneAccount" id="gestioneAccount" >Gestione Account</a>
+    
     <br>
     
     <div class="search-container">
         <form action="/api/libro/search" method="post" id="search-form">
-
+            
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
-            <div id="ris-ricerca" ></div>
-      
             <button id="search-button" type="submit" href="">
                 search
             </button>
+            <div id="ris-ricerca" ></div>
+      
+            
         </form>
     </div>
+    <br>
     
-    
+    <div class="right-box" id="right-box">
+        <h3>Gestione Account</h3>
+        
+        <form action="/modificaUsername" method="POST">
+            <label for="newUsername">Nuovo Username:</label><br>
+            <input type="text" id="newUsername" name="newUsername" required><br>
+            <input type="submit" value="Modifica Username">
+        </form>
+        <br>
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
+        <br>
+        <form action="/modificaPassword" method="POST">
+            <label for="oldPassword">Vecchia Password:</label><br>
+            <input type="password" id="oldPassword" name="oldPassword" required><br>
+            <label for="newPassword">Nuova Password:</label><br>
+            <input type="password" id="newPassword" name="newPassword" required><br>
+            <input type="submit" value="Modifica Password">
+        </form>
+        <br>
+        <div th:if="${error != null}">
+            <p th:text="${error}" style="color: red;"></p>
+        </div>
+        <br>
+        <form id="deleteAccountForm" action="/eliminaAccount" method="POST">
+            <input type="submit" value="Elimina Account">
+        </form>
+        <a href="/logout" id ="logout">Logout</a>
+        
+    </div>
     
 
 
@@ -93,13 +125,16 @@
             <a href="/api/libro/genere">...</a>
         </div>
     </div>
-        <div id="reading-challenge"  th:if="${session.loggato=='ok'}">
+    <br>
+    <br>
+        <div id="left-box"  th:if="${session.loggato=='ok'}">
             <h2>Reading Challenge</h2>
             
             <form action="/api/libro/challenge" method="post" id="challenge-form">
                 <div class="flex-container">
                     <a th:text="${nlibriUtente}" style="color: #CC7722;"></a>
-                    <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 50px; background-color: transparent;">
+                    <input type="number" name="libriChallenge" th:value="${libriChallenge}">
+                    <br>
                     <button id="challenge" type="submit">Aggiorna</button>
                 </div>
              
@@ -241,67 +276,5 @@ window.onpageshow = function() {
 }
 //ad ogni apertura della pagina il campo di ricerca viene resettato,anche se si torna indietro tramite freccia
 </script>
-
-<style>
- 
-    @keyframes colorchange {
-        0% { color: red; }
-        25% { color: yellow; }
-        50% { color: blue; }
-        75% { color: green; }
-        100% { color: red; }
-    }
-
-    .color-changing {
-        animation: colorchange 5s infinite;
-       
-    }
-
-
-    .flex-container {
-        display: flex;
-        align-items: center;
-    }
-
-    .flex-container > * {
-        margin-right: 10px;
-    }
-#reading-challenge {
-        width: 200px;
-        padding: 20px;
-        border: 1px solid #ddd;
-
-        
-        background-color: bisque;
-    }
-
-    #reading-challenge h2 {
-        font-size: 1.2em;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    #challenge-form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #challenge-form input, #challenge-form button {
-        padding: 10px;
-        margin: 5px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    #challenge-form button {
-        color: #fff;
-        background-color: #333;
-        cursor: pointer;
-    }
-
-    #challenge-form button:hover {
-        background-color: #555;
-    }
-</style>
 
 </html>
