@@ -7,6 +7,7 @@
     <script th:inline="javascript">
         var list = /*[[${libri}]]*/ [];
         var list1 = /*[[${autori}]]*/ [];
+        var libriChallenge = /*[[${libriChallenge}]]*/ [];
         
        </script>
     <script src="/js/libri.js"></script>
@@ -37,7 +38,7 @@
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
             <div id="ris-ricerca" ></div>
       
-            <button id="search-button" type="submit" href="">
+            <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
         </form>
@@ -107,7 +108,15 @@
         </div>
     </div>-->
 
-        <div id="reading-challenge"  th:if="${session.loggato=='ok'&& libriChallenge>0 }">
+    <div id="div-challengeOption">
+<button th:if="${libriChallenge==0}"id="bottone-partecipaC" onclick="showCh()">Partecipa alla challenge di lettura!</button>
+<button th:if ="${libriChallenge>0}"id="visualizza-c" onclick="visCh()">Visualizza challenge</button>
+<button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>
+    </div>
+
+        <div style="display:none;" id="reading-challenge"  th:if="${session.loggato=='ok' }" >
+
+            <div th:if="${libriChallenge>0}">
             <h2>Reading Challenge</h2>
             
             <form action="/api/libro/challenge" method="post" id="challenge-form">
@@ -123,7 +132,20 @@
                     <h2 class="animated color-changing">Bravo,hai superato la tua reading challenge!</h2>
                 </div>
         </div>
+    </div>
+    <div th:if="${libriChallenge==0}">
+        <h2>Imposta un obbiettivo per la tua challenge!</h2>
+            
+        <form action="/api/libro/challenge" method="post" id="challenge-form">
+            <div class="flex-container">
+                <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 50px; background-color: transparent;">
+                <button id="challenge" type="submit">Aggiorna</button>
+            </div>
+         
+        </form>
         </div>
+        </div>
+
 
         <div class="footer" style="text-align: center;
         margin-top: 40px;
@@ -154,10 +176,50 @@
 </body>
 
 <script>
-    const input = document.getElementById('search-input');
+
+
+  function showCh(){
+
+    var partecipaButton = document.getElementById('bottone-partecipaC');
+    var chiudiButton = document.getElementById('bottone-chiudiC');
+  
+    console.log('partecipaButton:', partecipaButton);
+    console.log('chiudiButton:', chiudiButton);
+    console.log('readingChallengeDiv:', readingChallengeDiv);
+    partecipaButton.style.display = 'none'; 
+    chiudiButton.style.display = 'block'; 
+    var readingChallengeDiv = document.getElementById('reading-challenge');
+readingChallengeDiv.style.display = 'block';
+  
+}
+
+    
+    function visCh(){
+        document.getElementById('visualizza-c').style.display = 'none'; // Hide the "Visualizza" button
+        document.getElementById('bottone-chiudiC').style.display = 'block'; // Show the "Chiudi" button
+        document.getElementById('reading-challenge').style.display = 'block'; 
+    }
+
+
+    function hideCh() {
+    document.getElementById('bottone-chiudiC').style.display = 'none'; // Hide the "Chiudi" button
+    document.getElementById('reading-challenge').style.display = 'none'; // Hide the "reading-challenge" div
+    if (libriChallenge == 0) {
+        document.getElementById('bottone-partecipaC').style.display = 'block'; // Show the "Partecipa alla challenge di lettura!" button
+    } else {
+        document.getElementById('visualizza-c').style.display = 'block'; // Show the "Visualizza challenge" button
+    }
+}
+
+document.getElementById('search-input').addEventListener('input', function() {
+    var searchInput = document.getElementById('search-input').value;
+    document.getElementById('search-button').disabled = !searchInput;
+});
+
+
+const input = document.getElementById('search-input');
     input.addEventListener("keyup",autocomp);
     const search = document.getElementById('ris-ricerca');
-
 
     function autocomplete(valore){
       if(valore.length === 0){
@@ -225,7 +287,7 @@ if(controllo===true)
     const titoli= autocomplete(input.target.value);
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-    if(cLibro<4)
+    if(cLibro<6)
   consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
 
   cLibro++;
@@ -234,7 +296,7 @@ titoli.forEach((titolo) => {
     
   })
     autori.forEach((autore) => {
-        if(cAutore<4)
+        if(cAutore<6)
 
         consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
         cAutore++;
@@ -293,6 +355,11 @@ window.onpageshow = function() {
         font-size: 1.2em;
         color: #333;
         margin-bottom: 10px;
+    }
+    #div-challengeOption{
+        width: 200px;
+        padding: 20px;
+        
     }
 
     #challenge-form {

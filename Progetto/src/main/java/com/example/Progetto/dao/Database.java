@@ -4,7 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -132,7 +134,7 @@ public class Database implements IDatabase{
               id = rs.getLong("id");
         
           } catch (SQLException e) {
-              System.out.println("non cè colonna id");
+            
           }
           result.put(id, row);
         }
@@ -149,6 +151,42 @@ public class Database implements IDatabase{
     }
     return result;
     }
+
+
+
+ 
+public List<Map<String, String>> executeDfL(String query, Object... params) {
+    List<Map<String, String>> result = new ArrayList<>();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+        ps = connection.prepareStatement(query);
+        for(int i=0; i<params.length; i++){
+            ps.setString(i+1, params[i].toString());
+        }
+
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Map<String, String> row = new HashMap<>();
+            for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
+                row.put(rs.getMetaData().getColumnName(i), rs.getString(i));
+            }
+            result.add(row);
+        }
+
+        if(ps != null){
+            ps.close();
+        }
+        if(rs != null){
+            rs.close();
+        }
+    } catch(Exception e){
+        System.out.println("Errore esecuzione query: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return result;
+}
 }
 
 

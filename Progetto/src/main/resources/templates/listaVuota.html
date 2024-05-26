@@ -1,67 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
-    <title>Nuove Uscite</title>
-</head> 
+    <title>Document</title>
+</head>
 <body>
-    <h3>Le Nuove Uscite!</h3>
+    <h1 style="color: rgb(191, 255, 0);">Avviso!</h1>
+    <h3><span th:text="${vuoto}"></span></h3>
     <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
     <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
     <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
     <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
     <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
    
-    <table>
-        <thead>
-            <TH>COVER</TH>
-            <th>TITOLO</th>
-            <TH>AUTORE</TH>
-            <th>GENERE</th>
-            <TH>DATA PUBBLICAZIONE</TH>
-            <TH>RATING</TH>
-            <th>See More</th>
-            
-        </thead>
-        <tbody>
-            <tr th:each="libro:${libri}">
-                <td th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></td>
-                <td th:text="${libro.titolo}"></td>
-                <td><a style="color: red;" th:text="${libro.autore}" th:href="@{|/api/autore/byNome?nome=${libro.autore}|}">  </a></td>
-                <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
-                <td th:text="${libro.dataPubblicazione}"></td>
-                <td th:text="${libro.rating}"></td>
 
-               
-
-                
-
-
-                <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
-                <td th:if="${session.loggato == 'ok'}">
-                    <a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
-                        <button th:disabled="${#strings.endsWith(libro.titolo, ' ')}" 
-                                th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
-                        </button>
-                    </a>
-                </td>
-            
-            </tr>
-        </tbody>
-
-
-
-
-
- <!--tabella di visualizzazione lista/modifica alimento e cancellazione-->
-
-</table>
-
-
-
-    <div class="footer" style="text-align: center;
+    <div class="footer" style="
+    text-align: center;
     margin-top: 40px;
     padding: 10px;
     background-color: grey;
@@ -83,6 +38,5 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
         </footer>
     </div>
-    
 </body>
 </html>

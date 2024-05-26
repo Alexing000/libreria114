@@ -79,6 +79,8 @@ public class LibroController {
         return "archivioCompleto.html";
     }
 
+    private static double votoX;
+    private static List<Double> voti=new ArrayList<>();
     @PostMapping("/votoo")
  public String voto(@RequestParam(name="idLibro", defaultValue = "0") Long id, 
  @RequestParam(name="rating", defaultValue = "0") double voto,@RequestParam(name="votoVecchio", defaultValue = "0") double votoVecchio,Model model,HttpSession session){
@@ -92,14 +94,16 @@ public class LibroController {
  double votoTetto=serviceLibro.numeroVotazioni(id);
 
 
-
 if(votoTetto==1&&valoreIniziale!=0)
 {
     double votino=(1+serviceLibro.numeroVotazioni(id))*5;
     double sommaVotazioni=serviceLibro.sommaVotazioni(id)+valoreIniziale;
     double votazioneBella=(sommaVotazioni/votino)*5;
-    System.out.println("votazioneBella: "+votazioneBella);
       serviceLibro.vota(id, votazioneBella);
+      votoX=votoVecchio;
+      voti.add(votoVecchio);
+      
+
  
 }else
 {
@@ -108,7 +112,7 @@ if(votoTetto==1&&valoreIniziale!=0)
     double votino=serviceLibro.numeroVotazioni(id)*5;
     double sommaVotazioni=serviceLibro.sommaVotazioni(id);
     double votazioneBella=(sommaVotazioni/votino)*5;
-    System.out.println("votazioneBella: "+votazioneBella);
+
       serviceLibro.vota(id, votazioneBella);
 }
     
@@ -124,13 +128,10 @@ if(votoTetto==1&&valoreIniziale!=0)
 
         double valoreIniziale=serviceLibro.readVoti(id);
         double votoTetto=serviceLibro.numeroVotazioni(id);
-
        
        if(votoTetto==0&&valoreIniziale!=0)
        {
-   
-             serviceLibro.vota(id, votoVecchio);
-        
+             serviceLibro.vota(id, voti.get(0));  
        }else
        {
        
@@ -138,7 +139,6 @@ if(votoTetto==1&&valoreIniziale!=0)
            double votino=serviceLibro.numeroVotazioni(id)*5;
            double sommaVotazioni=serviceLibro.sommaVotazioni(id);
            double votazioneBella=(sommaVotazioni/votino)*5;
-           System.out.println("votazioneBella: "+votazioneBella);
              serviceLibro.vota(id, votazioneBella);
        }
            
@@ -159,6 +159,13 @@ if(votoTetto==1&&valoreIniziale!=0)
         double votoUtente=serviceLibro.readRatingPersonale(id, idUtente);
 //se esiste un'associazione tra l'id del libro e l'id dell'utente allora la variabile associazione è true
         boolean associazione=serviceLibro.readAssociazione(id, idUtente);
+        double votoTetto=serviceLibro.numeroVotazioni(id);
+        if (votoTetto==1) {
+            model.addAttribute("votoTetto", "true");
+        } else {
+            model.addAttribute("votoTetto", "false");
+            
+        }
      
        //se ris contiene nella primary key recensione una recensione allora la variabile avereRec è true
        if(id==null)
@@ -180,14 +187,15 @@ if(votoTetto==1&&valoreIniziale!=0)
            }
         }
 
+        
+
        //id del libro
-    System.out.println("ratingPersonale"+votoUtente);
        model.addAttribute("ratingPersonale", votoUtente);
         model.addAttribute("idLibro", id);
        model.addAttribute("paginelette", paginelette);
       model.addAttribute("associazione", associazione);
   
-        model.addAttribute("recensioni", ris);
+        model.addAttribute("recensioni",ris);
         model.addAttribute("libro", l);
         return "dettaglioLibro.html";
     }
@@ -231,8 +239,10 @@ if(votoTetto==1&&valoreIniziale!=0)
  
 //aggiungere recensione ad un libro in base all'utente in sessione
 
+
 @PostMapping("/aggiungiRecensione")
 public String aggiungiRecensione(@RequestParam Map<String,String> params,Model model,HttpSession session){
+
 
 
     
@@ -289,9 +299,13 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     public String libriUtente(Model model, HttpSession session,@RequestParam(name="count",  defaultValue="0") int conteggio){
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
-       // model.addAttribute("count",conteggio);
+        if(ris.isEmpty())
+        {
+            model.addAttribute("vuoto", "Non hai ancora libri nella tua lista!!");
+            return "listaVuota.html";
+        }
+       
         model.addAttribute("libri", ris);
-        System.out.println(conteggio);
         model.addAttribute("count", conteggio);
         return "libriUtente.html";
     }
@@ -315,7 +329,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
      
     
         List<Libro> ris2 = new ArrayList<>();
-        if(count==1||count==null)
+        if(count==0||count==null&&ris.isEmpty())
        ris2= serviceLibro.byGenere();
         else
         ris2=serviceLibro.findByGenere(mostFrequentGenre);
@@ -358,9 +372,15 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
       
         int conteggio=count; 
         conteggio++;
+        
        
      
         redirectAttributes.addAttribute("count", conteggio);
+
+
+       /*  if(serviceLibro.readRecensione(id,idUtente)!=null){
+            serviceLibro.deleteUtenteWhenAssocia(idUtente, id);
+        }*/
 
      
         serviceLibro.dissociaLU(id, idUtente);
@@ -382,7 +402,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     } */
     @PostMapping("/search")
     public String search(@RequestBody String titolo,Model model,HttpSession session){
-        System.out.println(titolo);
+     
         String titoloOk=titolo.substring(6,titolo.length());
         if(titoloOk.contains("+") )
             titoloOk=titoloOk.replace("+"," ");
@@ -433,11 +453,40 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     }*/
 
     @PostMapping("/add")
-    public String add(@RequestParam Map<String,String> map){
-        serviceLibro.insert(map);
-        System.out.println(map);
+    public String add(@RequestParam Map<String,String> map,Model model){
+      
+        List<Autore> autori = serviceAutore.findAll();
+
+        //unire il nome e cognome di ogni autore della lista autori
+        for (Autore autore : autori) {
+            String nomeCognome=autore.getNome()+" "+autore.getCognome();
+   
+            //se il nome e cognome dell'autore è uguale al nome e cognome dell'autore del libro
+            if(nomeCognome.equalsIgnoreCase(map.get("autore"))){
+                //la mappa con chiave id_autore prendera il valore dell'id dell'autore
+                map.put("id_autore", String.valueOf(autore.getId()));
+          
+            }
+            
+            
+                //se l'autore non esiste nella lista autori
+            
+                
+        
+    }
+    //se ò'autore non è trovato nella lista autori allora da errore
+    if(map.get("id_autore").isEmpty()){
+        model.addAttribute("error", "Autore non esistente,ritenta inserimento libro o crea l'Autore desiderato");
+        return "mainError.html";
+
+
+    }
+        //cercare l'id dell'autore che ha come+cognome come autore del libro
+serviceLibro.insert(map);
+     
         return "redirect:/api/libro/all";
     }
+
 
 
 

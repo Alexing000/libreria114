@@ -128,7 +128,7 @@
             </div>
             <div>
                 <a href="/api/libro/genere">...</a>
-                <a href="/api/libro/genere">...</a>
+        
             </div>
     
     
@@ -237,7 +237,7 @@ if(controllo===true)
     const titoli= autocomplete(input.target.value);
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-    if(cLibro<4)
+    if(cLibro<6)
   consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
 
   cLibro++;
@@ -246,7 +246,7 @@ titoli.forEach((titolo) => {
     
   })
     autori.forEach((autore) => {
-        if(cAutore<4)
+        if(cAutore<6)
 
         consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
         cAutore++;
