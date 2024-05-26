@@ -297,7 +297,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
         if(ris.isEmpty())
         {
-            model.addAttribute("vuoto", "Non hai ancora libri nella tua lista!!");
+            model.addAttribute("vuoto", "Non hai ancora libri nella tua lista!");
             return "listaVuota.html";
         }
        
