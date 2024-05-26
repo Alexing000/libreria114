@@ -130,7 +130,7 @@ int libriLetti=libriLetti(idUtente,ris,deleteCount,map);
 
 private boolean merito(int nLibriUtente, int libriChallenge){
 boolean merito=false;
-    if(nLibriUtente>libriChallenge){
+    if(nLibriUtente>=libriChallenge){
         merito=true;
     }
     return merito;
@@ -415,10 +415,10 @@ sommaLibri-=libriLetti;
     }
      if(count==null)
      count=0L;
-     System.out.println(count+"fdfdfdaacount");
+    
     
         List<Libro> ris2 = new ArrayList<>();
-        
+
         if(count==0||count==0L&&ris.isEmpty())
        ris2= serviceLibro.byGenere();
         else
