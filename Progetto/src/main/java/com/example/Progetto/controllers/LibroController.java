@@ -21,10 +21,6 @@ import com.example.Progetto.services.ServiceAutore;
 import com.example.Progetto.services.ServiceLibro;
 
 import com.example.Progetto.services.ServiceUtente;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
-
-
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 

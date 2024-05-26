@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
+    <link rel="stylesheet" href="/css/homeUtente.css" type="text/css">
     <script th:inline="javascript">
         var list = /*[[${libri}]]*/ [];
         var list1 = /*[[${autori}]]*/ [];
@@ -18,33 +18,67 @@
     
 
     <video autoplay muted loop id="background-video">
-        <source src="https://videos.pexels.com/video-files/2268807/2268807-hd_1920_1080_24fps.mp4" type="video/mp4">
+        <source src="https://videos.pexels.com/video-files/4864405/4864405-uhd_4096_2160_25fps.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
     <h2>
         <img src="https://i.ibb.co/wM8h3cP/bookwarm.png" alt="bookwarm"></a>
     </h2>
     <h4 th:text="${actualUser}"></h4>
-    <a href="/logout" id ="logout">Logout</a>
+    
     <a href="/api/libro/all" id="Archivio" >Archivio Completo</a>
     <a href="/api/autore/all" id="Autori" >Archivio Autori</a>
     <a href="/api/libro/libriUtente" id="libriP" >I tuoi libri</a>
-    <a href="/gestioneAccount" id="gestioneAccount" >Gestione Account</a>
+    
     <br>
     
     <div class="search-container">
         <form action="/api/libro/search" method="post" id="search-form">
-
+            
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
             <div id="ris-ricerca" ></div>
       
             <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
+            <div id="ris-ricerca" ></div>
+      
+            
         </form>
     </div>
+    <br>
     
-    
+    <div class="right-box" id="right-box">
+        <h3>Gestione Account</h3>
+        
+        <form action="/modificaUsername" method="POST">
+            <label for="newUsername">Nuovo Username:</label><br>
+            <input type="text" id="newUsername" name="newUsername" required><br>
+            <input type="submit" value="Modifica Username">
+        </form>
+        <br>
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
+        <br>
+        <form action="/modificaPassword" method="POST">
+            <label for="oldPassword">Vecchia Password:</label><br>
+            <input type="password" id="oldPassword" name="oldPassword" required><br>
+            <label for="newPassword">Nuova Password:</label><br>
+            <input type="password" id="newPassword" name="newPassword" required><br>
+            <input type="submit" value="Modifica Password">
+        </form>
+        <br>
+        <div th:if="${error != null}">
+            <p th:text="${error}" style="color: red;"></p>
+        </div>
+        <br>
+        <form id="deleteAccountForm" action="/eliminaAccount" method="POST">
+            <input type="submit" value="Elimina Account">
+        </form>
+        <a href="/logout" id ="logout">Logout</a>
+        
+    </div>
     
 
 
@@ -114,7 +148,9 @@
 <button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>
     </div>
 
-        <div style="display:none;" id="reading-challenge"  th:if="${session.loggato=='ok' }" >
+    <br>
+    <br>
+        <div style="display:none;" id="left-box"  th:if="${session.loggato=='ok' }" >
 
             <div th:if="${libriChallenge>0}">
             <h2>Reading Challenge</h2>
@@ -122,7 +158,8 @@
             <form action="/api/libro/challenge" method="post" id="challenge-form">
                 <div class="flex-container">
                     <a th:text="${nlibriUtente}" style="color: #CC7722;"></a>
-                    <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 50px; background-color: transparent;">
+                    <input type="number" name="libriChallenge" th:value="${libriChallenge}">
+                    <br>
                     <button id="challenge" type="submit">Aggiorna</button>
                 </div>
              
