@@ -38,7 +38,7 @@
      
           <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
-                <td th:text="${libro.rating}"></td>
+                <td th:text="${#numbers.formatDecimal(libro.rating, 1, 2)}"></td>
                 <td><a style="color: black;" th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                 <td th:if="${session.loggato == 'ok'}">
                     <a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
@@ -163,8 +163,7 @@
       
         <br>
 
-	<input type="hidden" id="id_autore" name="id_autore" value="0">
-
+	
         <br>
 
 

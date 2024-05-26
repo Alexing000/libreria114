@@ -476,6 +476,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
                 map.put("id_autore", String.valueOf(autore.getId()));
           
             }
+            System.out.println("maaapp"+map);
             
             
                 
