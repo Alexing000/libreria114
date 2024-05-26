@@ -7,7 +7,27 @@ body {
     text-align: center; /* Centra il contenuto orizzontalmente */
 }
 
-.left-box {
+.right-box {
+    display: flex;
+    flex-direction: column;
+    width: 400px; /* Puoi regolare questa larghezza come desideri */
+    background-image: linear-gradient(to right, #fc9e82,#ffefe8,#ffefe8, #ffefe8, #ffefe8); /* Gradiente da sinistra a destra con tre colori */
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fissa il box nella posizione */
+    top: 0;
+    right: 0;
+    height: 100vh; /* Altezza del box per occupare tutta la pagina */
+    overflow-y: auto; /* Permette di scorrere verticalmente se il contenuto è più alto del box */
+    transform: translateX(90%); /* Sposta il box completamente fuori dalla sinistra */
+    transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
+}
+.right-box:hover {
+    transform: translateX(0);  /* Sposta il box di 20px a destra quando il mouse passa sopra */
+}
+
+#left-box {
     display: flex;
     flex-direction: column;
     width: 200px; /* Puoi regolare questa larghezza come desideri */
@@ -23,53 +43,65 @@ body {
     transform: translateX(-80%); /* Sposta il box completamente fuori dalla sinistra */
     transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
 }
-.left-box:hover {
+#left-box:hover {
     transform: translateX(0);  /* Sposta il box di 20px a destra quando il mouse passa sopra */
 }
-  
-.right-box {
+
+@keyframes colorchange {
+    0% { color: red; }
+    25% { color: yellow; }
+    50% { color: blue; }
+    75% { color: green; }
+    100% { color: red; }
+}
+
+.color-changing {
+    animation: colorchange 5s infinite;
+}
+
+
+.flex-container {
     display: flex;
+    align-items: center;
+}
+
+.flex-container > * {
+    margin-right: 10px;
+}
+#reading-challenge {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    box-shadow: #000;
+
+    
+    background-color:#fdd9c8
+}
+
+#challenge-form {
+    display: inline-flex;
     flex-direction: column;
-    width: 180px; /* Puoi regolare questa larghezza come desideri */
-    background-color: #ffefe8; /* Colore di sfondo del box */
+}
+
+#challenge-form input, #challenge-form button {
+    
+    padding: 10px;
+    margin: 5px 0;
     border-radius: 5px;
-    padding: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fissa il box nella posizione */
-    top: 0;
-    right: 0;
-    height: 100vh; /* Altezza del box per occupare tutta la pagina */
-    overflow-y: auto; /* Permette di scorrere verticalmente se il contenuto è più alto del box */
-    transform: translateX(80%); /* Sposta il box completamente fuori dalla sinistra */
-    transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
-}
-.right-box:hover {
-    transform: translateX(0);  /* Sposta il box di 20px a destra quando il mouse passa sopra */
+    background-color: #fff;
+    width: 100px;
 }
 
-
-#TreImg img {
-    width: 80%; /* Le immagini occupano tutta la larghezza del box */
-    margin-bottom: 35px; /* Spazio tra le immagini */
-    height: auto; /* Altezza fissa per mantenere le proporzioni */
-     /* Taglia l'immagine per riempire le dimensioni */
-    display: block;
-    margin: 0 auto; /* Centra l'immagine orizzontalmente */
-    border-radius: 5px; /* Bordi leggermente arrotondati */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+#challenge-form button {
+    color: #fff;
+    background-color: #ce441a;
+    cursor: pointer;
 }
 
-#TreImg img:hover {
-    transform: scale(1.1); /* Ingrandisce l'immagine al passaggio del mouse */
+#challenge-form button:hover {
+    background-color: #f39353;
 }
 
-  
-
-/* Stile per l'intestazione */
-h3 {
-    color: #ce441a; /* Rosso corallo */
-    margin-top: 50px; /* Spazio sopra il titolo */
-}
 
 #search-container {
     margin: 20px auto;
@@ -146,9 +178,8 @@ td img {
     width: 180px; /* Larghezza fissa */
     height: auto; /* Altezza fissa per mantenere le proporzioni */
     object-fit: cover; /* Taglia l'immagine per riempire le dimensioni */
-    display: flex;
+    display: block;
     margin: 0 auto; /* Centra l'immagine orizzontalmente */
-    margin-block: auto; /* Spazio tra le immagini */
     border-radius: 5px; /* Bordi leggermente arrotondati */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Ombra leggera */
    
@@ -234,39 +265,81 @@ a {
     transform: scale(1.1); /* Ingrandisce il bottone al passaggio del mouse */
 }
 
-
-
-
-
-
-#logout{
-    display: inline-block;
-    margin: 20px auto;
-    text-decoration: none;
-    color: #fff; /* Bianco */
-    background-color: #ce441a; /*Rosso corallo */
-    padding: 10px 20px; /* Spaziatura interna */
-    border-radius: 5px; /* Bordi arrotondati */
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-} 
-#libriP{
-    display: inline-block;
-    margin: 20px auto;
-    text-decoration: none;
-    color: #fff; /* Bianco */
-    background-color: #ce441a; /* Rosso corallo */
-    padding: 10px 20px; /* Spaziatura interna */
-    border-radius: 5px; /* Bordi arrotondati */
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+.right-box input[type="text"], input[type="password"], input[type="submit"], button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.right-box input[type="submit"], button {
+    font-size: large;
+    background-color:#4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+input[type="submit"]:hover, button:hover {
+    background-color:#29832c
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: grey;
+    color: #fff;
+}
+
+
+#logout {
+    font-size: large;
+    display: inline-block; /* Permette di applicare padding e margin */
+    padding: 20px 40px; /* Aggiungi spazio interno per sembrare un bottone */
+    background-color: #4CAF50; /* Colore di sfondo del bottone */
+    color: white; /* Colore del testo */
+    text-align: center; /* Centra il testo */
+    text-decoration: none; /* Rimuove la sottolineatura */
+    border-radius: 5px; /* Bordi arrotondati */
+    position: absolute ; /* Fissa il bottone nella posizione */
+    bottom: 20px; /* Posiziona il bottone in alto */
+    left: 130px;
+    transition: transform 0.3s ease; /* Aggiunge una transizione per il movimento */
+}
+#logout:hover {
+    transform: scale(1.1); /* Ingrandisce il bottone al passaggio del mouse */
+}
+#libriP{
+    display: inline-block;
+    margin: 10px auto;
+    color: #fff; /* Bianco */
+    background-color: #ce441a; /* Rosso corallo */
+    padding: 20px 40px; /* Spaziatura interna */
+    border-radius: 5px; /* Bordi arrotondati */
+    font-weight: bold;
+    font-size: large;
+    transition: background-color 0.3s ease;
+}
+#libriP:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}
 #recensione {
     height: auto;
 }
-
-
 
 /* Stile per il link "Torna alla Home" al passaggio del mouse */
 a:hover {
@@ -334,80 +407,7 @@ a:hover {
     background-color: #f39353; 
 }
 
-#inserisci{
-    display: inline-block;
-    margin: 20px auto;
-    text-decoration: none;
-    color: #fff; /* Bianco */
-    background-color: #ce441a; /* Rosso corallo */
-    padding: 10px 20px; /* Spaziatura interna */
-    border-radius: 5px; /* Bordi arrotondati */
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
 
-
-/* Stile per il contenitore della barra di progresso */
-#progress-container {
-    width: 80%;
-    margin: 20px auto;
-    text-align: center;
-    background-color: #ffffff; /* Bianco */
-    padding: 20px;
-    border-radius: 10px; /* Bordi arrotondati */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-}
-
-/* Stile per l'input del numero di pagine lette */
-#progress-container input[type="number"] {
-    width: 100px; /* Larghezza fissa */
-    padding: 10px;
-    border: 1px solid #ce441a; /* Rosso corallo */
-    border-radius: 5px;
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-/* Stile per la barra di progresso */
-#progress-container progress {
-    width: 60%;
-    height: 20px;
-    margin-right: 10px;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-/* Stile per il pulsante di aggiornamento */
-#progress-container button {
-    padding: 10px 20px;
-    background-color: #ce441a; /* Rosso corallo */
-    color: #fff; /* Bianco */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Stile per il pulsante di aggiornamento al passaggio del mouse */
-#progress-container button:hover {
-    background-color: #f39353; /* Rosso chiaro */
-}
-
-/* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
-#progress-container progress::-webkit-progress-bar {
-    background-color: #ffe4cc; /* Azzurro chiarissimo */
-    border-radius: 5px;
-}
-
-#progress-container progress::-webkit-progress-value {
-    background-color: #ce441a; /* Rosso corallo */
-    border-radius: 5px;
-}
-
-#progress-container progress::-moz-progress-bar {
-    background-color: #ce441a; /* Rosso corallo */
-    border-radius: 5px;
-}
 
 /* Aggiungi queste regole alla fine del tuo file libriOrder.css */
 .social-icon {
@@ -421,3 +421,6 @@ a:hover {
 .social-icon:hover {
     transform: scale(1.2); /* Effetto hover */
 }
+
+
+
