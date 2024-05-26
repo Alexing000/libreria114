@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #ffeddb; /* Arancione chiaro */
+    background-color: #f7d8ba; /* Arancione chiaro */
     text-align: center; /* Centra il contenuto orizzontalmente */
 }
 
@@ -63,7 +63,33 @@ body {
     transform: scale(1.1); /* Ingrandisce l'immagine al passaggio del mouse */
 }
 
-  
+#rece{
+    width: 90%;
+    margin: 20px auto; /* Centra la tabella orizzontalmente */
+    border-collapse: collapse;
+}
+
+
+#rating{
+    margin: 40px;
+}
+
+.beautiful-button {
+    /* Stile per il pulsante */
+    margin-left: 40px;
+    display: inline-flex;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    margin-right: 5px; /* Aggiungi margine tra i pulsanti */
+}
+
+.beautiful-button:hover {
+    background-color: #3e8e41;
+}
 
 /* Stile per l'intestazione */
 h3 {
@@ -315,6 +341,10 @@ a:hover {
     transition: width 0.4s ease-in-out;
 }
 
+#myButton{
+    background-color: #4CAF50;
+}
+
 /* Stile per il pulsante di ricerca */
 #search-button {
     font-family: Arial, Helvetica, sans-serif;
@@ -349,13 +379,14 @@ a:hover {
 
 /* Stile per il contenitore della barra di progresso */
 #progress-container {
-    width: 80%;
-    margin: 20px auto;
-    text-align: center;
-    background-color: #ffffff; /* Bianco */
-    padding: 20px;
-    border-radius: 10px; /* Bordi arrotondati */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    margin: 40px;
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 /* Stile per l'input del numero di pagine lette */
@@ -368,46 +399,11 @@ a:hover {
     margin-right: 10px;
 }
 
-/* Stile per la barra di progresso */
-#progress-container progress {
-    width: 60%;
-    height: 20px;
-    margin-right: 10px;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-/* Stile per il pulsante di aggiornamento */
-#progress-container button {
-    padding: 10px 20px;
-    background-color: #ce441a; /* Rosso corallo */
-    color: #fff; /* Bianco */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
 /* Stile per il pulsante di aggiornamento al passaggio del mouse */
-#progress-container button:hover {
+#progress-container:hover {
     background-color: #f39353; /* Rosso chiaro */
 }
 
-/* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
-#progress-container progress::-webkit-progress-bar {
-    background-color: #ffe4cc; /* Azzurro chiarissimo */
-    border-radius: 5px;
-}
-
-#progress-container progress::-webkit-progress-value {
-    background-color: #ce441a; /* Rosso corallo */
-    border-radius: 5px;
-}
-
-#progress-container progress::-moz-progress-bar {
-    background-color: #ce441a; /* Rosso corallo */
-    border-radius: 5px;
-}
 
 /* Aggiungi queste regole alla fine del tuo file libriOrder.css */
 .social-icon {
@@ -420,4 +416,155 @@ a:hover {
 
 .social-icon:hover {
     transform: scale(1.2); /* Effetto hover */
+}
+
+
+select {
+    padding: 8px; /* Spazio interno */
+    font-size: 16px; /* Dimensione del testo */
+    border: 1px solid #ccc; /* Bordo */
+    border-radius: 5px; /* Bordi arrotondati */
+    background-color: #fff; /* Colore di sfondo */
+    width: 200px; /* Larghezza del menu */
+}
+
+#menutendina{
+    padding: 8px; /* Spazio interno */
+    font-size: 16px; /* Dimensione del testo */
+}
+
+#menubottone{
+    width: 100px;
+    padding: 8px; /* Spazio interno */
+    font-size: 16px; /* Dimensione del testo */
+    color: #fff;
+    background-color: #ce441a; /* Colore di sfondo */
+    border-radius: 5px; /* Bordi arrotondati */
+    margin: 10px 0;
+    
+}
+
+
+
+#progress {
+    width: 90%; /* Occupa tutta la larghezza */
+    margin: 40px; /* Margini per centrare */
+    height: 20px; /* Altezza dell'elemento */
+    background-color: #ce441a; /* Rosso corallo */
+    border-radius: 5px; /* Bordi arrotondati */
+    transition: width 0.4s ease-in-out; /* Altezza dell'elemento */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
+#progress::-webkit-progress-bar {
+    background-color: #ffe4cc; 
+    border-radius: 5px;
+}
+
+#progress::-webkit-progress-value {
+    background-color: #ce441a; /* Rosso corallo */
+    border-radius: 5px;
+}
+
+#progress::-moz-progress-bar {
+    background-color: #ce441a; /* Rosso corallo */
+    border-radius: 5px;
+}
+
+
+/* Stile per il pulsante "Salva Progressi" */
+#progress-container button {
+    margin: 40px;
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block; /* Per occupare l'intera larghezza del contenitore */
+    margin: 20px auto; /* Margini per centrare */
+    width: 150px; /* Larghezza fissa */
+}
+
+/* Effetto hover sul pulsante "Salva Progressi" */
+#progress-container button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}
+
+/* Stile per la sezione delle recensioni */
+#recensioni-section {
+    margin-top: 50px; /* Spazio sopra */
+}
+
+/* Stile per la tabella delle recensioni */
+#recensioni-table {
+    width: 90%;
+    margin: 20px auto;
+    border-radius: 5px;
+    border-collapse: collapse;
+}
+
+/* Stile per le celle della tabella delle recensioni */
+#recensioni-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Linea divisoria tra le righe */
+}
+
+/* Stile per i bottoni delle recensioni */
+.beautiful-button {
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effetto hover sui bottoni delle recensioni */
+.beautiful-button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}
+
+/* Stile per il form di aggiunta recensione */
+#form-aggiungiRecensione {
+    margin-top: 20px; /* Spazio sopra */
+}
+
+/* Stile per la sezione di voto */
+#voto-section {
+    margin-top: 50px; /* Spazio sopra */
+}
+
+/* Stile per il form di voto */
+#voto-form {
+    margin-top: 20px; /* Spazio sopra */
+}
+
+#container-home{
+    text-align: center;
+}
+
+/* Stile per il pulsante "HOME" */
+#home-button {
+    display: inline-block;
+    margin: 20px 10px;
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    justify-content: center;
+}
+
+/* Effetto hover sul pulsante "HOME" */
+#home-button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+    
 }
