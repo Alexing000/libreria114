@@ -41,7 +41,9 @@
             <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
-            <div id="ris-ricerca" ></div>
+            <div id="ris-ricerca" >
+                
+            </div>
       
             
         </form>
@@ -94,13 +96,14 @@
 
                 
                 <tbody>
-                       
-                    <li id="listina" th:each="libro:${libr}">      
-                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                    <li th:each="libro:${libr}">      
+                        <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                            <img th:src="${libro.url}" alt="Copertina">
+                        </a>
                     </li>
                 </tbody>
                 <div>
-                    <a href="/api/libro/recenti">...</a>
+                    <a href="/api/libro/recenti" style="color: black;">...</a>
                 </div>
                 
 
@@ -120,12 +123,14 @@
         <div>
             
             <li th:each="libro:${librG}">      
-                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                    <img th:src="${libro.url}" alt="Copertina">
+                </a>
             </li>
             
         </div>
         <div>
-            <a href="/api/libro/genereUtente">...</a>
+            <a href="/api/libro/genereUtente" style="color: black;">...</a>
         </div>
     </div>
     <!--<div id="libri-consigliati">
@@ -323,8 +328,8 @@ if(controllo===true)
     const titoli= autocomplete(input.target.value);
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-    if(cLibro<6)
-  consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
+    if(cLibro<4)
+  consigliati += " "+`<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`+" ";
 
   cLibro++;
 
@@ -332,14 +337,20 @@ titoli.forEach((titolo) => {
     
   })
     autori.forEach((autore) => {
-        if(cAutore<6)
+        if(cAutore<4)
 
-        consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
+        consigliati1 +=" "+ `<li  onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`+" ";
         cAutore++;
     })
-  let consigliatiSuper=consigliati+" "+consigliati1+" ";
+  let consigliatiSuper=consigliati+consigliati1;
 
-  search.innerHTML = `<ul>${consigliatiSuper}</ul>`;
+  search.innerHTML = `
+    
+        <ul >
+            ${consigliatiSuper}
+        </ul>
+   
+`;
  
 
 }
@@ -354,6 +365,39 @@ window.onpageshow = function() {
 //ad ogni apertura della pagina il campo di ricerca viene resettato,anche se si torna indietro tramite freccia
 </script>
 
+<style>
 
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0,0,0,0.2);
+    }
+    100% {
+        box-shadow: 0 0 0 50px rgba(0,0,0,0);
+    }
+}
+
+
+
+li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+li:hover::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ripple 0.6s linear infinite;
+}
+
+
+
+</style>
 
 </html>

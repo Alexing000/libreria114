@@ -22,6 +22,7 @@
             <th>BIOGRAFIA</th>
             <TH>RATING</TH>
             <th>Lista libri</th>
+            <th id="colum" th:if="${session.loggato == 'ok' && session.ruolo=='admin'}" style="display: none;">Utils</th>
             
         </thead>
         <tbody>
@@ -37,6 +38,27 @@
                         <span><a  style="color: red;" th:text="${libro.titolo}" th:href="@{|/api/libro/libroById?idLibro=${libro.id}|}">  </a></span><br>&nbsp;
                     </div>
                 </td>
+                <td th:if="${session.loggato == 'ok' && session.ruolo=='admin'}">
+          
+                    <button
+                   class="modifica-button"
+                    
+                   th:modifica-id="${autori.id}"
+                   th:modifica-nome="${autori.nome}"
+                     th:modifica-cognome="${autori.cognome}"
+                        th:modifica-biografia="${autori.biografia}"
+                        th:modifica-rating="${autori.rating}"
+                        th:modifica-url="${autori.url}"
+
+
+    
+                    style="display: none; padding: 10px 20px; background-color: #986a08; border: none; cursor: pointer;" onclick="modifica(this)">Modifica
+                
+                </button>
+                <br>
+                <br>
+                    <a class="delete-button" style="display: none; padding: 10px 20px; background-color: #980808; border: none; cursor: pointer;" th:href="|/api/autore/delete?idAutore=${autori.id}|">Elimina</a>
+                </td>
                   
             </tr>
         </tbody>
@@ -47,11 +69,22 @@
 </table>
 
 
-<div th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
-    <button id="inserisciButton">Inserisci un nuovo autore</button>
+ 
+<div class="centered-buttons" th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
+    <button id="inserisciButton">Inserisci un nuovo autore!</button>
+    <button style ="display: block;" id="mod" onclick="modificaAutore()">Apri funzionalità di modifica autori</button>
+    <button id="del_but" onclick="eliminaAutore()">Apri funzionalità di eliminazione autori</button><br>
+    <br>
+    
+</div>
+<br>
+<div class="centered-buttons" th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
+    <button style ="display: none;" id="chiudi-inserisciButton" onclick="chiudiModificaAutori()">Chiudi funzionalità di modifica autori</button>
+    <button style ="display: none;" id="chiudi-del_but" onclick="chiudiEliminaAutori()">Chiudi funzionalità di eliminazione autori</button>  <br>
+    <br>
 </div>
 
-<div class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: none;">
+<div class="form-container" id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: none;">
     <h4>Aggiungi Autore</h4>
     <!--Uso la form per permettere l'inserimento di dati da parte dell'utente
     Se faccio una richiesta inserimento dati
@@ -80,6 +113,34 @@
     </form>
      
     </div>
+    <div class="form-container" id="div-modifica"  th:if="${session.ruolo == 'admin' && session.loggato=='ok'} " style="display: none;">
+        <h4>Modifica</h4>
+
+        
+        <form action="/api/autore/update" method="post" >
+           
+            <label for="nome">Nome</label>
+            <input type="text" id="modifica-nome" name="nome" required><br>
+            <label for="cognome">Cognome</label>
+            <input type="text" id="modifica-cognome" name="cognome" required><br>
+            <label for="biografia">Biografia</label>
+            <input type="text" id="modifica-biografia" name="biografia" required><br>
+            <label for="rating">Rating</label>
+            <input type="number" id="modifica-rating" name="rating" required><br>
+            <label for="url">Url</label>
+            <input type="text" id="modifica-url" name="url_autore" required><br>
+            <input type="hidden" id="modifica-id" name="id" required><br>
+
+            <button id="modifica">Modifica</button>
+            <button id="annulla-modifica" onclick="annullaModifica()">Annulla</button>
+
+            <br>
+    
+    
+     <!--<input id="crea" type="submit" value="Aggiungi un nuovo libro">--> 
+        </form>
+         
+        </div>
 
     
     <script src="script.js"></script>
@@ -108,6 +169,21 @@
     
 </body>
 <script>
+    var observer = new MutationObserver(function(mutations) {
+    var chiudiInserisciButton = document.getElementById('chiudi-inserisciButton');
+    var chiudiDelBut = document.getElementById('chiudi-del_but');
+    var colum = document.getElementById('colum');
+
+    if (chiudiInserisciButton.style.display !== 'none' || chiudiDelBut.style.display !== 'none') {
+        colum.style.display = 'table-cell';
+    } else {
+        colum.style.display = 'none';
+    }
+});
+
+var config = { attributes: true, childList: true, subtree: true };
+
+observer.observe(document.body, config);
     document.getElementById('inserisciButton').addEventListener('click', function() {
         document.getElementById('inserisciButton').style.display = 'none';
         document.getElementById('inserisci').style.display = 'block';
@@ -116,5 +192,176 @@
     document.getElementById('inserisci').style.display = 'none';
     document.getElementById('inserisciButton').style.display = 'block';
 });
+
+function annullaModifica() {
+    // Get the div
+    var div = document.getElementById('div-modifica');
+ 
+
+    // Hide the div
+    div.style.display = 'none';
+
+    // Get all input elements within the div
+    var inputs = div.getElementsByTagName('input');
+
+    // Clear the input fields
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'hidden') {
+            continue; // Skip hidden fields
+        }
+        inputs[i].value = '';
+    }
+}
+
+function eliminaAutore() {
+    var buttons = document.getElementsByClassName('delete-button');
+    var button = document.getElementById('del_but');
+    var chiudiButton = document.getElementById('chiudi-del_but');
+    chiudiButton.style.display = 'block';
+button.style.display = 'none';
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'inline';
+    }
+}
+function modificaAutore() {
+
+    var button = document.getElementById('mod');
+button.style.display = 'none';
+
+    var buttons = document.getElementsByClassName('modifica-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'inline';
+    }
+    var chiudiButton = document.getElementById('chiudi-inserisciButton');
+    chiudiButton.style.display = 'block';
+
+}
+
+function chiudiModificaAutori() {
+    var chiudiButton = document.getElementById('chiudi-inserisciButton');
+    var modificaButton = document.getElementById('mod'); // Replace 'modifica' with the actual id of the "modifica" button
+
+    // Toggle the visibility of the "chiudi-inserisciButton" button
+    chiudiButton.style.display =  'none';
+
+    // Toggle the visibility of the "modifica" button
+    modificaButton.style.display = 'block';
+    var buttons = document.getElementsByClassName('modifica-button');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
+    }
+}
+function chiudiEliminaAutori() {
+    var chiudiButton = document.getElementById('chiudi-del_but');
+    var anotherButton = document.getElementById('del_but'); 
+    var buttons = document.getElementsByClassName('delete-button');
+    // Toggle the visibility of the "chiudi-del_but" button
+    chiudiButton.style.display = (chiudiButton.style.display == 'none') ? 'block' : 'none';
+
+    // Toggle the visibility of the other button
+    anotherButton.style.display = (anotherButton.style.display == 'none') ? 'block' : 'none';
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
+    }
+
+}
+
+function modifica(oggetto) {
+    var div = document.getElementById('div-modifica');
+    var id=document.getElementById('modifica-id');
+    var nome=document.getElementById('modifica-nome');
+    var cognome=document.getElementById('modifica-cognome');
+    var biografia=document.getElementById('modifica-biografia');
+    var rating=document.getElementById('modifica-rating');
+    var url=document.getElementById('modifica-url');
+
+    id.value=oggetto.getAttribute('modifica-id');
+    nome.value=oggetto.getAttribute('modifica-nome');
+    cognome.value=oggetto.getAttribute('modifica-cognome');
+    biografia.value=oggetto.getAttribute('modifica-biografia');
+    rating.value=oggetto.getAttribute('modifica-rating');
+    url.value=oggetto.getAttribute('modifica-url');
+
+    div.style.display = 'block';
+
+}
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    
+        .form-container {
+            width: 50%;
+            margin: auto;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+    
+        .form-container h4 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="int"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .centered-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .centered-buttons button {
+        padding: 10px 20px;
+        margin: 5px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #inserisciButton, #chiudi-inserisciButton {
+        background-color: #4CAF50; /* Green */
+    }
+
+    #mod, #chiudi-inserisciButton {
+        background-color: #FFA500; /* Orange */
+    }
+
+    #del_but, #chiudi-del_but {
+        background-color: #FF0000; /* Red */
+    }
+
+    .centered-buttons button:hover {
+        opacity: 0.8;
+    }
+    </style>
 </html>

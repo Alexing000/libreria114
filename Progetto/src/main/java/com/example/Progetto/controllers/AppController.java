@@ -49,7 +49,7 @@ public class AppController {
     public void receiveDeleteCount(@RequestBody Map<String, Integer> payload, HttpSession session) {
 
         //se count è null, allora count sarà uguale a 0
-        
+      //  
         Integer count = payload.get("count");
       
             session.setAttribute("count", count);
@@ -70,11 +70,6 @@ public class AppController {
 Map<Long, Libro> map = startupInit.getMap();
 List<Map<String, String>> map1 = startupInit.getMap1();
 
-
-
-
-
-
             List<Libro> ris = serviceLibro.byAnno();
             Integer deleteCount = session.getAttribute("count")==null?0:(Integer)session.getAttribute("count");
 
@@ -91,7 +86,6 @@ List<Autore > autori = serviceAutore.findAll();
                 hasRun = true;
             }
          
-        System.out.println("map1: "+map1);
     
             model.addAttribute("libri", ris);
             model.addAttribute("autori", autori);
@@ -414,13 +408,17 @@ sommaLibri-=libriLetti;
     
     String mostFrequentGenre = null;
     Long count = 0L;
+
     if (mostFrequentGenreEntry != null) {
         mostFrequentGenre = mostFrequentGenreEntry.getKey();
         count = mostFrequentGenreEntry.getValue();
     }
-     
+     if(count==null)
+     count=0L;
+     System.out.println(count+"fdfdfdaacount");
     
         List<Libro> ris2 = new ArrayList<>();
+        
         if(count==0||count==0L&&ris.isEmpty())
        ris2= serviceLibro.byGenere();
         else

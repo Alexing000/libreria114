@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.example.Progetto.models.Utente;
+import com.example.Progetto.services.ServiceLibro;
 
 import lombok.Data;
 
@@ -20,6 +21,8 @@ public class DaoUtente implements IDao<Long, Utente>{
 
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private ServiceLibro serviceLibro;
 
 
     public Long create(Utente e) {
@@ -34,6 +37,10 @@ public class DaoUtente implements IDao<Long, Utente>{
                 e.getRuolo(),
                 0,
                 0);
+              
+
+               
+
         return id;
     }
 

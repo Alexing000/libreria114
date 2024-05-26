@@ -1,5 +1,6 @@
 package com.example.Progetto.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Progetto.models.Utente;
+import com.example.Progetto.services.ServiceLibro;
 import com.example.Progetto.services.ServiceUtente;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +25,8 @@ public class UtenteController {
 
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private ServiceLibro serviceLibro;
 
     
     @GetMapping("/signup")
@@ -129,6 +133,7 @@ if (utenteEsistente || emailEsistente || passwordNonValida || passwordNonCorrisp
     System.out.println(allParams);
     // Altrimenti, procedi con la registrazione dell'utente
     serviceUtente.create(allParams);
+ 
     session.setAttribute("utente", utente);
     return "confermaRegistrazione.html";
 }

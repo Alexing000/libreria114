@@ -16,6 +16,7 @@
             <TH>DATA PUBBLICAZIONE</TH>
             <TH>RATING</TH>
             <th>See More</th>
+            <th  th:if="${session.loggato == 'ok' }" >Utils</th>
             
         </thead>
         <tbody>
@@ -28,7 +29,7 @@
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
 
-                <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
+                <td><a style="color: black;" th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
             
             
             </tr>
@@ -37,11 +38,14 @@
 
 </table>
     <h1>Libro Inserito correttamente!</h1>
-    <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
-    <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
-    <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+    <div style="font-size: 20px; line-height: 2;">
+        <div><a th:if="${session.loggato=='ok'}" style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a></div>
+        <div><a th:if="${session.loggato!='ok'}" style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a></div>
+        <div><a th:if="${session.loggato=='ok'}" style="color: rgb(97, 139, 18); font-weight: bold; font-size: 25px;" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a></div>
+<div><a style="color: rgb(97, 139, 18); font-weight: bold; font-size: 25px;" href="/api/libro/all">Vai nell'archivio libri!</a></div>
+        <div><a style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a></div>
+    </div>
+   
    
 </body>
 </html>

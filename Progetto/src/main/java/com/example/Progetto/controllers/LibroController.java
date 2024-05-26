@@ -167,20 +167,22 @@ if(votoTetto==1&&valoreIniziale!=0)
        if(id==null)
         model.addAttribute("error", "id non valido!");
 
-       for(Map<String,String> m:ris){
-
-           if(m.get("recensione")!=null&&m.get("username").equals(username)){
-               model.addAttribute("avereRec", "true")    ; 
-        
-              break;
-           }
-           else
-           {
-
+        int index = -1;
+        for(int i = 0; i < ris.size(); i++){
+            Map<String,String> m = ris.get(i);
+            if(m.get("recensione")!=null && m.get("username").equals(username)){
+                model.addAttribute("avereRec", "true");
+                index = i;
+                break;
+            }
+            else {
                 model.addAttribute("avereRec", "false");
-             
-               break;
-           }
+            }
+        }
+        
+        if(index != -1){
+            Map<String,String> m = ris.remove(index);
+            ris.add(0, m);
         }
 
         
@@ -190,6 +192,7 @@ if(votoTetto==1&&valoreIniziale!=0)
         model.addAttribute("idLibro", id);
        model.addAttribute("paginelette", paginelette);
       model.addAttribute("associazione", associazione);
+      model.addAttribute("contRec", ris.size());
   
         model.addAttribute("recensioni",ris);
         model.addAttribute("libro", l);
@@ -235,7 +238,15 @@ if(votoTetto==1&&valoreIniziale!=0)
  
 //aggiungere recensione ad un libro in base all'utente in sessione
 
-
+@PostMapping("/creaRecensione")
+public String creaRecensione(@RequestParam Map<String,String> params,Model model,HttpSession session){
+    Long idUtente = (Long) session.getAttribute("idUtente");
+    serviceLibro.creaRecensione(params, idUtente);
+    //ottieni l'id del da params
+    Long id = Long.parseLong(params.get("id"));
+    //ritorna alla pagina dei libriutenti
+    return "redirect:/api/libro/byId?idLibro="+id;
+}
 @PostMapping("/aggiungiRecensione")
 public String aggiungiRecensione(@RequestParam Map<String,String> params,Model model,HttpSession session){
 
@@ -297,8 +308,8 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
         if(ris.isEmpty())
         {
-            model.addAttribute("vuoto", "Non hai ancora libri nella tua lista!!");
-            return "listaVuota.html";
+            model.addAttribute("vuoto", "true");
+            return "libriUtente.html";
         }
        
         model.addAttribute("libri", ris);
@@ -322,10 +333,12 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         mostFrequentGenre = mostFrequentGenreEntry.getKey();
         count = mostFrequentGenreEntry.getValue();
     }
+    if(count==null)
+    count=0L;
      
     
         List<Libro> ris2 = new ArrayList<>();
-        if(count==0||count==null&&ris.isEmpty())
+        if(count==0||count==0L&&ris.isEmpty())
        ris2= serviceLibro.byGenere();
         else
         ris2=serviceLibro.findByGenere(mostFrequentGenre);
@@ -465,13 +478,11 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
             }
             
             
-                //se l'autore non esiste nella lista autori
-            
                 
         
     }
     //se ò'autore non è trovato nella lista autori allora da errore
-    if(map.get("id_autore").isEmpty()){
+    if(!map.containsKey("id_autore")){
         model.addAttribute("error", "Autore non esistente,ritenta inserimento libro o crea l'Autore desiderato");
         return "mainError.html";
 
@@ -480,6 +491,32 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         //cercare l'id dell'autore che ha come+cognome come autore del libro
 serviceLibro.insert(map);
      
+        return "redirect:/api/libro/all";
+    }
+    @PostMapping("/update")
+    public String update(@RequestParam Map<String,String> map,Model model){
+        List<Autore> autori = serviceAutore.findAll();
+
+        //unire il nome e cognome di ogni autore della lista autori
+        for (Autore autore : autori) {
+            String nomeCognome=autore.getNome()+" "+autore.getCognome();
+   
+            //se il nome e cognome dell'autore è uguale al nome e cognome dell'autore del libro
+            if(nomeCognome.equalsIgnoreCase(map.get("autore"))){
+                //la mappa con chiave id_autore prendera il valore dell'id dell'autore
+                map.put("id_autore", String.valueOf(autore.getId()));
+          
+            }            
+        
+    }
+    //se ò'autore non è trovato nella lista autori allora da errore
+    if(!map.containsKey("id_autore")){
+        model.addAttribute("error", "Autore non esistente,ritenta inserimento libro o crea l'Autore desiderato");
+        return "mainError.html";
+
+
+    }
+        serviceLibro.update(map);
         return "redirect:/api/libro/all";
     }
 
@@ -502,5 +539,11 @@ serviceLibro.insert(map);
             model.addAttribute("error", "Errore nell'aggiornamento delle pagine lette");
             return "mainError.html";
         }
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name="idLibro", defaultValue = "0") Long id,Model model){
+        serviceLibro.delete(id);
+        return "redirect:/api/libro/all";
     }
 }

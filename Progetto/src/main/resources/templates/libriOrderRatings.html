@@ -23,6 +23,7 @@
             <TH>DATA PUBBLICAZIONE</TH>
             <TH>RATING</TH>
             <th>See More</th>
+            <th  th:if="${session.loggato == 'ok' }" >Utils</th>
             
         </thead>
         <tbody>
@@ -34,12 +35,15 @@
                 <td th:text="${libro.dataPubblicazione}"></td>
                 <td th:text="${libro.rating}"></td>
 
-                <td><a th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
+                <td><a style="color: black;" th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                 <td th:if="${session.loggato == 'ok'}">
                     <a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
-                        <button th:disabled="${#strings.endsWith(libro.titolo, ' ')}" 
-                                th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
-                        </button>
+                        <button
+                        th:style="'padding: 10px 20px; border: none; cursor: pointer; color: #ffffff; background-color:' + 
+                                  (${#strings.endsWith(libro.titolo, ' ') ? '#ADD8E6' : '#209808'}) + ';'"
+                        th:disabled="${#strings.endsWith(libro.titolo, ' ')}"
+                        th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
+                    </button>
                     </a>
                 </td>
             

@@ -35,10 +35,14 @@
         <form action="/api/libro/search" method="post" id="search-form">
 
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
-            <button id="search-button" type="submit" href="">
+            <div id="ris-ricerca" ></div>
+      
+            <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
-            <div id="ris-ricerca" ></div>
+            <div id="ris-ricerca" >
+                
+            </div>
       
             
         </form>
@@ -99,12 +103,14 @@
                     
                     <tbody>
                            
-                        <li id="listina" th:each="libro:${libr}">      
-                            <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                        <li th:each="libro:${libr}">      
+                            <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                                <img th:src="${libro.url}" alt="Copertina">
+                            </a>
                         </li>
                     </tbody>
                     <div>
-                        <a href="/api/libro/ratings">...</a>
+                        <a href="/api/libro/ratings" style="color: black;">...</a>
                     </div>
                     
     
@@ -123,12 +129,14 @@
             <div>
                 
                 <li th:each="libro:${librG}">      
-                    <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                    <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                        <img th:src="${libro.url}" alt="Copertina">
+                    </a>
                 </li>
                 
             </div>
             <div>
-                <a href="/api/libro/genere">...</a>
+                <a href="/api/libro/genere" style="color: black;">...</a>
         
             </div>
     
@@ -166,13 +174,17 @@
 </body>
 
 <script>
-     const input = document.getElementById('search-input');
+document.getElementById('search-input').addEventListener('input', function() {
+    var searchInput = document.getElementById('search-input').value;
+    document.getElementById('search-button').disabled = !searchInput;
+});
+
+
+const input = document.getElementById('search-input');
     input.addEventListener("keyup",autocomp);
     const search = document.getElementById('ris-ricerca');
 
-
     function autocomplete(valore){
-        console.log(list);
       if(valore.length === 0){
         return [];
       }
@@ -238,7 +250,7 @@ if(controllo===true)
     const titoli= autocomplete(input.target.value);
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-    if(cLibro<6)
+    if(cLibro<5)
   consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
 
   cLibro++;
@@ -247,7 +259,7 @@ titoli.forEach((titolo) => {
     
   })
     autori.forEach((autore) => {
-        if(cAutore<6)
+        if(cAutore<5)
 
         consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
         cAutore++;

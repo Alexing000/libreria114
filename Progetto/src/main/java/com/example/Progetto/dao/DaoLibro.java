@@ -60,7 +60,7 @@ public class DaoLibro implements IDao<Long, Libro>{
 
     @Override
     public void update(Libro e) {
-        String query = "UPDATE libro SET titolo = ?, trama = ?, autore = ?, nPagine = ?, genere = ?, dataPubblicazione = ?, rating = ? where id = ?";
+        String query = "UPDATE libro SET titolo = ?, trama = ?, autore = ?, nPagine = ?, genere = ?, dataPubblicazione = ?, rating = ? ,url=?,id_autore=? where id = ?";
         database.executeDML(query, 
             e.getTitolo(),
             e.getTrama(),
@@ -70,6 +70,7 @@ public class DaoLibro implements IDao<Long, Libro>{
             String.valueOf(e.getDataPubblicazione()),
             String.valueOf(e.getRating()),
             String.valueOf(e.getUrl()),
+            String.valueOf(e.getId_autore()),
             String.valueOf(e.getId()));
             
 
@@ -220,6 +221,12 @@ public List<Map<String,String>> readRecensione(Long id) {
    
 }
 //aggiungere recensione ad un libro in base all'utente in sessione
+
+public void creaRecensione(Long idLibro, Long idUtente, String recensione) {
+    String query = "INSERT INTO associa (id_libro, id_utente, recensione) VALUES (?, ?, ?)";
+    database.executeDML(query, String.valueOf(idLibro), String.valueOf(idUtente), recensione);
+}
+
 public void addRecensione(Long idLibro, Long idUtente, String recensione) {
     String query = "update associa set recensione=? where id_libro=? and id_utente=?";
 
@@ -304,6 +311,7 @@ public double sommaVotazioni(double idLibro){
     }
     return sommaVotazioni;
 }
+
 public double readVoti(Long idLibro){
    //voto del libro con id =idLibro
    String query ="select rating from libro where id=?";
@@ -334,4 +342,5 @@ public String readRecensione(Long idLibro, Long idUtente){
     }
     return recensione;
 }
+
 }

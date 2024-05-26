@@ -31,6 +31,12 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
             return (Libro) x;
         }).toList();
     }
+
+    public boolean update(Map<String, String> map) {
+        Libro l = createEntity(map);
+        getDao().update(l);
+        return true;
+    }
     public void associaLU(Long idLibro, Long idUtente) {
          getDao().aLibroUtente(idLibro, idUtente);
     }
@@ -66,6 +72,13 @@ public class ServiceLibro extends GenericService <Long, Libro, DaoLibro>{
     public List<Map<String,String>> readRecensioni(Long id) {
         return getDao().readRecensione(id);
     }
+    public void creaRecensione(Map<String,String> map,Long idUtente) {
+        Long idLibro= Long.parseLong(map.get("id"));
+        String recensione= map.get("recensione");
+        if(map.get("recensione")!=null){
+            getDao().creaRecensione(idLibro, idUtente, recensione);
+        }
+    }
 
     public void aggiungiRecensione(Map<String,String> map,Long idUtente) {
 
@@ -90,6 +103,11 @@ if(map.get("recensione")!=null){
 
    public int readPagineLette(Long idLibro, Long idUtente){
        return getDao().readPagineLette(idLibro, idUtente);
+   }
+
+   public boolean delete(Long id){
+       getDao().delete(id);
+       return true;
    }
 
     public boolean readAssociazione(Long idLibro, Long idUtente){

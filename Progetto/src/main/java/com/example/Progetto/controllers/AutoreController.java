@@ -111,4 +111,15 @@ public class AutoreController {
    
         return new StringBuilder(nome).reverse().toString();
     }
+
+    @PostMapping("/update")
+    public String update(@RequestParam Map<String, String> map){
+        serviceAutore.update(map);
+        return "redirect:/api/autore/all";
+    }
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name="idAutore", defaultValue = "0") Long id){
+        serviceAutore.delete(id);
+        return "redirect:/api/autore/all";
+    }
 }
