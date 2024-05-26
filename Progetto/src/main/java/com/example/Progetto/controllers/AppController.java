@@ -87,7 +87,7 @@ List<Autore > autori = serviceAutore.findAll();
                 for(Long i=1L; i<=serviceUtente.readLibriLetti(idUtente)-libriInLIsta(idUtente); i++) {
                     map.put(-i, null);
                 }
-                map1=serviceLibro.readAssociazioniUtente(idUtente);
+           
                 hasRun = true;
             }
          

@@ -318,12 +318,7 @@ public double readVoti(Long idLibro){
     return voti;
 }
 
-public List<Map<String,String>> readAssociazioneUtente(Long idUtente) {
-    String query = "SELECT * FROM associa WHERE id_utente = ?";
-    List< Map<String, String>> ris = databasee.executeDfL(query, String.valueOf(idUtente));
-    return ris;
 
-}
 
 public void deleteUtenteWhenAssocia(Long idLibro, Long idUtente){
     String query="update associa set id_utente=null where id_libro=? and id_utente=?";

@@ -117,9 +117,7 @@ if(map.get("recensione")!=null){
    public double readVoti(Long idLibro){
        return getDao().readVoti(idLibro);
    }
-   public List<Map<String,String>> readAssociazioniUtente(Long idUtente){
-       return getDao().readAssociazioneUtente(idUtente);
-   }
+
    public void deleteUtenteWhenAssocia(Long idLibro, Long idUtente){
        getDao().deleteUtenteWhenAssocia(idLibro, idUtente);
    }

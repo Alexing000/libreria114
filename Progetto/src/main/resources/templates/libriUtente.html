@@ -54,7 +54,7 @@ min-height: 100vh;">
 
                         
                <form action="/api/libro/eliminaDaLista" method="post">
-                    <input type="numer" name="idLibro" th:value="${libro.id}">
+                    <input type="hidden" name="idLibro" th:value="${libro.id}">
                     <input type="hidden" th:value="${count}" name="conto">
 
                     <button id="deleteButton" class="deleteButton">Elimina!</button>
