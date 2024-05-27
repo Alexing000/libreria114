@@ -68,39 +68,14 @@ body {
 .flex-container > * {
     margin-right: 10px;
 }
-#reading-challenge {
-    width: 50%;
-    margin: auto;
-    padding: 20px;
-    box-shadow: #000;
 
-    
-    background-color:#fdd9c8
-}
 
-#challenge-form {
-    display: inline-flex;
-    flex-direction: column;
-}
 
-#challenge-form input, #challenge-form button {
-    
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    background-color: #fff;
-    width: 100px;
-}
 
-#challenge-form button {
-    color: #fff;
-    background-color: #ce441a;
-    cursor: pointer;
-}
 
-#challenge-form button:hover {
-    background-color: #f39353;
-}
+
+
+
 
 
 #search-container {
@@ -423,4 +398,79 @@ a:hover {
 }
 
 
+#numero-libriUtente{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    padding: 10px 20px;
+    width: 150px; /* Larghezza fissa */
+    color: #000000;
+    text-align: center;
+   
+
+}
+
+#reading-challenge {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 200px; /* Larghezza del box */
+    background-image: linear-gradient(to right,#ffefe8,#ffefe8, #ffefe8, #ffefe8,  #fc9e82); /* Gradiente da sinistra a destra con tre colori */
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    position: fixed; /* Fissa il box nella posizione */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Altezza del box per occupare tutta la pagina */
+    overflow-y: auto; /* Permette di scorrere verticalmente se il contenuto è più alto del box */
+    transform: translateX(-80%); /* Sposta il box per l'80% fuori dalla pagina */
+    transition: transform 0.3s ease-in-out; /* Aggiunge una transizione per il movimento */
+}
+
+#reading-challenge:hover {
+    transform: translateX(0); /* Riporta il box dentro la pagina al passaggio del mouse */
+}
+
+/* Aggiungi altri stili necessari */
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.flex-container > * {
+    margin-right: 10px;
+}
+
+#challenge-form input, #challenge-form button {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100px;
+}
+
+#challenge-form button {
+    color: #fff;
+    background-color: #ce441a;
+    cursor: pointer;
+}
+
+#challenge-form button:hover {
+    background-color: #f39353;
+}
+
+.color-changing {
+    animation: colorchange 5s infinite;
+}
+
+@keyframes colorchange {
+    0% { color: red; }
+    25% { color: yellow; }
+    50% { color: blue; }
+    75% { color: green; }
+    100% { color: red; }
+}
 

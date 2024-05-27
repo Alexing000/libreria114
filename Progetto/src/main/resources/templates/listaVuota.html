@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libriOrder.css" type="text/css">
     <title>Document</title>
 </head>
 <body>
-    <h1 style="color: rgb(191, 255, 0);">Avviso!</h1>
+    <h1 style="color: #29832c;">Avviso!</h1>
     <h3><span th:text="${vuoto}"></span></h3>
-    <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
-    <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
-    <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+    <br>
+    <a  th:if="${session.loggato=='ok'}" id="search-button" href="/homeUtente">HOME</a>
+    <a  id="search-button" th:if="${session.loggato!='ok'}" href="/home">HOME</a>
+    <a id="search-button"  href="/api/libro/all">ARCHIVIO LIBRI</a>
+    <a id="search-button"  href="/api/autore/all">ARCHIVIO AUTORI</a>
    
 
     <div class="footer" style="

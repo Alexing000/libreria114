@@ -307,8 +307,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         Long idUtente = (Long) session.getAttribute("idUtente");
         List<Libro> ris = serviceLibro.readByIdUtente(idUtente);
         if(ris.isEmpty())
-        {
-            model.addAttribute("vuoto", "true");
+        {model.addAttribute("vuoto", "true");
             return "libriUtente.html";
         }
        

@@ -13,10 +13,18 @@
     
        </script>
 
-    <title>DettaglioLibro</title>
+    <title>Dettaglio Libro</title>
 </head>
 <body onload="adjustInputSizeOnLoad();updateProgress()">
+
+    <div id="container-home">
     <!--da aggiungere bottone per arrivare alla pagina-->
+    <a id="home-button" th:if="${session.loggato=='ok'} " href="/homeUtente">HOME</a>
+    <a id="home-button" th:if="${session.loggato!='ok'}"href="/home">HOME</a>
+    <a id="home-button" href="/api/autore/all">ARCHIVIO AUTORI</a>
+    <a id="home-button" th:if="${session.loggato=='ok'}"  href="/api/libro/libriUtente">I TUOI LIBRI</a>
+    <a id="home-button" href="/api/libro/all">ARCHIVIO LIBRI</a>
+</div>
     <table>
         <thead>
             <TH>COVER</TH>
@@ -54,13 +62,13 @@
         <input type="hidden" id="nPagine" th:value="${nPagineLette}" name="nPagineLette">
     </form>
     <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
-    <button onclick="confirmProgress()">Salva Progressi</button>
+    <button id="progress-container" onclick="confirmProgress()">Salva Progressi</button>
     </div>
 
    
 
-    <h3>Recensioni</h3>
-    <table class="table table-striped">
+    <h3 id="rece">Recensioni</h3>
+    <table id="recensioni-table" class="table table-striped">
         <tbody>
             <tr th:each="recensione:${recensioni}" th:if="${!#strings.isEmpty(recensione.recensione)}">
                 <td id="listRec" th:text="${recensione.username}"></td>
@@ -111,31 +119,28 @@
             </div>
  
 <div th:if="${session.loggato=='ok' && associazione==true}">
-<h3>Dai un voto</h3>
-
+<h3 id="rece">Dai un voto</h3>
+<div id="tastini">
 <form action="/api/libro/votoo" method="post">
 <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
 <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
 <input type="number" name="rating" id="rating" min="1" max="5" value="0" step="0.1" oninput="validateInput1(this)">
+<br>
 <input th:if="${ratingPersonale == -1}" type="submit" value="Vota!" class="beautiful-button">
-<input th:if="${ratingPersonale != -1}" type="submit" value="Modifica voto" class="beautiful-button">
-
+<input th:if="${ratingPersonale != -1}" type="submit" id="modifica" value="Modifica voto" class="beautiful-button">
 </form>
+<br>
 <div th:if="${ratingPersonale != -1}">
     <form action="/api/libro/eliminaVoto" method="get">
         <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
-        <input type="submit" value="Elimina voto" class="beautiful-button-del">
+        <input  type="submit" value="Elimina voto" class="beautiful-button">
         <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
     </form>
 </div>
-            </div>
+ </div>
+</div>
 
-
-            <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
-            <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
-            <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
-            <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
-            <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+    
    
 
 
@@ -278,148 +283,7 @@ window.onload = function() {
 
 }
 
-/*function adjustInputSize(input) {
-    var words = input.value.split(' ');
-    for (var j = 99; j < words.length; j += 100) {
-        words[j] += '\n';
-    }
-    input.value = words.join(' ');
-    var lines = input.value.split('\n');
-    var longestLine = lines.reduce(function(a, b) { return a.length > b.length ? a : b; });
-    input.rows = lines.length;
-    input.cols = longestLine.length;
-    input.cols = Math.max(longestLine.length, 50);
-}
 
-function adjustInputSizeOnLoad() {
-    var inputs = document.querySelectorAll('textarea.full-text');
-    for (var i = 0; i < inputs.length; i++) {
-        var words = inputs[i].value.split(' ');
-        for (var j = 99; j < words.length; j += 100) {
-            words[j] += '\n';S
-        inputs[i].value = words.join(' ');
-        var lines = inputs[i].value.split('\n').length;
-        inputs[i].rows = lines;
-    }
-    input.cols = Math.max(longestLine.length, 50);
-}*/
-
- /*  function modificaRecensione(button) {
-    var tr = button.closest('tr');
-    var recensione = tr.querySelector('span.full-text');
-    var newRecensione = prompt('Enter new recensione:');
-    if (newRecensione) {
-        recensione.textContent = newRecensione;
-    }
-}*/
-    /*window.onload = function() {
-        var td = document.getElementById('recensione');
-        var shortText = td.getElementsByClassName('short-text')[0];
-        var fullText = td.getElementsByClassName('full-text')[0];
-        var ellipsis = td.getElementsByClassName('ellipsis')[0];
-    
-        var words = shortText.innerText.split(' ');
-    
-        if (words.length > 50) {
-            shortText.innerText = words.slice(0, 50).join(' ') + ' ';
-        } else {
-            ellipsis.style.display = 'none';
-        }
-    
-        ellipsis.onclick = function() {
-            shortText.style.display = 'none';
-            ellipsis.style.display = 'none';
-            fullText.style.display = 'inline';
-        }
-    
-        fullText.onclick = function() {
-            shortText.style.display = 'inline';
-            ellipsis.style.display = 'inline';
-            fullText.style.display = 'none';
-        }
-    }*/
     </script>
-    <style>
-        
-        .beautiful-button {
-    background-color: #4CAF50; 
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 15px 32px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer; /* Mouse pointer on hover */
-    border-radius: 4px; /* Rounded corners */
-    transition-duration: 0.4s; /* Transition effects */
-}
-.beautiful-button-del {
-    background-color: red; 
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 15px 32px; /* Some padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer; /* Mouse pointer on hover */
-    border-radius: 4px; /* Rounded corners */
-    transition-duration: 0.4s; /* Transition effects */
-}
-
-.beautiful-button:hover {
-    background-color: #45a049; /* Green background on hover */
-}
-
-.beautiful-form {
-    background-color: #f2f2f2; /* Light grey background */
-    padding: 20px; /* Some padding */
-    border-radius: 5px; /* Rounded corners */
-}
-
-.beautiful-input {
-    width: 100%; /* Full width */
-    padding: 12px; /* Some padding */
-    border: 1px solid #ccc; /* Grey border */
-    border-radius: 4px; /* Rounded corners */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
-}
-.full-text {
-    resize: vertical;
-    overflow: auto;
-    min-width: 100px; /* adjust as needed */
-    max-width: 100%; /* adjust as needed */
-    background-color: #ffe4cc;
-    border-color: transparent; /* This will make the border transparent */
-    padding: 10px; /* Add some padding */
-    border-radius: 5px; /* Round the corners */
-   
-}
-textarea.full-text {
-    width: 100%; /* Or any other value */
-    background-color: #ffe4cc; 
-}
-.full-text:focus {
-    outline: none; 
-}
-
-
-button:hover {
-    background-color: #45a049; /* Green background on hover */
-}
-
-#deleteButton {
-    background-color: #f44336; /* Red background */
-}
-
-#deleteButton:hover {
-    background-color: #da190b; /* Red background on hover */
-}
-    </style>
+  
 </html>

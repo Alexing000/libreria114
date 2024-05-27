@@ -1,0 +1,90 @@
+#progress {
+    width: 100%; /* Occupa tutta la larghezza */
+    margin: 20px auto; /* Margini per centrare */
+}
+
+/* Stile per il pulsante "Salva Progressi" */
+#progress-container button {
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block; /* Per occupare l'intera larghezza del contenitore */
+    margin: 20px auto; /* Margini per centrare */
+    width: 150px; /* Larghezza fissa */
+}
+
+/* Effetto hover sul pulsante "Salva Progressi" */
+#progress-container button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}
+
+/* Stile per la sezione delle recensioni */
+#recensioni-section {
+    margin-top: 50px; /* Spazio sopra */
+}
+
+/* Stile per la tabella delle recensioni */
+#recensioni-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+/* Stile per le celle della tabella delle recensioni */
+#recensioni-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Linea divisoria tra le righe */
+}
+
+/* Stile per i bottoni delle recensioni */
+.beautiful-button {
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effetto hover sui bottoni delle recensioni */
+.beautiful-button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}
+
+/* Stile per il form di aggiunta recensione */
+#form-aggiungiRecensione {
+    margin-top: 20px; /* Spazio sopra */
+}
+
+/* Stile per la sezione di voto */
+#voto-section {
+    margin-top: 50px; /* Spazio sopra */
+}
+
+/* Stile per il form di voto */
+#voto-form {
+    margin-top: 20px; /* Spazio sopra */
+}
+
+/* Stile per il pulsante "HOME" */
+#home-button {
+    display: inline-block;
+    margin: 20px 10px;
+    padding: 10px 20px;
+    background-color: #ce441a; /* Rosso corallo */
+    color: #fff; /* Bianco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effetto hover sul pulsante "HOME" */
+#home-button:hover {
+    background-color: #f39353; /* Rosso chiaro */
+}

@@ -7,11 +7,10 @@
 <body>
     <h1>Archivio Autori</h1>
     
-    <a  th:if="${session.loggato=='ok'} " style="color: rgb(97, 139, 18);" href="/homeUtente">Ritorna alla home!</a>
-    <a  th:if="${session.loggato!='ok'}"style="color: rgb(97, 139, 18);" href="/home">Ritorna alla home!</a>
-    <a th:if="${session.loggato=='ok'}"style="color: rgb(97, 139, 18);" href="/api/libro/libriUtente">Visualizza i tuoi libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/libro/all">Vai nell'archivio libri!</a>
-    <a  style="color: rgb(97, 139, 18);" href="/api/autore/all">Vai nell'archivio autori!</a>
+    <a id="search-button" th:if="${session.loggato=='ok'} " href="/homeUtente">HOME</a>
+    <a id="search-button" th:if="${session.loggato!='ok'}"href="/home">HOME</a>
+    <a id="search-button" th:if="${session.loggato=='ok'}" href="/api/libro/libriUtente">I TUOI LIBRI</a>
+    <a id="search-button"  href="/api/libro/all">ARCHIVIO LIBRI</a>
    
    
     <table>
@@ -34,9 +33,17 @@
                 <td th:text="${autori.biografia}"></td>
                 <td th:text="${autori.rating}"></td>
                 <td>
-                    <div th:each="libro : ${autori.libri}">
-                        <span><a  style="color: red;" th:text="${libro.titolo}" th:href="@{|/api/libro/libroById?idLibro=${libro.id}|}">  </a></span><br>&nbsp;
-                    </div>
+                    <form id="menutendina" th:action="@{/api/libro/libroById}" method="get">
+                        <select name="idLibro">
+                            
+                            <div th:each="libro : ${autori.libri}">
+                                <option th:value="${libro.id}" th:text="${libro.titolo}"></option>
+                            </div>
+                        </select>
+                        <br>
+                        <button id="menubottone" type="submit">Vai</button>
+                    </form>
+
                 </td>
                 <td th:if="${session.loggato == 'ok' && session.ruolo=='admin'}">
           

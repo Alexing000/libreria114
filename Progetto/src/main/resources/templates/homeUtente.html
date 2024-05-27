@@ -36,8 +36,6 @@
         <form action="/api/libro/search" method="post" id="search-form">
             
             <input type="text" id="search-input" name="query" placeholder="Cerca...">
-            <div id="ris-ricerca" ></div>
-      
             <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
@@ -103,7 +101,7 @@
                     </li>
                 </tbody>
                 <div>
-                    <a href="/api/libro/recenti" style="color: black;">...</a>
+                    <a style="color: red;" href="/api/libro/recenti">...</a>
                 </div>
                 
 
@@ -130,7 +128,7 @@
             
         </div>
         <div>
-            <a href="/api/libro/genereUtente" style="color: black;">...</a>
+            <a style="color: red;" href="/api/libro/genereUtente">...</a>
         </div>
     </div>
     <!--<div id="libri-consigliati">
@@ -150,20 +148,21 @@
  
 
     <div id="div-challengeOption">
-        <button th:if="${libriChallenge==0}"id="bottone-partecipaC" onclick="showCh()">Partecipa alla challenge di lettura!</button>
+       <!-- <button th:if="${libriChallenge==0}"id="bottone-partecipaC" onclick="showCh()">Partecipa alla challenge di lettura!</button>
         <button th:if ="${libriChallenge>0}"id="visualizza-c" onclick="visCh()">Visualizza challenge</button>
-        <button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>
+        <button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>-->
             </div>
         
-                <div  style="display: none;"id="reading-challenge"  th:if="${session.loggato=='ok' }" >
+                <div  id="reading-challenge"  th:if="${session.loggato=='ok' }" >
         
                     <div th:if="${libriChallenge>0}">
                     <h2>Reading Challenge</h2>
                     
                     <form action="/api/libro/challenge" method="post" id="challenge-form">
                         <div class="flex-container">
-                            <a th:text="${nlibriUtente}" style="color: #CC7722;"></a>
-                            <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 50px; background-color: transparent;">
+                            <a id="numero-libriUtente" th:text="${nlibriUtente}"></a>
+                            <input type="number" name="libriChallenge" th:value="${libriChallenge}" style="width: 70px; background-color: white; ">
+                            <br>
                             <button id="challenge" type="submit">Aggiorna</button>
                         </div>
                      

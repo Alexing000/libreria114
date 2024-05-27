@@ -20,7 +20,7 @@ body {
 
 /* Stile per l'intestazione */
 h1 {
-    color: #ff6b6b; /* Verde pastello */
+    color: #ce441a;
     margin-top: 50px; /* Spazio sopra il titolo */
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7); /* Ombra bianca */
 }
@@ -29,7 +29,7 @@ h1 {
 form {
     width: 300px; /* Larghezza del form */
     margin: 0 auto; /* Centra il form orizzontalmente */
-    background-color: #ebd0b2; /* Azzurro pastello */
+    background-color: #ffe4cc; /* Azzurro pastello */
     padding: 20px; /* Spaziatura interna del form */
     border-radius: 10px; /* Bordi arrotondati */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
@@ -38,7 +38,7 @@ form {
 /* Stile per le etichette dei campi di input */
 label {
     display: block; /* Visualizza le etichette come blocchi separati */
-    color: #ff6b6b; /* Verde scuro */
+    color: #ce441a; /* Verde scuro */
     margin-bottom: 5px; /* Spazio sotto l'etichetta */
 }
 
@@ -57,7 +57,7 @@ button[type="submit"] {
     width: calc(100% - 20px); /* Larghezza completa meno il padding */
     padding: 10px; /* Spaziatura interna */
     margin: 10px 0; /* Spaziatura esterna */
-    background-color: #ff6b6b; /* Verde pastello */
+    background-color: #ce441a; /* Verde pastello */
     color: #e9dfd1; /* Testo bianco */
     border: none; /* Nessun bordo */
     border-radius: 5px; /* Bordi arrotondati */
@@ -67,7 +67,7 @@ button[type="submit"] {
 
 /* Stile per il pulsante di login al passaggio del mouse */
 button[type="submit"]:hover {
-    background-color: #ff6b6b; /* Verde scuro */
+    background-color: #f39353; /* Verde scuro */
 }
 
 /* Stile per il link di registrazione */
@@ -75,8 +75,8 @@ form[action="/signup"] input[type="submit"] {
     display: block; /* Visualizza il pulsante di registrazione come blocco separato */
     width: calc(100% - 20px); /* Larghezza completa meno il padding */
     padding: 10px; /* Spaziatura interna */
-    margin: 10px 0; /* Spaziatura esterna */
-    background-color: #ff6b6b; /* Verde pastello */
+    margin: 10px auto; /* Spaziatura esterna */
+    background-color: #ce441a; /* Verde pastello */
     color: #e9dfd1; /* Testo bianco */
     border: none; /* Nessun bordo */
     border-radius: 5px; /* Bordi arrotondati */
@@ -86,10 +86,8 @@ form[action="/signup"] input[type="submit"] {
 
 /* Stile per il link di registrazione al passaggio del mouse */
 form[action="/signup"] input[type="submit"]:hover {
-    background-color: #ff6b6b; /* Verde scuro */
+    background-color: #f39353; /* Verde scuro */
 }
 
 
-progress{
-    
-}
+
