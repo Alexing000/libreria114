@@ -147,11 +147,7 @@
 
  
 
-    <div id="div-challengeOption">
-       <!-- <button th:if="${libriChallenge==0}"id="bottone-partecipaC" onclick="showCh()">Partecipa alla challenge di lettura!</button>
-        <button th:if ="${libriChallenge>0}"id="visualizza-c" onclick="visCh()">Visualizza challenge</button>
-        <button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>-->
-            </div>
+    
         
                 <div  id="reading-challenge"  th:if="${session.loggato=='ok' }" >
         
@@ -364,14 +360,5 @@ window.onpageshow = function() {
 //ad ogni apertura della pagina il campo di ricerca viene resettato,anche se si torna indietro tramite freccia
 </script>
 
-<style>
-
-
-
-
-
-
-
-</style>
 
 </html>

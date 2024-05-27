@@ -459,7 +459,7 @@ select {
 
 /* Stile per la barra di progresso nei browser che non supportano le pseudo-classi */
 #progress::-webkit-progress-bar {
-    background-color: #ffe4cc; 
+    background-color: white; 
     border-radius: 5px;
 }
 
