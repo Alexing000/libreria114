@@ -64,7 +64,25 @@
     <progress id="progress" value="0" th:max="${libro.nPagine}"></progress>
     <button id="progress-container" onclick="confirmProgress()">Salva Progressi</button>
     </div>
-
+    <div th:if="${session.loggato=='ok' && associazione==true}" class="voto-container">
+        <h3 id="rece">Dai un voto</h3>
+    
+        <form action="/api/libro/votoo" method="post" class="voto-form">
+            <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}">
+            <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}">
+            <input type="number" name="rating" id="rating" min="1" max="5" value="0" step="0.1" oninput="validateInput1(this)">
+            <input th:if="${ratingPersonale == -1}" type="submit" value="Vota!">
+            <input th:if="${ratingPersonale != -1}" type="submit" id="search-button" value="Modifica voto">
+        </form>
+    
+        <div th:if="${ratingPersonale != -1}" class="elimina-form">
+            <form action="/api/libro/eliminaVoto" method="get">
+                <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}">
+                <input type="submit" id="search-button" value="Elimina voto">
+                <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}">
+            </form>
+        </div>
+    </div>
    
 
     <h3 id="rece">Recensioni</h3>
@@ -118,27 +136,7 @@
                 </form>
             </div>
  
-<div th:if="${session.loggato=='ok' && associazione==true}">
-<h3 id="rece">Dai un voto</h3>
-<div id="tastini">
-<form action="/api/libro/votoo" method="post">
-<input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
-<input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
-<input type="number" name="rating" id="rating" min="1" max="5" value="0" step="0.1" oninput="validateInput1(this)">
-<br>
-<input th:if="${ratingPersonale == -1}" type="submit" value="Vota!" class="beautiful-button">
-<input th:if="${ratingPersonale != -1}" type="submit" id="modifica" value="Modifica voto" class="beautiful-button">
-</form>
-<br>
-<div th:if="${ratingPersonale != -1}">
-    <form action="/api/libro/eliminaVoto" method="get">
-        <input type="hidden" name="idLibro" id="idLibro" th:value="${idLibro}" >
-        <input  type="submit" value="Elimina voto" class="beautiful-button">
-        <input type="hidden" name="votoVecchio" id="votoVecchio" th:value="${libro.rating}" >
-    </form>
-</div>
- </div>
-</div>
+
 
     
    
@@ -292,6 +290,7 @@ window.onload = function() {
     font-family: Arial, sans-serif;
     background-color: #f7d8ba; /* Arancione chiaro */
     text-align: center; /* Centra il contenuto orizzontalmente */
+    
 }
     </style>
   

@@ -76,8 +76,8 @@ body {
 
 .beautiful-button {
     /* Stile per il pulsante */
-    margin-left: 40px;
-    display: inline-flex;
+    margin-left: 10px;
+    display: inline-block;
     background-color: #4CAF50;
     color: #ffffff;
     border: none;
@@ -85,6 +85,7 @@ body {
     padding: 5px 10px;
     font-weight: bold;
     margin-right: 5px; /* Aggiungi margine tra i pulsanti */
+    justify-content: center;
 }
 
 .beautiful-button:hover {
@@ -533,22 +534,34 @@ select {
 #form-aggiungiRecensione {
     margin-top: 20px; /* Spazio sopra */
 }
-
-/* Stile per la sezione di voto */
-#voto-section {
-    margin-top: 50px; /* Spazio sopra */
+.voto-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Se hai bisogno di gestire meglio gli spazi stretti */
 }
 
-/* Stile per il form di voto */
-#voto-form {
-    margin-top: 20px; /* Spazio sopra */
+.voto-container h3 {
+    margin-right: 20px; /* Spazio tra il titolo e l'input */
 }
 
+.voto-form, .elimina-form {
+    display: inline-block;
+    margin: 0 10px; /* Spazio tra i form */
+}
+
+.voto-form input[type="number"] {
+    margin: 0 10px; /* Spazio tra l'input e i pulsanti */
+}
+
+.voto-form input[type="submit"], .elimina-form input[type="submit"] {
+    margin: 0 10px; /* Spazio tra i pulsanti */
+}
 #container-home{
     text-align: center;
 }
 
-/* Stile per il pulsante "HOME" */
+
 #home-button {
     display: inline-block;
     margin: 20px 10px;
