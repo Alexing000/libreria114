@@ -47,11 +47,14 @@ public class DaoAutore implements IDao<Long, Autore>{
     //aggiornare un autore
     @Override
     public void update(Autore e) {
-        String query = "UPDATE autore SET nome = ?, cognome = ?, rating = ? WHERE id = ?";
+        String query = "UPDATE autore SET nome = ?, cognome = ?,biografia=?, rating = ?,url_autore=?  WHERE id = ?";
         database.executeDML(query, 
                 e.getNome(),
                 e.getCognome(),
-                String.valueOf(e.getRating()));
+                e.getBiografia(),
+                String.valueOf(e.getRating()),
+                e.getUrl(),
+                String.valueOf(e.getId()));
                 
     }
     @Override

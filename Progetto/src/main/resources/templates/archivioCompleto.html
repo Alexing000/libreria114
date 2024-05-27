@@ -6,6 +6,7 @@
     <title>Archivio</title>
 </head> 
 <body>
+
     <h3>Archivio</h3>
     
     <a id="search-button" th:if="${session.loggato=='ok'} " href="/homeUtente">HOME</a>
@@ -22,7 +23,7 @@
             <TH>DATA PUBBLICAZIONE</TH>
             <TH>RATING</TH>
             <th>See More</th>
-            <th>+</th>
+            <th  th:if="${session.loggato == 'ok' }" >Utils</th>
             
         </thead>
         <tbody>
@@ -37,14 +38,35 @@
      
           <td><a  style="color: red;" th:text="${libro.genere}" th:href="@{|/api/libro/byGenere?genere=${libro.genere}|}">  </a></td>
                 <td th:text="${libro.dataPubblicazione}"></td>
-                <td th:text="${libro.rating}"></td>
-                <td><a  th:href="|/api/libro/byId?idLibro=${libro.id}|" style="color: red;">...</a></td>
+                <td th:text="${#numbers.formatDecimal(libro.rating, 1, 2)}"></td>
+                <td><a style="color: red;" th:href="|/api/libro/byId?idLibro=${libro.id}|">...</a></td>
                 <td th:if="${session.loggato == 'ok'}">
                     <a th:href="|/api/libro/aggiungiLibro?idLibro=${libro.id}|">
-                        <button id="menubottone" th:disabled="${#strings.endsWith(libro.titolo, ' ')}" 
-                                th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
-                        </button>
+                        <button
+                        th:style="'padding: 10px 20px; border: none; cursor: pointer; color: #ffffff; background-color:' + 
+                                  (${#strings.endsWith(libro.titolo, ' ') ? '#ADD8E6' : '#209808'}) + ';'"
+                        th:disabled="${#strings.endsWith(libro.titolo, ' ')}"
+                        th:text="${#strings.endsWith(libro.titolo, ' ') ? 'Già nella lista' : 'Aggiungi!'}">
+                    </button>
                     </a>
+                    <button
+                   class="modifica-button"
+                    
+                    th:modifica-titolo="${libro.titolo}"
+                    th:modifica-trama="${libro.trama}"
+                    th:modifica-autore="${libro.autore}"
+                    th:modifica-nPagine="${libro.nPagine}"
+                    th:modifica-genere="${libro.genere}"
+                    th:modifica-dataPubblicazione="${libro.dataPubblicazione}"
+                    th:modifica-rating="${libro.rating}"
+                    th:modifica-url="${libro.url}"
+                    th:modifica-id="${libro.id}"
+
+    
+                    style="display: none; padding: 10px 20px; background-color: #986a08; border: none; cursor: pointer;" onclick="modifica(this)">Modifica
+                
+                </button>
+                    <a class="delete-button" style="display: none; padding: 10px 20px; background-color: #980808; border: none; cursor: pointer;" th:href="|/api/libro/delete?idLibro=${libro.id}|">Elimina</a>
                 </td>
             
             
@@ -57,18 +79,62 @@
 </table>
 
 
+<div class="form-container" id="div-modifica"  th:if="${session.ruolo == 'admin' && session.loggato=='ok'} " style="display: none;">
+    <h4>Modifica</h4>
+    <form action="/api/libro/update" method="post">
+        <label for="titolo"> Titolo</label>
+        <input type="text" id="modifica-titolo" name="titolo" required>
+        <br>
+        <label for="trama">Trama</label>
+        <input type="text" id="modifica-trama" name="trama" required>
+        <br>
+        <label for="autore">Autore</label>
+        <input type="text" id="modifica-autore" name="autore" required>
+        <br>
+        <label for="nPagine">Numero Pagine</label>
+        <input type="number" id="modifica-nPagine" name="nPagine" required>
+        <br>
+        <label for="genere">Genere</label>
+        <input type="text" id="modifica-genere" name="genere" required>
+        <br>
+        <label for="dataPubblicazione"> Data Pubblicazione</label>
+        <input type="int" id="modifica-dataPubblicazione" name="dataPubblicazione" required>
+        <br>
+        <label for="rating">Rating</label>
+        <input type="number" id="modifica-rating" name="rating" step=".01" required>
+        <br>
+        <label for="url">URL</label>
+        <input type="text" id="modifica-url" name="url" required>
+        <br>
+        <input type="hidden" id="modifica-id" name="id" value="0">
+        <br>
+        <button id="modifica">Modifica</button>
+        <button id="annulla-modifica" onclick="annullaModifica()">Annulla</button>
+    </form>
 
-<div th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
-    <button id="inserisciButton">Inserisci un nuovo libro!</button>
+
 </div>
 
-<div style="display: none; " class="contenuto" id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'} " >
-    <h4>Aggiungi</h4>
-    <!--Uso la form per permettere l'inserimento di dati da parte dell'utente
-    Se faccio una richiesta inserimento dati
-    e uso il body allora probabilmente sfrutterò il verbo POST
-    questi dati potranno così essere recuperati dal backend e li passiamo al server-->
+
+
+<div class="centered-buttons" th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
+    <button id="inserisciButton">Inserisci un nuovo libro!</button>
+    <button style ="display: block;" id="mod" onclick="modificaLibri()">Apri funzionalità di modifica libri</button>
+    <button id="del_but" onclick="eliminaLibri()">Apri funzionalità di eliminazione libri</button><br>
+    <br>
     
+</div>
+<br>
+<div class="centered-buttons" th:if="${session.ruolo == 'admin' && session.loggato=='ok'}" style="display: flex; justify-content: center;">
+    <button style ="display: none;" id="chiudi-inserisciButton" onclick="chiudiModificaLibri()">Chiudi funzionalità di modifica libri</button>
+    <button style ="display: none;" id="chiudi-del_but" onclick="chiudiEliminaLibri()">Chiudi funzionalità di eliminazione libri</button>  <br>
+    <br>
+</div>
+
+
+<div class="form-container" style="display: none; "  id="inserisci"   th:if="${session.ruolo == 'admin' && session.loggato=='ok'} " >
+    <h4>Aggiungi</h4>
+ 
     <form action="/api/libro/add" method="post">
        
         <label for="titolo"> Titolo</label>
@@ -97,8 +163,7 @@
       
         <br>
 
-	<input type="hidden" id="id_autore" name="id_autore" value="0">
-
+	
         <br>
 
 
@@ -108,6 +173,7 @@
     </form>
      
     </div>
+   
 
     <div class="footer" style="text-align: center;
     margin-top: 40px;
@@ -131,13 +197,14 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
         </footer>
     </div>
+    </div>
 
 
 
     
 </body>
 <script>
-    document.getElementById('inserisciButton').addEventListener('click', function() {
+   document.getElementById('inserisciButton').addEventListener('click', function() {
         document.getElementById('inserisciButton').style.display = 'none';
         document.getElementById('inserisci').style.display = 'block';
     });
@@ -145,5 +212,185 @@
     document.getElementById('inserisci').style.display = 'none';
     document.getElementById('inserisciButton').style.display = 'block';
 });
+
+function annullaModifica() {
+    // Get the div
+    var div = document.getElementById('div-modifica');
+
+    // Hide the div
+    div.style.display = 'none';
+
+    // Get all input elements within the div
+    var inputs = div.getElementsByTagName('input');
+
+    // Clear the input fields
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'hidden') {
+            continue; // Skip hidden fields
+        }
+        inputs[i].value = '';
+    }
+}
+
+function eliminaLibri() {
+    var buttons = document.getElementsByClassName('delete-button');
+    var button = document.getElementById('del_but');
+    var chiudiButton = document.getElementById('chiudi-del_but');
+    chiudiButton.style.display = 'block';
+button.style.display = 'none';
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'inline';
+    }
+}
+function modificaLibri() {
+
+    var button = document.getElementById('mod');
+button.style.display = 'none';
+
+    var buttons = document.getElementsByClassName('modifica-button');
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'inline';
+    }
+    var chiudiButton = document.getElementById('chiudi-inserisciButton');
+    chiudiButton.style.display = 'block';
+
+}
+
+function chiudiModificaLibri() {
+    var chiudiButton = document.getElementById('chiudi-inserisciButton');
+    var modificaButton = document.getElementById('mod'); // Replace 'modifica' with the actual id of the "modifica" button
+
+    // Toggle the visibility of the "chiudi-inserisciButton" button
+    chiudiButton.style.display =  'none';
+
+    // Toggle the visibility of the "modifica" button
+    modificaButton.style.display = 'block';
+    var buttons = document.getElementsByClassName('modifica-button');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
+    }
+}
+function chiudiEliminaLibri() {
+    var chiudiButton = document.getElementById('chiudi-del_but');
+    var anotherButton = document.getElementById('del_but'); 
+    var buttons = document.getElementsByClassName('delete-button');
+    // Toggle the visibility of the "chiudi-del_but" button
+    chiudiButton.style.display = (chiudiButton.style.display == 'none') ? 'block' : 'none';
+
+    // Toggle the visibility of the other button
+    anotherButton.style.display = (anotherButton.style.display == 'none') ? 'block' : 'none';
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
+    }
+
+}
+function modifica(oggetto) {
+    // Get the div
+    var div = document.getElementById('div-modifica');
+
+    var id= document.getElementById('modifica-id');
+    var titolo = document.getElementById('modifica-titolo');
+    var trama = document.getElementById('modifica-trama');
+    var autore = document.getElementById('modifica-autore');
+    var nPagine = document.getElementById('modifica-nPagine');
+    var genere = document.getElementById('modifica-genere');
+    var dataPubblicazione = document.getElementById('modifica-dataPubblicazione');
+    var rating = document.getElementById('modifica-rating');
+    var url = document.getElementById('modifica-url');
+
+
+    id.value = oggetto.getAttribute('modifica-id');
+    titolo.value = oggetto.getAttribute('modifica-titolo');
+    trama.value = oggetto.getAttribute('modifica-trama');
+    autore.value = oggetto.getAttribute('modifica-autore');
+    nPagine.value = oggetto.getAttribute('modifica-nPagine');
+    genere.value = oggetto.getAttribute('modifica-genere');
+    dataPubblicazione.value = oggetto.getAttribute('modifica-dataPubblicazione');
+    rating.value = oggetto.getAttribute('modifica-rating');
+    url.value = oggetto.getAttribute('modifica-url');
+
+
+
+    div.style.display = 'block';
+}
+
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    
+        .form-container {
+            width: 50%;
+            margin: auto;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+    
+        .form-container h4 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="int"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .centered-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .centered-buttons button {
+        padding: 10px 20px;
+        margin: 5px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #inserisciButton, #chiudi-inserisciButton {
+        background-color: #4CAF50; /* Green */
+    }
+
+    #mod, #chiudi-inserisciButton {
+        background-color: #FFA500; /* Orange */
+    }
+
+    #del_but, #chiudi-del_but {
+        background-color: #FF0000; /* Red */
+    }
+
+    .centered-buttons button:hover {
+        opacity: 0.8;
+    }
+    </style>
 </html>

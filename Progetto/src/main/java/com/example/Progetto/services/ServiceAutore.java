@@ -35,6 +35,11 @@ public class ServiceAutore extends GenericService<Long, Autore, DaoAutore>{
                 )
                 .toList();
 
+
+}
+public boolean delete(Long id) {
+    getDao().delete(id);
+    return true;
 }
 
 // cercare un autore per nome
@@ -45,4 +50,10 @@ public Autore findByCognome(String cognome) {
 public Autore findByNome(String nome) {
     return getDao().readByNome(nome);
 }
+public boolean update(Map<String, String> map) {
+    Autore a = createEntity(map);
+    getDao().update(a);
+    return true;
+}
+
 }

@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   
     <script src="/js/libri.js"></script>
+    <script th:inline="javascript">
+        var list = /*[[${session}]]*/ [];
+        var list1 = /*[[${recensione}]]*/ [];
+    
+       </script>
 
     <title>Dettaglio Libro</title>
 </head>
@@ -69,13 +74,17 @@
                 <td id="listRec" th:text="${recensione.username}"></td>
                 <td id="recensione">
             
-                    <textarea id="myTextarea" class="full-text" th:text="${recensione.recensione}" readonly></textarea>
+                  
+                        <textarea th:id="myTextarea" class="full-text" th:text="${recensione.recensione}" readonly></textarea>
+                
 
                 </td>
 
 <!--${session.username}==${recensione.username} and-->
                 <div id="div-bottoni" th:if=" ${session.username}==${recensione.username} and ${session.loggato}=='ok'">
                         <td>
+
+
                             <button id="myButton" class="beautiful-button" onclick="modificaRecensione(this)">Modifica recensione</button>
                             <div id="div-button2" style="display: none;">
                
@@ -217,12 +226,13 @@ function validateInput1(input) {
 
 
    function modificaRecensione(oggetto) {
-    var textarea = document.getElementById('myTextarea');
-    textarea.readOnly = false;
-    oggetto.style.display = 'none';
-    var button = document.getElementById('div-button2');
-    button.style.display = 'block';
- 
+  
+        var textarea = document.getElementById('myTextarea');
+        textarea.readOnly = false;
+        oggetto.style.display = 'none';
+        var button = document.getElementById('div-button2');
+        button.style.display = 'block';
+    
 }
 function modificaRec(oggetto, clickedButton) {
     var textarea = document.getElementById('myTextarea');
@@ -275,5 +285,14 @@ window.onload = function() {
 
 
     </script>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7d8ba; /* Arancione chiaro */
+    text-align: center; /* Centra il contenuto orizzontalmente */
+}
+    </style>
   
 </html>

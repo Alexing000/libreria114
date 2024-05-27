@@ -39,7 +39,9 @@
             <button id="search-button" type="submit" href="" disabled>
                 search
             </button>
-            <div id="ris-ricerca" ></div>
+            <div id="ris-ricerca" >
+                
+            </div>
       
             
         </form>
@@ -92,9 +94,10 @@
 
                 
                 <tbody>
-                       
-                    <li id="listina" th:each="libro:${libr}">      
-                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                    <li th:each="libro:${libr}">      
+                        <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                            <img th:src="${libro.url}" alt="Copertina">
+                        </a>
                     </li>
                 </tbody>
                 <div>
@@ -118,7 +121,9 @@
         <div>
             
             <li th:each="libro:${librG}">      
-                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                <a id="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                    <img th:src="${libro.url}" alt="Copertina">
+                </a>
             </li>
             
         </div>
@@ -142,11 +147,7 @@
 
  
 
-    <div id="div-challengeOption">
-       <!-- <button th:if="${libriChallenge==0}"id="bottone-partecipaC" onclick="showCh()">Partecipa alla challenge di lettura!</button>
-        <button th:if ="${libriChallenge>0}"id="visualizza-c" onclick="visCh()">Visualizza challenge</button>
-        <button id="bottone-chiudiC" style="display:none;"  onclick="hideCh()">Metti in pausa la challenge!</button>-->
-            </div>
+    
         
                 <div  id="reading-challenge"  th:if="${session.loggato=='ok' }" >
         
@@ -322,8 +323,8 @@ if(controllo===true)
     const titoli= autocomplete(input.target.value);
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
-    if(cLibro<6)
-  consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
+    if(cLibro<4)
+  consigliati += " "+`<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`+" ";
 
   cLibro++;
 
@@ -331,14 +332,20 @@ titoli.forEach((titolo) => {
     
   })
     autori.forEach((autore) => {
-        if(cAutore<6)
+        if(cAutore<4)
 
-        consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
+        consigliati1 +=" "+ `<li  onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`+" ";
         cAutore++;
     })
-  let consigliatiSuper=consigliati+" "+consigliati1+" ";
+  let consigliatiSuper=consigliati+consigliati1;
 
-  search.innerHTML = `<ul>${consigliatiSuper}</ul>`;
+  search.innerHTML = `
+    
+        <ul >
+            ${consigliatiSuper}
+        </ul>
+   
+`;
  
 
 }
@@ -352,7 +359,6 @@ window.onpageshow = function() {
 }
 //ad ogni apertura della pagina il campo di ricerca viene resettato,anche se si torna indietro tramite freccia
 </script>
-
 
 
 </html>
