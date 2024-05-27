@@ -251,7 +251,7 @@ if(controllo===true)
     const autori= autocompleteA(input.target.value);
 titoli.forEach((titolo) => {
     if(cLibro<5)
-  consigliati += `<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`;
+    consigliati += " "+`<li  onclick="seleziona(event)"><span style="color:blue;">L</span>: ${titolo.titolo}</li>`+" ";
 
   cLibro++;
 
@@ -261,7 +261,7 @@ titoli.forEach((titolo) => {
     autori.forEach((autore) => {
         if(cAutore<5)
 
-        consigliati1 += `<li onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`;
+        consigliati1 +=" "+ `<li  onclick="seleziona(event)"><span style="color:green;">A</span>: ${autore.cognome}</li>`+" ";
         cAutore++;
     })
   let consigliatiSuper=consigliati+" "+consigliati1+" ";

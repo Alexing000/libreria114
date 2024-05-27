@@ -462,7 +462,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     }*/
 
     @PostMapping("/add")
-    public String add(@RequestParam Map<String,String> map,Model model){
+    public String add(@RequestParam Map<String,String> map,Model model,RedirectAttributes redirectAttributes){
       
         List<Autore> autori = serviceAutore.findAll();
 
@@ -476,17 +476,14 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
                 map.put("id_autore", String.valueOf(autore.getId()));
           
             }
-            System.out.println("maaapp"+map);
-            
-            
-                
+          
+                   
         
     }
     //se ò'autore non è trovato nella lista autori allora da errore
     if(!map.containsKey("id_autore")){
-        model.addAttribute("error", "Autore non esistente,ritenta inserimento libro o crea l'Autore desiderato");
+        model.addAttribute("error", "Autore non trovato");
         return "mainError.html";
-
 
     }
         //cercare l'id dell'autore che ha come+cognome come autore del libro
@@ -512,8 +509,11 @@ serviceLibro.insert(map);
     }
     //se ò'autore non è trovato nella lista autori allora da errore
     if(!map.containsKey("id_autore")){
-        model.addAttribute("error", "Autore non esistente,ritenta inserimento libro o crea l'Autore desiderato");
+        model.addAttribute("error", "Autore non trovato");
         return "mainError.html";
+        //return "redirect:/api/libro/all";
+
+
 
 
     }

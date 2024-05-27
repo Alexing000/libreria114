@@ -343,7 +343,7 @@ sommaLibri-=libriLetti;
         }
             
             
-            model.addAttribute("libri", ordineUscitaRidotta);
+            model.addAttribute("libri", ris);
             model.addAttribute("autori", autori);
            
             List<Libro> ris2 = new ArrayList<Libro>();
