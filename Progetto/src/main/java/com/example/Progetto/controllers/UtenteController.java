@@ -1,6 +1,5 @@
 package com.example.Progetto.controllers;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +105,7 @@ public String modificaPassword(@RequestParam("oldPassword") String oldPassword, 
         Object idSalvato=session.getAttribute("idUtente");
         Long idUtente= (Long) idSalvato;
         serviceUtente.delete(idUtente);
-        return "home.html";
+        return "redirect:/home";
     }
    
 
