@@ -2,21 +2,18 @@ package com.example.Progetto.controllers;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
 import com.example.Progetto.models.Utente;
@@ -36,26 +33,14 @@ public class AppController {
     private  ServiceLibro serviceLibro;
     @Autowired
     private ServiceAutore serviceAutore;
-    @Autowired
-    private StartupInit startupInit;
+ 
     private static boolean hasRun = false;
+    private Map<Long, Libro> map;
+
 
  
 
-    //la view è la pagina html
-    //per indicare il percorso della pagina html
-     @PostMapping("/api/count")
-    @ResponseBody
-    public void receiveDeleteCount(@RequestBody Map<String, Integer> payload, HttpSession session) {
 
-        //se count è null, allora count sarà uguale a 0
-      //  
-        Integer count = payload.get("count");
-      
-            session.setAttribute("count", count);
-    
-   
-    }
     
     @GetMapping("/homeUtente")
     public String home(HttpSession session,Model model){
@@ -67,18 +52,21 @@ public class AppController {
 
 
 
-Map<Long, Libro> map = startupInit.getMap();
-List<Map<String, String>> map1 = startupInit.getMap1();
+
+
+
 
             List<Libro> ris = serviceLibro.byAnno();
-            Integer deleteCount = session.getAttribute("count")==null?0:(Integer)session.getAttribute("count");
-
-
+        
+           
            
 List<Autore > autori = serviceAutore.findAll();
+
+
 //id dell'utente in sessione
             Long idUtente = (Long) session.getAttribute("idUtente");
             if (!hasRun) {
+              map=new HashMap<>();
                 for(Long i=1L; i<=serviceUtente.readLibriLetti(idUtente)-libriInLIsta(idUtente); i++) {
                     map.put(-i, null);
                 }
@@ -92,7 +80,7 @@ List<Autore > autori = serviceAutore.findAll();
             model.addAttribute("libriChallenge", serviceUtente.readLibriChallenge(idUtente));
       
 
-int libriLetti=libriLetti(idUtente,ris,deleteCount,map);
+int libriLetti=libriLetti(idUtente,ris,map);
     
 
             model.addAttribute("nlibriUtente", libriLetti);
@@ -158,10 +146,10 @@ boolean merito=false;
     }
     return sommaLibri;
 }
-    private int libriLetti(Long idUtente,List<Libro> listaTot, int deleteCount,Map<Long, Libro> map){
+    private int libriLetti(Long idUtente,List<Libro> listaTot, Map<Long, Libro> map){
      
 
-        int libriLetti=serviceUtente.readLibriLetti(idUtente);
+     
         List<Libro> lista2 = serviceLibro.readByIdUtente(idUtente);
       
    
@@ -197,73 +185,6 @@ Long newKey = 500L + random.nextLong() % (Long.MAX_VALUE - 500);
           
 
                 
-              
-       
-
-
-
-
-
-
-
-
-
-     
-       /*  int libriLetti=serviceUtente.readLibriLetti(idUtente);
-        List<Libro> lista = serviceLibro.readByIdUtente(idUtente);
-        int sommaLibri=0;
-        //quando gli id libro della listaUtente sono uguali a quelli della listaTot, incremento sommaLibri
-        for (Libro libro : lista) {
-            for (Libro libro2 : listaTot) {
-                if (libro.getId()==libro2.getId()) {
-                    if( serviceLibro.readPagineLette(libro.getId(), idUtente)==libro2.getNPagine())
-                    sommaLibri++;
-                }
-            }
-        }
- 
-  
-
-
-
-
-
-if(deleteCount>0)
-
-
-{
-    if(sommaLibri<libriLetti)
-    {
-        serviceUtente.addLibroLetti(idUtente, libriLetti);
-        return libriLetti;
-    }
-    else
-    {
-        sommaLibri+=libriLetti;
-sommaLibri-=libriLetti;
-sommaLibri+=deleteCount;
-        serviceUtente.addLibroLetti(idUtente, sommaLibri);
-        return sommaLibri;
-    }
-}else
-{
-    if(sommaLibri<libriLetti)
-    {
-        serviceUtente.addLibroLetti(idUtente, libriLetti);
-        return libriLetti;
-    }
-    else
-    {
-        sommaLibri+=libriLetti;
-sommaLibri-=libriLetti;
-
-        serviceUtente.addLibroLetti(idUtente, sommaLibri);
-        return sommaLibri; 
-}
-}
-
-
-  */      
     
         
     }
@@ -318,6 +239,8 @@ sommaLibri-=libriLetti;
     public String logout(HttpSession session){
         session.setAttribute("loggato", null);
         session.setAttribute("utente", null);
+        hasRun=false;
+        
         return "redirect:/home";
     }
 

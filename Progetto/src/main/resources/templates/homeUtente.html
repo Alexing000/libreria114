@@ -94,7 +94,9 @@
                 <tbody>
                        
                     <li id="listina" th:each="libro:${libr}">      
-                        <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                        <a id ="Fiveimg" th:href="|/api/libro/libroById?idLibro=${libro.id}|">
+                            <img th:src="${libro.url}" alt="Copertina"></a>
+         
                     </li>
                 </tbody>
                 <div>
@@ -118,7 +120,7 @@
         <div>
             
             <li th:each="libro:${librG}">      
-                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
+                <a id ="Fiveimg"  th:href="|/api/libro/libroById?idLibro=${libro.id}|"><img th:src="${libro.url}" alt="Copertina"></a>
             </li>
             
         </div>
@@ -126,19 +128,7 @@
             <a style="color: red;" href="/api/libro/genereUtente">...</a>
         </div>
     </div>
-    <!--<div id="libri-consigliati">
-        <h2>Libri Consigliati</h2>
-        <div>
-            
-            <li th:each="libro:${librG}">      
-                <a id ="Fiveimg" th:src="${libro.url}"><img th:src="${libro.url}" alt="Copertina"></a>
-            </li>
-            
-        </div>
-        <div>
-            <a href="/api/libro/genere">...</a>
-        </div>
-    </div>-->
+
 
  
 
