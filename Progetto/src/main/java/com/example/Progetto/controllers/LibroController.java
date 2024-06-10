@@ -279,29 +279,6 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     return "redirect:/homeUtente";
 }
 
-    /*@GetMapping("/byId")
-    public Libro findById(@RequestParam(name="idLibro", defaultValue = "0") Long id,
-    @RequestHeader("token")String token){
-        if (token.split("-")[0].equals("libro")&&
-        Long.parseLong(token.split("-")[1])==id) {
-            return serviceLibro.findById(id);
-        } else {
-            return null;
-            
-        }
-    }*/
-   /*  public String findById(@RequestParam(name="idLibro", defaultValue = "1") Long id,
-    Model model){
-       Libro l= serviceLibro.findById(id);
-       if(id==null){
-        model.addAttribute("error", "id non valido!");
-
-        return "mainError.html";
-       }
-       model.addAttribute("idLibro", id);   
-       model.addAttribute("libro", l);
-         return "dettaglioLibro.html";
-    }*/
     @GetMapping("/libriUtente")
     public String libriUtente(Model model, HttpSession session,@RequestParam(name="count",  defaultValue="0") int conteggio){
         Long idUtente = (Long) session.getAttribute("idUtente");
@@ -386,9 +363,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
         redirectAttributes.addAttribute("count", conteggio);
 
 
-       /*  if(serviceLibro.readRecensione(id,idUtente)!=null){
-            serviceLibro.deleteUtenteWhenAssocia(idUtente, id);
-        }*/
+     
 
      
         serviceLibro.dissociaLU(id, idUtente);
@@ -396,18 +371,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     }
 
 
-    /* //http://localhost:8080/api/libro/byTitolo?titolo=titolo
-    /*@GetMapping("/byTitolo")
-    public Libro findByTitolo(@RequestParam(name="titolo", defaultValue = " ")String titolo,
-    @RequestHeader("token")String token){
-        if (token.split("-")[0].equals("libro")&&
-        token.split("-")[1].contains(titolo)) {
-            return serviceLibro.findByTitolo(titolo);
-        } else {
-            return null;
-            
-        }
-    } */
+
     @PostMapping("/search")
     public String search(@RequestBody String titolo,Model model,HttpSession session){
      
@@ -434,32 +398,7 @@ public String libriChallenge(@RequestParam(name="libriChallenge", defaultValue =
     
 
     }
-    /*
-    @GetMapping("/byAutore")
-    public List<Libro> findByAutore(@RequestParam(name="autore", defaultValue = " ")String autore,
-    @RequestHeader("token")String token){
-        if (token.split("-")[0].equals("libro")&&
-        token.split("-")[1].contains(autore)) {
-            return serviceLibro.findByAutore(autore);
-        } else {
-            return null;
-            
-        }
-    }*/
-
-
-    /*@GetMapping("/byGenere")
-    public List<Libro> findByGenere(@RequestParam(name="genere", defaultValue = " ")String genere,
-    @RequestHeader("token")String token){
-        if (token.split("-")[0].equals("libro")&&
-        token.split("-")[1].contains(genere)) {
-            return serviceLibro.byGenere(genere);
-        } else {
-            return null;
-            
-        }
-    }*/
-
+    
     @PostMapping("/add")
     public String add(@RequestParam Map<String,String> map,Model model,RedirectAttributes redirectAttributes){
       
@@ -510,10 +449,7 @@ serviceLibro.insert(map);
     if(!map.containsKey("id_autore")){
         model.addAttribute("error", "Autore non trovato");
         return "mainError.html";
-        //return "redirect:/api/libro/all";
-
-
-
+      
 
     }
         serviceLibro.update(map);

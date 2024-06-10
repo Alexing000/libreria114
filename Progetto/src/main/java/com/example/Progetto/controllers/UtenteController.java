@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.Progetto.models.Utente;
-import com.example.Progetto.services.ServiceLibro;
 import com.example.Progetto.services.ServiceUtente;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +22,7 @@ public class UtenteController {
 
     @Autowired
     private ApplicationContext applicationContext;
-    @Autowired
-    private ServiceLibro serviceLibro;
+
 
     
     @GetMapping("/signup")
@@ -38,14 +35,6 @@ public class UtenteController {
 
     
     
-
-    //questo metodo permette di registrare un utente
-    //svolge la funzione di legare i dati inviati dalla form di registrazione
-    //all'oggetto utente e di inviarli al database
-    //in questo modo potrò verificare se i dati sono corretti 
-    //che la password sia uguale a quella di conferma
-    //e che il db non sia già presente nel db
-
 
     
 

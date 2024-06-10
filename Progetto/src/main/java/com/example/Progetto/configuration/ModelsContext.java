@@ -1,15 +1,9 @@
 package com.example.Progetto.configuration;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-
-import com.example.Progetto.dao.DaoAutore;
 import com.example.Progetto.dao.DaoLibro;
 import com.example.Progetto.models.Autore;
 import com.example.Progetto.models.Libro;
@@ -19,9 +13,7 @@ import com.example.Progetto.models.Utente;
 public class ModelsContext {
     @Autowired
     private DaoLibro daoLibro;
-    @Autowired
-    private DaoAutore daoAutore;
-
+  
     @Bean
     @Scope("prototype")
     public Autore autore (Map<String, String> map) {
